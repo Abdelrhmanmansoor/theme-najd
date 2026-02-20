@@ -4,32 +4,32 @@
    ============================================================ */
 
 /* 01 — Settings: Variables, tokens, config (no output) */
-@import './01-settings/tailwind';
-@import './01-settings/variables';
-@import './01-settings/glass-system';
-@import './01-settings/fonts';
+@use './01-settings/tailwind';
+@use './01-settings/variables';
+@use './01-settings/glass-system';
+@use './01-settings/fonts';
 
 /* 02 — Generic: Reset, normalize, base rules */
-@import './02-generic/reset';
-@import './02-generic/common';
-@import './02-generic/animations';
-@import './02-generic/rtl';
+@use './02-generic/reset';
+@use './02-generic/common';
+@use './02-generic/animations';
+@use './02-generic/rtl';
 
 /* 03 — Elements: Base HTML elements (buttons, forms) */
-@import './03-elements/buttons';
-@import './03-elements/form';
+@use './03-elements/buttons';
+@use './03-elements/form';
 
 /* 04 — Components: UI components */
-@import './04-components/header';
-@import './04-components/footer';
-@import './04-components/home-blocks';
-@import './04-components/product-card';
-@import './04-components/slider';
+@use './04-components/header';
+@use './04-components/footer';
+@use './04-components/home-blocks';
+@use './04-components/product-card';
+@use './04-components/slider';
 
 /* 05 — Utilities: Helpers, overrides */
-@import './05-utilities/glass-utilities';
-@import './05-utilities/accessibility';
+@use './05-utilities/glass-utilities';
+@use './05-utilities/accessibility';
 
 /* External */
-@import 'lite-youtube-embed/src/lite-yt-embed.css';
-@import 'mmenu-light/dist/mmenu-light.css';
+@use 'lite-youtube-embed/src/lite-yt-embed.css';
+@use 'mmenu-light/dist/mmenu-light.css';

@@ -18,10 +18,6 @@
     {% if theme.settings.get('default_theme_mode') == 'glass' or theme.settings.get('enable_theme_switcher') %}
         <script defer src="{{ 'liquid-glass.js'|asset }}"></script>
     {% endif %}
-    {% if theme.settings.get('enable_add_product_toast', true) %}
-        <script defer src="{{ 'add-product-toast.js'|asset }}"></script>
-    {% endif %}
-
     {% block head_scripts %}{% endblock %}
 
     {# ---- Pass theme settings to JS ---- #}
@@ -202,6 +198,8 @@
     <salla-add-product-toast></salla-add-product-toast>
 {% endif %}
 
+<script defer crossorigin="anonymous" src="{{ 'app.js' | asset }}"></script>
+
 <salla-offer-modal></salla-offer-modal>
 <salla-search></salla-search>
 
@@ -213,7 +211,6 @@
     <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
 {% endif %}
 
-<script defer crossorigin="anonymous" src="{{ 'app.js' | asset }}"></script>
 {% block scripts %}{% endblock %}
 </body>
 </html>
