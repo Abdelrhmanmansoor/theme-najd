@@ -1,0 +1,968 @@
+{
+  "name": {
+    "ar": "نجد",
+    "en": "Najd Theme"
+  },
+  "description": {
+    "ar": "ثيم نجد — أول ثيم سلة بثلاثة أوضاع عرض: فاتح، داكن، وزجاجي (Liquid Glass). تصميم احترافي مع 60+ مكون و200+ إعداد قابل للتخصيص.",
+    "en": "Najd — The first Salla theme with three display modes: Light, Dark, and Liquid Glass. Professional design with 60+ components and 200+ customizable settings."
+  },
+  "repository": "",
+  "author_email": "support@najd-theme.sa",
+  "support_url": "https://najd-theme.sa",
+
+  "features": [
+    "mega-menu",
+    "fonts",
+    "color",
+    "breadcrumb",
+    "unite-cards-height",
+    "component-featured-products",
+    "component-fixed-banner",
+    "component-fixed-products",
+    "component-products-slider",
+    "component-photos-slider",
+    "component-parallax-background",
+    "component-testimonials",
+    "component-square-photos",
+    "component-store-features",
+    "component-youtube",
+    "menu-images",
+    "filters"
+  ],
+
+  "settings": [
+    {
+      "type": "static",
+      "format": "title",
+      "id": "section-theme-mode",
+      "value": "<div>أوضاع العرض (فاتح / داكن / زجاجي)</div>",
+      "variant": "h5"
+    },
+    {
+      "id": "enable_theme_switcher",
+      "type": "boolean",
+      "format": "switch",
+      "label": "تفعيل زر التنقل بين الأوضاع",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "default_theme_mode",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "الوضع الافتراضي للمتجر",
+      "selected": [{ "label": "فاتح", "value": "light" }],
+      "options": [
+        { "label": "فاتح", "value": "light" },
+        { "label": "داكن", "value": "dark" },
+        { "label": "زجاجي", "value": "glass" }
+      ],
+      "source": "Manual",
+      "required": true
+    },
+    {
+      "id": "glass_blur_intensity",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "شدة تأثير الزجاج",
+      "selected": [{ "label": "متوسط", "value": "medium" }],
+      "options": [
+        { "label": "خفيف", "value": "light" },
+        { "label": "متوسط", "value": "medium" },
+        { "label": "قوي", "value": "strong" }
+      ],
+      "source": "Manual"
+    },
+
+    { "type": "static", "id": "line-1", "format": "line" },
+    {
+      "type": "static",
+      "format": "title",
+      "id": "section-store-ui",
+      "value": "<div>خيارات واجهة المتجر</div>",
+      "variant": "h5"
+    },
+    {
+      "id": "merge_header_with_first",
+      "type": "boolean",
+      "format": "switch",
+      "label": "دمج أعلى الصفحة مع العنصر الأول في الصفحة الرئيسية",
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "header_overlay_on_slider",
+      "type": "boolean",
+      "format": "switch",
+      "label": "إنشاء طبقة شفافة داكنة على السلايدر والهيدر",
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "alt_logo",
+      "type": "string",
+      "format": "image",
+      "label": "شعار بديل (للألوان المعكوسة)",
+      "value": ""
+    },
+    {
+      "id": "show_alt_logo_on_slider",
+      "type": "boolean",
+      "format": "switch",
+      "label": "تثبيت الشعار البديل على السلايدر المتقدم",
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "show_alt_logo_in_footer",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض الشعار البديل في الفوتر",
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "enable_home_animations",
+      "type": "boolean",
+      "format": "switch",
+      "label": "تفعيل أنيميشن عناصر الصفحة الرئيسية",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "use_arabic_numbers",
+      "type": "boolean",
+      "format": "switch",
+      "label": "استخدام الأرقام العربية",
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "protect_content",
+      "type": "boolean",
+      "format": "switch",
+      "label": "حماية محتوى المتجر (تعطيل النسخ وحفظ الصور)",
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "enable_breadcrumb",
+      "type": "boolean",
+      "format": "switch",
+      "label": "ميزة مسار التنقل (Breadcrumbs)",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "is_more_button_enabled",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض (زر الكل) في الصفحة الرئيسية",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "unite_product_height",
+      "type": "boolean",
+      "format": "switch",
+      "label": "توحيد ارتفاع المنتجات في الرئيسية والتصنيفات",
+      "value": true,
+      "selected": true
+    },
+
+    { "type": "static", "id": "line-2", "format": "line" },
+    {
+      "type": "static",
+      "format": "title",
+      "id": "section-announcement",
+      "value": "<div>إعلان ترويجي متحرك أعلى المتجر</div>",
+      "variant": "h5"
+    },
+    {
+      "id": "announcement_text",
+      "type": "string",
+      "format": "text",
+      "label": "نص الإعلان المتحرك (15-100 حرف)",
+      "value": ""
+    },
+    {
+      "id": "announcement_url",
+      "type": "string",
+      "format": "text",
+      "label": "رابط الإعلان",
+      "value": ""
+    },
+    {
+      "id": "announcement_bg_color",
+      "type": "string",
+      "format": "text",
+      "label": "لون خلفية الإعلان",
+      "value": ""
+    },
+    {
+      "id": "announcement_text_color",
+      "type": "string",
+      "format": "text",
+      "label": "لون نص الإعلان",
+      "value": ""
+    },
+    {
+      "id": "announcement_sticky",
+      "type": "boolean",
+      "format": "switch",
+      "label": "تثبيت الإعلان عند السكرول في جميع الصفحات",
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "announcement_closable",
+      "type": "boolean",
+      "format": "switch",
+      "label": "تمكين العميل من إغلاق الإعلان",
+      "value": true,
+      "selected": true
+    },
+
+    { "type": "static", "id": "line-3", "format": "line" },
+    {
+      "type": "static",
+      "format": "title",
+      "id": "section-product-card",
+      "value": "<div>خيارات بطاقة المنتج</div>",
+      "variant": "h5"
+    },
+    {
+      "id": "product_card_style",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "شكل بطاقة المنتج",
+      "selected": [{ "label": "كلاسيك", "value": "classic" }],
+      "options": [
+        { "label": "كلاسيك", "value": "classic" },
+        { "label": "مودرن", "value": "modern" },
+        { "label": "ميني مال", "value": "minimal" },
+        { "label": "بولد", "value": "bold" }
+      ],
+      "source": "Manual"
+    },
+    {
+      "id": "products_per_row",
+      "type": "number",
+      "format": "integer",
+      "label": "عدد المنتجات في الصف الواحد",
+      "value": 4,
+      "min": 2,
+      "max": 6
+    },
+    {
+      "id": "card_image_hover",
+      "type": "boolean",
+      "format": "switch",
+      "label": "تغيير الصورة عند التمرير على بطاقة المنتج",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "show_product_options",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض خيارات المنتج في بطاقة المنتج",
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "show_card_buttons",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض أزرار بطاقة المنتج (السلة - المفضلة - العرض السريع)",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "buttons_on_image_hover",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض الأزرار على صورة المنتج عند التمرير",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "show_countdown_on_sale",
+      "type": "boolean",
+      "format": "switch",
+      "label": "إظهار العد التنازلي على المنتجات التي تحتوي على خصم",
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "card_image_zoom",
+      "type": "boolean",
+      "format": "switch",
+      "label": "تفعيل الزوم على صور المنتجات عند التمرير",
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "card_rounded",
+      "type": "boolean",
+      "format": "switch",
+      "label": "حواف دائرية لبطاقات المنتج",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "show_discount_percentage",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض نسبة الخصم",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "show_rating_on_card",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض التقييم على بطاقات المنتجات",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "mobile_small_products",
+      "type": "boolean",
+      "format": "switch",
+      "label": "تصغير المنتجات في الجوال",
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "enhanced_mobile_add_btn",
+      "type": "boolean",
+      "format": "switch",
+      "label": "تفعيل العرض المحسن لزر الإضافة للسلة في الجوال",
+      "value": true,
+      "selected": true
+    },
+
+    { "type": "static", "id": "line-4", "format": "line" },
+    {
+      "type": "static",
+      "format": "title",
+      "id": "section-colors-light",
+      "value": "<div>ألوان الوضع الفاتح</div>",
+      "variant": "h5"
+    },
+    {
+      "id": "light_bg_primary",
+      "type": "string",
+      "format": "text",
+      "label": "لون خلفية المتجر (أساسي)",
+      "value": "#ffffff"
+    },
+    {
+      "id": "light_bg_secondary",
+      "type": "string",
+      "format": "text",
+      "label": "لون خلفية المتجر (ثانوي)",
+      "value": "#f8f9fc"
+    },
+    {
+      "id": "light_text_primary",
+      "type": "string",
+      "format": "text",
+      "label": "لون النصوص الرئيسية",
+      "value": "#111827"
+    },
+    {
+      "id": "light_text_secondary",
+      "type": "string",
+      "format": "text",
+      "label": "لون النصوص الفرعية",
+      "value": "#4b5563"
+    },
+    {
+      "id": "light_header_bg",
+      "type": "string",
+      "format": "text",
+      "label": "لون خلفية أعلى الصفحة",
+      "value": "#ffffff"
+    },
+    {
+      "id": "light_header_text",
+      "type": "string",
+      "format": "text",
+      "label": "لون نصوص أعلى الصفحة",
+      "value": "#111827"
+    },
+    {
+      "id": "light_card_bg",
+      "type": "string",
+      "format": "text",
+      "label": "لون خلفية بطاقة المنتج",
+      "value": "#ffffff"
+    },
+
+    { "type": "static", "id": "line-5", "format": "line" },
+    {
+      "type": "static",
+      "format": "title",
+      "id": "section-colors-dark",
+      "value": "<div>ألوان الوضع الداكن</div>",
+      "variant": "h5"
+    },
+    {
+      "id": "dark_bg_primary",
+      "type": "string",
+      "format": "text",
+      "label": "لون خلفية المتجر الداكن (أساسي)",
+      "value": "#1d1f1f"
+    },
+    {
+      "id": "dark_bg_secondary",
+      "type": "string",
+      "format": "text",
+      "label": "لون خلفية المتجر الداكن (ثانوي)",
+      "value": "#0e0f0f"
+    },
+    {
+      "id": "dark_text_primary",
+      "type": "string",
+      "format": "text",
+      "label": "لون النصوص الرئيسية (داكن)",
+      "value": "#ffffff"
+    },
+    {
+      "id": "dark_text_secondary",
+      "type": "string",
+      "format": "text",
+      "label": "لون النصوص الفرعية (داكن)",
+      "value": "#cccccc"
+    },
+    {
+      "id": "dark_header_bg",
+      "type": "string",
+      "format": "text",
+      "label": "لون خلفية أعلى الصفحة (داكن)",
+      "value": "#0e0f0f"
+    },
+    {
+      "id": "dark_card_bg",
+      "type": "string",
+      "format": "text",
+      "label": "لون خلفية بطاقة المنتج (داكن)",
+      "value": "#1d1f1f"
+    },
+
+    { "type": "static", "id": "line-6", "format": "line" },
+    {
+      "type": "static",
+      "format": "title",
+      "id": "section-colors-glass",
+      "value": "<div>ألوان الوضع الزجاجي</div>",
+      "variant": "h5"
+    },
+    {
+      "id": "glass_scene_color_1",
+      "type": "string",
+      "format": "text",
+      "label": "لون خلفية المشهد الأول",
+      "value": "#0f0f1a"
+    },
+    {
+      "id": "glass_scene_color_2",
+      "type": "string",
+      "format": "text",
+      "label": "لون خلفية المشهد الثاني",
+      "value": "#1a0f2e"
+    },
+    {
+      "id": "glass_orb_color_1",
+      "type": "string",
+      "format": "text",
+      "label": "لون الكرة المتحركة الأولى",
+      "value": "#7c5cfc"
+    },
+    {
+      "id": "glass_orb_color_2",
+      "type": "string",
+      "format": "text",
+      "label": "لون الكرة المتحركة الثانية",
+      "value": "#06d6a0"
+    },
+    {
+      "id": "glass_orb_color_3",
+      "type": "string",
+      "format": "text",
+      "label": "لون الكرة المتحركة الثالثة",
+      "value": "#fc5c7d"
+    },
+
+    { "type": "static", "id": "line-7", "format": "line" },
+    {
+      "type": "static",
+      "format": "title",
+      "id": "section-header",
+      "value": "<div>خيارات أعلى الصفحة</div>",
+      "variant": "h5"
+    },
+    {
+      "id": "header_style",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "نمط أعلى الصفحة",
+      "selected": [{ "label": "كلاسيكي", "value": "classic" }],
+      "options": [
+        { "label": "كلاسيكي", "value": "classic" },
+        { "label": "وسطي", "value": "centered" },
+        { "label": "متقدم", "value": "advanced" }
+      ],
+      "source": "Manual"
+    },
+    {
+      "id": "header_is_sticky",
+      "type": "boolean",
+      "format": "switch",
+      "label": "تثبيت القائمة الرئيسية أعلى الصفحة عند التمرير",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "topnav_is_dark",
+      "type": "boolean",
+      "format": "switch",
+      "label": "الشريط العلوي داكن",
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "important_links",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض الروابط المهمة في الشريط العلوي",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "enable_more_menu",
+      "type": "boolean",
+      "format": "switch",
+      "label": "القائمة الجانبية في متصفح الكمبيوتر",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "center_logo",
+      "type": "boolean",
+      "format": "switch",
+      "label": "توسيط الشعار أعلى الصفحة",
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "hide_top_bar",
+      "type": "boolean",
+      "format": "switch",
+      "label": "إخفاء الشريط العلوي",
+      "value": false,
+      "selected": false
+    },
+
+    { "type": "static", "id": "line-8", "format": "line" },
+    {
+      "type": "static",
+      "format": "title",
+      "id": "section-footer",
+      "value": "<div>خيارات أسفل الصفحة</div>",
+      "variant": "h5"
+    },
+    {
+      "id": "footer_is_dark",
+      "type": "boolean",
+      "format": "switch",
+      "label": "تثبيت الوضع الداكن للفوتر",
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "footer_bg_color",
+      "type": "string",
+      "format": "text",
+      "label": "لون خلفية أسفل الموقع",
+      "value": "#f3f4f6"
+    },
+    {
+      "id": "footer_text_color",
+      "type": "string",
+      "format": "text",
+      "label": "لون نصوص أسفل الموقع",
+      "value": "#374151"
+    },
+    {
+      "id": "show_newsletter",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض النشرة البريدية",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "newsletter_title",
+      "type": "string",
+      "format": "text",
+      "label": "عنوان النشرة البريدية",
+      "value": "",
+      "multilanguage": true
+    },
+    {
+      "id": "social_icons_circle",
+      "type": "boolean",
+      "format": "switch",
+      "label": "جعل أيقونات وسائل التواصل الاجتماعي دائرية",
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "show_business_badge",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض أيقونة توثيق منصة الأعمال",
+      "value": true,
+      "selected": true
+    },
+
+    { "type": "static", "id": "line-9", "format": "line" },
+    {
+      "type": "static",
+      "format": "title",
+      "id": "section-product-page",
+      "value": "<div>خيارات صفحة المنتج</div>",
+      "variant": "h5"
+    },
+    {
+      "id": "enable_add_product_toast",
+      "type": "boolean",
+      "format": "switch",
+      "label": "تفعيل إشعار الإضافة للسلة المحسن",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "sticky_add_to_cart",
+      "type": "boolean",
+      "format": "switch",
+      "label": "تثبيت زر الإضافة والكمية أسفل شاشة الجوال",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "imageZoom",
+      "type": "boolean",
+      "format": "switch",
+      "label": "تفعيل خاصية الزوم على صورة المنتج",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "show_tags",
+      "type": "boolean",
+      "format": "switch",
+      "label": "إظهار الوسوم",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "show_payment_methods",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض وسائل الدفع في صفحة المنتج",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "show_product_category",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض تصنيف المنتج في صفحة المنتج",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "show_store_features_on_product",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض مميزات المتجر في صفحة المنتج",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "sticky_product_card",
+      "type": "boolean",
+      "format": "switch",
+      "label": "إظهار البطاقة المصغرة للمنتج بعد السكرول",
+      "value": true,
+      "selected": true
+    },
+
+    { "type": "static", "id": "line-10", "format": "line" },
+    {
+      "type": "static",
+      "format": "title",
+      "id": "section-extras",
+      "value": "<div>خيارات إضافية</div>",
+      "variant": "h5"
+    },
+    {
+      "id": "show_whatsapp_btn",
+      "type": "boolean",
+      "format": "switch",
+      "label": "زر واتساب عائم",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "show_back_to_top",
+      "type": "boolean",
+      "format": "switch",
+      "label": "زر الرجوع للأعلى",
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "show_loading_screen",
+      "type": "boolean",
+      "format": "switch",
+      "label": "صفحة التحميل",
+      "value": false,
+      "selected": false
+    },
+
+    {
+      "id": "slider_background_size",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "طريقة عرض الصور في سليدر صور المنتج",
+      "selected": [{ "label": "تغطية كامل المساحة", "value": "cover" }],
+      "options": [
+        { "label": "تغطية كامل المساحة", "value": "cover" },
+        { "label": "إظهار الصورة كاملة", "value": "contain" }
+      ],
+      "source": "Manual"
+    }
+  ],
+
+  "components": [
+    {
+      "key": "najd-hero-slider",
+      "title": { "ar": "سلايدر متقدم (نجد)", "en": "Advanced Slider (Najd)" },
+      "icon": "sicon-image-carousel",
+      "path": "home.hero-slider",
+      "fields": [
+        {
+          "id": "slides",
+          "type": "collection",
+          "format": "collection",
+          "label": "شرائح السلايدر",
+          "minLength": 1,
+          "maxLength": 10,
+          "fields": [
+            { "id": "image", "type": "string", "format": "image", "label": "الصورة", "required": true },
+            { "id": "title", "type": "string", "format": "text", "label": "العنوان", "multilanguage": true },
+            { "id": "subtitle", "type": "string", "format": "text", "label": "العنوان الفرعي", "multilanguage": true },
+            { "id": "btn_text", "type": "string", "format": "text", "label": "نص الزر", "multilanguage": true },
+            { "id": "btn_url", "type": "items", "format": "variable-list", "label": "رابط الزر" },
+            { "id": "overlay", "type": "boolean", "format": "switch", "label": "طبقة داكنة على الصورة", "value": true }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "najd-about-store",
+      "title": { "ar": "عن المتجر (نجد)", "en": "About Store (Najd)" },
+      "icon": "sicon-info-circle",
+      "path": "home.about-store",
+      "fields": [
+        { "id": "image", "type": "string", "format": "image", "label": "الصورة" },
+        { "id": "title", "type": "string", "format": "text", "label": "العنوان", "multilanguage": true },
+        { "id": "description", "type": "string", "format": "textarea", "label": "الوصف", "multilanguage": true },
+        { "id": "btn_text", "type": "string", "format": "text", "label": "نص الزر", "multilanguage": true },
+        { "id": "btn_url", "type": "items", "format": "variable-list", "label": "رابط الزر" }
+      ]
+    },
+    {
+      "key": "najd-store-features",
+      "title": { "ar": "مميزات المتجر (نجد)", "en": "Store Features (Najd)" },
+      "icon": "sicon-star-circle",
+      "path": "home.store-features-custom",
+      "fields": [
+        {
+          "id": "items",
+          "type": "collection",
+          "format": "collection",
+          "label": "المميزات",
+          "minLength": 1,
+          "maxLength": 8,
+          "fields": [
+            { "id": "icon", "type": "string", "format": "icon", "label": "الأيقونة" },
+            { "id": "title", "type": "string", "format": "text", "label": "العنوان", "multilanguage": true },
+            { "id": "text", "type": "string", "format": "text", "label": "الوصف", "multilanguage": true }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "najd-custom-products",
+      "title": { "ar": "منتجات مخصصة (نجد)", "en": "Custom Products (Najd)" },
+      "icon": "sicon-shopping-bag",
+      "path": "home.custom-products",
+      "fields": [
+        { "id": "title", "type": "string", "format": "text", "label": "العنوان", "multilanguage": true },
+        { "id": "subtitle", "type": "string", "format": "text", "label": "العنوان الفرعي", "multilanguage": true },
+        { "id": "products", "type": "items", "format": "dropdown-list", "label": "المنتجات", "source": "products" },
+        { "id": "display_all_url", "type": "items", "format": "variable-list", "label": "رابط عرض الكل" }
+      ]
+    },
+    {
+      "key": "najd-double-banner",
+      "title": { "ar": "بانر مزدوج (نجد)", "en": "Double Banner (Najd)" },
+      "icon": "sicon-layout-columns-2",
+      "path": "home.double-banner",
+      "fields": [
+        {
+          "id": "banners",
+          "type": "collection",
+          "format": "collection",
+          "label": "البانرات",
+          "minLength": 2,
+          "maxLength": 2,
+          "fields": [
+            { "id": "image", "type": "string", "format": "image", "label": "الصورة", "required": true },
+            { "id": "url", "type": "items", "format": "variable-list", "label": "الرابط" },
+            { "id": "title", "type": "string", "format": "text", "label": "العنوان", "multilanguage": true },
+            { "id": "description", "type": "string", "format": "text", "label": "الوصف", "multilanguage": true }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "najd-triple-banner",
+      "title": { "ar": "بانر ثلاثي (نجد)", "en": "Triple Banner (Najd)" },
+      "icon": "sicon-layout-columns-3",
+      "path": "home.triple-banner",
+      "fields": [
+        {
+          "id": "banners",
+          "type": "collection",
+          "format": "collection",
+          "label": "البانرات",
+          "minLength": 3,
+          "maxLength": 3,
+          "fields": [
+            { "id": "image", "type": "string", "format": "image", "label": "الصورة", "required": true },
+            { "id": "url", "type": "items", "format": "variable-list", "label": "الرابط" },
+            { "id": "title", "type": "string", "format": "text", "label": "العنوان", "multilanguage": true }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "najd-custom-reviews",
+      "title": { "ar": "آراء عملاء مخصصة (نجد)", "en": "Custom Reviews (Najd)" },
+      "icon": "sicon-chat-bubbles",
+      "path": "home.custom-reviews",
+      "fields": [
+        { "id": "title", "type": "string", "format": "text", "label": "العنوان", "multilanguage": true },
+        {
+          "id": "items",
+          "type": "collection",
+          "format": "collection",
+          "label": "التقييمات",
+          "minLength": 1,
+          "maxLength": 12,
+          "fields": [
+            { "id": "name", "type": "string", "format": "text", "label": "اسم العميل", "required": true },
+            { "id": "avatar", "type": "string", "format": "image", "label": "الصورة الشخصية" },
+            { "id": "stars", "type": "number", "format": "integer", "label": "التقييم (1-5)", "min": 1, "max": 5, "value": 5 },
+            { "id": "text", "type": "string", "format": "textarea", "label": "نص التقييم", "multilanguage": true }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "najd-faq",
+      "title": { "ar": "الأسئلة الشائعة (نجد)", "en": "FAQ (Najd)" },
+      "icon": "sicon-help-circle",
+      "path": "home.faq",
+      "fields": [
+        { "id": "title", "type": "string", "format": "text", "label": "العنوان", "multilanguage": true },
+        {
+          "id": "items",
+          "type": "collection",
+          "format": "collection",
+          "label": "الأسئلة",
+          "minLength": 1,
+          "maxLength": 20,
+          "fields": [
+            { "id": "question", "type": "string", "format": "text", "label": "السؤال", "multilanguage": true, "required": true },
+            { "id": "answer", "type": "string", "format": "textarea", "label": "الجواب", "multilanguage": true, "required": true }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "najd-special-offer",
+      "title": { "ar": "عرض خاص مع عد تنازلي (نجد)", "en": "Special Offer with Countdown (Najd)" },
+      "icon": "sicon-timer",
+      "path": "home.special-offer",
+      "fields": [
+        { "id": "title", "type": "string", "format": "text", "label": "العنوان", "multilanguage": true },
+        { "id": "description", "type": "string", "format": "textarea", "label": "الوصف", "multilanguage": true },
+        { "id": "image", "type": "string", "format": "image", "label": "صورة الخلفية" },
+        { "id": "end_date", "type": "string", "format": "text", "label": "تاريخ انتهاء العرض (YYYY-MM-DD)" },
+        { "id": "btn_text", "type": "string", "format": "text", "label": "نص الزر", "multilanguage": true },
+        { "id": "btn_url", "type": "items", "format": "variable-list", "label": "رابط الزر" }
+      ]
+    },
+    {
+      "key": "najd-blog",
+      "title": { "ar": "المدونة (نجد)", "en": "Blog (Najd)" },
+      "icon": "sicon-newspaper",
+      "path": "home.blog-section",
+      "fields": [
+        { "id": "title", "type": "string", "format": "text", "label": "العنوان", "multilanguage": true },
+        { "id": "count", "type": "number", "format": "integer", "label": "عدد المقالات", "min": 2, "max": 8, "value": 4 }
+      ]
+    },
+    {
+      "key": "najd-statistics",
+      "title": { "ar": "إحصائيات (نجد)", "en": "Statistics (Najd)" },
+      "icon": "sicon-chart-bar",
+      "path": "home.statistics",
+      "fields": [
+        {
+          "id": "items",
+          "type": "collection",
+          "format": "collection",
+          "label": "الإحصائيات",
+          "minLength": 2,
+          "maxLength": 6,
+          "fields": [
+            { "id": "number", "type": "string", "format": "text", "label": "الرقم", "required": true },
+            { "id": "label", "type": "string", "format": "text", "label": "الوصف", "multilanguage": true, "required": true },
+            { "id": "icon", "type": "string", "format": "icon", "label": "الأيقونة" }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "najd-marquee",
+      "title": { "ar": "شريط إعلاني متحرك (نجد)", "en": "Marquee Banner (Najd)" },
+      "icon": "sicon-megaphone",
+      "path": "home.marquee-banner",
+      "fields": [
+        { "id": "text", "type": "string", "format": "text", "label": "النص", "multilanguage": true, "required": true },
+        { "id": "url", "type": "items", "format": "variable-list", "label": "الرابط" },
+        { "id": "bg_color", "type": "string", "format": "text", "label": "لون الخلفية" }
+      ]
+    }
+  ]
+}

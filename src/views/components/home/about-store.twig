@@ -1,0 +1,36 @@
+{# ============================================================
+   About Store — Image + text section
+   Fields: component.image, .title, .description,
+           .btn_text, .btn_url
+   ============================================================ #}
+
+<section class="najd-block najd-block--about container">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        {% if component.image %}
+            <div class="najd-about__image glass-surface rounded-glass overflow-hidden">
+                <img src="{{ component.image }}"
+                     alt="{{ component.title }}"
+                     loading="lazy"
+                     class="w-full h-auto object-cover">
+            </div>
+        {% endif %}
+
+        <div class="najd-about__content">
+            {% if component.title %}
+                <h2 class="text-2xl lg:text-3xl font-bold mb-4">{{ component.title }}</h2>
+            {% endif %}
+
+            {% if component.description %}
+                <div class="text-sm leading-relaxed opacity-70 mb-6">
+                    {{ component.description|raw }}
+                </div>
+            {% endif %}
+
+            {% if component.btn_text and component.btn_url %}
+                <a href="{{ component.btn_url }}" class="najd-btn najd-btn--primary">
+                    {{ component.btn_text }}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>

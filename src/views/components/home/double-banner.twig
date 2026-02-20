@@ -1,0 +1,30 @@
+{# ============================================================
+   Double Banner — Two side-by-side banners
+   Fields: component.banners[].image, .url, .title, .description
+   ============================================================ #}
+
+<section class="najd-block najd-block--banners container">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+        {% for banner in component.banners %}
+            <a href="{{ banner.url }}"
+               class="najd-banner glass-surface rounded-glass overflow-hidden group"
+               aria-label="{{ banner.title ? banner.title : 'banner-' ~ loop.index }}">
+                <img src="{{ banner.image }}"
+                     alt="{{ banner.title }}"
+                     loading="lazy"
+                     class="najd-banner__img">
+
+                {% if banner.title or banner.description %}
+                    <div class="najd-banner__overlay">
+                        {% if banner.title %}
+                            <h3 class="najd-banner__title">{{ banner.title }}</h3>
+                        {% endif %}
+                        {% if banner.description %}
+                            <p class="najd-banner__desc">{{ banner.description }}</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </a>
+        {% endfor %}
+    </div>
+</section>

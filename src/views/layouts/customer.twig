@@ -1,0 +1,18 @@
+{# Customer Pages Layout — extends master with sidebar #}
+{% extends "layouts.master" %}
+{% block content %}
+    <div class="container py-8 lg:py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+            {# Sidebar #}
+            <aside class="lg:w-72 shrink-0">
+                <div class="glass-surface rounded-glass p-6 sticky top-24">
+                    <salla-user-menu inline show-header></salla-user-menu>
+                </div>
+            </aside>
+            {# Content #}
+            <div class="flex-1 min-w-0">
+                {% block customer_content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

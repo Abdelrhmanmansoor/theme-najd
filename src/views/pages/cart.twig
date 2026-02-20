@@ -1,0 +1,9 @@
+{% extends "layouts.master" %}
+{% block content %}
+    <div class="container py-8 lg:py-12">
+        <salla-cart-summary-enhanced></salla-cart-summary-enhanced>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script defer src="{{ 'checkout.js' | asset }}"></script>
+{% endblock %}

@@ -1,0 +1,24 @@
+{# ============================================================
+   Triple Banner — Three column banners
+   Fields: component.banners[].image, .url, .title
+   ============================================================ #}
+
+<section class="najd-block najd-block--banners container">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+        {% for banner in component.banners %}
+            <a href="{{ banner.url }}"
+               class="najd-banner najd-banner--sm glass-surface rounded-glass overflow-hidden group"
+               aria-label="{{ banner.title ? banner.title : 'banner-' ~ loop.index }}">
+                <img src="{{ banner.image }}"
+                     alt="{{ banner.title }}"
+                     loading="lazy"
+                     class="najd-banner__img">
+                {% if banner.title %}
+                    <div class="najd-banner__overlay">
+                        <h3 class="najd-banner__title">{{ banner.title }}</h3>
+                    </div>
+                {% endif %}
+            </a>
+        {% endfor %}
+    </div>
+</section>

@@ -1,0 +1,38 @@
+{
+  "common": {
+    "elements": {
+      "light_mode": "وضع فاتح",
+      "dark_mode": "وضع داكن",
+      "glass_mode": "وضع زجاجي",
+      "tax_number": "الرقم الضريبي",
+      "show_all": "عرض الكل",
+      "add_to_cart": "أضف للسلة",
+      "quick_view": "عرض سريع",
+      "wishlist": "المفضلة",
+      "compare": "مقارنة",
+      "search": "بحث",
+      "my_account": "حسابي",
+      "day": "يوم",
+      "hour": "ساعة",
+      "minute": "دقيقة",
+      "second": "ثانية",
+      "new": "جديد",
+      "sale": "خصم",
+      "sold_out": "نفذت الكمية",
+      "best_seller": "الأكثر مبيعاً"
+    }
+  },
+  "blocks": {
+    "home": {
+      "display_all": "عرض الكل",
+      "latest_products": "أحدث المنتجات",
+      "testimonials": "آراء العملاء",
+      "faq": "الأسئلة الشائعة"
+    },
+    "footer": {
+      "pages_links": "روابط سريعة",
+      "newsletter": "النشرة البريدية",
+      "newsletter_desc": "اشترك ليصلك كل جديد من عروض ومنتجات"
+    }
+  }
+}

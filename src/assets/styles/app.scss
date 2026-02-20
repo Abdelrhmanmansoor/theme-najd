@@ -1,0 +1,35 @@
+/* ============================================================
+   NAJD THEME — Main Stylesheet
+   Architecture: ITCSS (Inverted Triangle CSS)
+   ============================================================ */
+
+/* 01 — Settings: Variables, tokens, config (no output) */
+@import './01-settings/tailwind';
+@import './01-settings/variables';
+@import './01-settings/glass-system';
+@import './01-settings/fonts';
+
+/* 02 — Generic: Reset, normalize, base rules */
+@import './02-generic/reset';
+@import './02-generic/common';
+@import './02-generic/animations';
+@import './02-generic/rtl';
+
+/* 03 — Elements: Base HTML elements (buttons, forms) */
+@import './03-elements/buttons';
+@import './03-elements/form';
+
+/* 04 — Components: UI components */
+@import './04-components/header';
+@import './04-components/footer';
+@import './04-components/home-blocks';
+@import './04-components/product-card';
+@import './04-components/slider';
+
+/* 05 — Utilities: Helpers, overrides */
+@import './05-utilities/glass-utilities';
+@import './05-utilities/accessibility';
+
+/* External */
+@import 'lite-youtube-embed/src/lite-yt-embed.css';
+@import 'mmenu-light/dist/mmenu-light.css';

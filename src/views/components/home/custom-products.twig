@@ -1,0 +1,24 @@
+{# ============================================================
+   Custom Products — Product slider with title
+   Fields: component.title, .subtitle, .products, .display_all_url
+   ============================================================ #}
+
+{% set display_all = component.display_all_url %}
+{% set show_all_btn = theme.settings.get('is_more_button_enabled') %}
+
+<section class="najd-block najd-block--products container">
+    <salla-products-slider
+        {% if component.products|length %}
+            source="selected"
+            source-value="[{{ component.products|map((p) => p.id)|join(',') }}]"
+        {% endif %}
+        {% if display_all != '' and display_all != '#' and show_all_btn %}
+            display-all-url="{{ display_all }}"
+        {% endif %}
+        block-title="{{ component.title }}"
+        {% if component.subtitle %}
+            block-subTitle="{{ component.subtitle }}"
+        {% endif %}
+        slider-id="najd-products-{{ position }}">
+    </salla-products-slider>
+</section>

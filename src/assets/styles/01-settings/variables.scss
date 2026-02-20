@@ -1,0 +1,145 @@
+/* ============================================================
+   Design Tokens — CSS Custom Properties
+   These are the RESOLVED values used by all components.
+   The actual values come from twilight.json → master.twig → :root
+   ============================================================ */
+
+:root {
+  /* ---- Spacing Scale ---- */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* ---- Radius Scale ---- */
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+
+  /* ---- Transitions ---- */
+  --ease-out:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+
+  /* ---- Z-Index Scale ---- */
+  --z-bg:      -1;
+  --z-base:     0;
+  --z-above:    1;
+  --z-header:  50;
+  --z-overlay: 90;
+  --z-modal:  100;
+  --z-toast:  110;
+}
+
+/* ============================================================
+   LIGHT MODE (default)
+   ============================================================ */
+[data-theme="light"],
+:root {
+  --surface-bg:         var(--light-bg-primary, #ffffff);
+  --surface-secondary:  var(--light-bg-secondary, #f8f9fc);
+  --surface-card:       var(--light-card-bg, #ffffff);
+
+  --text-primary:       var(--light-text-primary, #111827);
+  --text-secondary:     var(--light-text-secondary, #4b5563);
+  --text-tertiary:      #9ca3af;
+
+  --header-bg:          var(--light-header-bg, #ffffff);
+  --header-text:        var(--light-header-text, #111827);
+
+  --border-color:       rgba(0, 0, 0, 0.08);
+  --border-hover:       rgba(0, 0, 0, 0.15);
+
+  --shadow-sm:          0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md:          0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg:          0 8px 24px rgba(0, 0, 0, 0.08);
+
+  /* Glass properties — minimal in light mode */
+  --glass-bg:           rgba(255, 255, 255, 0.85);
+  --glass-bg-hover:     rgba(255, 255, 255, 0.95);
+  --glass-bg-strong:    rgba(255, 255, 255, 0.95);
+  --glass-border:       rgba(0, 0, 0, 0.08);
+  --glass-border-hover: rgba(0, 0, 0, 0.12);
+  --glass-blur:         12px;
+  --glass-shadow:       0 4px 16px rgba(0, 0, 0, 0.05);
+  --glass-highlight:    none;
+
+  /* Background scene — hidden in light */
+  --scene-opacity: 0;
+}
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+[data-theme="dark"] {
+  --surface-bg:         var(--dark-bg-primary, #1d1f1f);
+  --surface-secondary:  var(--dark-bg-secondary, #0e0f0f);
+  --surface-card:       var(--dark-card-bg, #1d1f1f);
+
+  --text-primary:       var(--dark-text-primary, #ffffff);
+  --text-secondary:     var(--dark-text-secondary, #cccccc);
+  --text-tertiary:      #6b7280;
+
+  --header-bg:          var(--dark-header-bg, #0e0f0f);
+  --header-text:        #ffffff;
+
+  --border-color:       rgba(255, 255, 255, 0.08);
+  --border-hover:       rgba(255, 255, 255, 0.15);
+
+  --shadow-sm:          0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md:          0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-lg:          0 8px 24px rgba(0, 0, 0, 0.35);
+
+  --glass-bg:           rgba(30, 30, 45, 0.85);
+  --glass-bg-hover:     rgba(40, 40, 60, 0.9);
+  --glass-bg-strong:    rgba(35, 35, 55, 0.95);
+  --glass-border:       rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.15);
+  --glass-blur:         12px;
+  --glass-shadow:       0 4px 16px rgba(0, 0, 0, 0.3);
+  --glass-highlight:    none;
+
+  --scene-opacity: 0;
+}
+
+/* ============================================================
+   GLASS MODE (Liquid Glass — iOS 26)
+   ============================================================ */
+[data-theme="glass"] {
+  --surface-bg:         var(--glass-scene-1, #0f0f1a);
+  --surface-secondary:  transparent;
+  --surface-card:       var(--glass-bg);
+
+  --text-primary:       rgba(255, 255, 255, 0.95);
+  --text-secondary:     rgba(255, 255, 255, 0.7);
+  --text-tertiary:      rgba(255, 255, 255, 0.45);
+
+  --header-bg:          var(--glass-bg-strong);
+  --header-text:        rgba(255, 255, 255, 0.95);
+
+  --border-color:       rgba(255, 255, 255, 0.12);
+  --border-hover:       rgba(255, 255, 255, 0.22);
+
+  --shadow-sm:          0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-md:          0 8px 24px rgba(0, 0, 0, 0.18);
+  --shadow-lg:          0 12px 40px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+  --glass-bg:           rgba(255, 255, 255, 0.06);
+  --glass-bg-hover:     rgba(255, 255, 255, 0.10);
+  --glass-bg-strong:    rgba(255, 255, 255, 0.12);
+  --glass-border:       rgba(255, 255, 255, 0.12);
+  --glass-border-hover: rgba(255, 255, 255, 0.22);
+  --glass-blur:         20px;
+  --glass-shadow:       0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --glass-highlight:    linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.03) 100%);
+
+  --scene-opacity: 1;
+}

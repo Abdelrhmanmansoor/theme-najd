@@ -1,0 +1,26 @@
+/* ============================================================
+   Form Elements — Glass-aware inputs
+   ============================================================ */
+
+.najd-input {
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+  transition: all var(--duration-base) var(--ease-out);
+
+  &::placeholder {
+    color: var(--text-tertiary);
+  }
+
+  &:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary), 0.15);
+  }
+}

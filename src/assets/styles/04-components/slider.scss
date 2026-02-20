@@ -1,0 +1,40 @@
+/* ============================================================
+   Slider overrides for Salla's <salla-slider>
+   ============================================================ */
+
+salla-slider {
+  .swiper-button-next,
+  .swiper-button-prev {
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    transition: all var(--duration-base) var(--ease-out);
+
+    &::after {
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    &:hover {
+      background: var(--glass-bg-hover);
+      border-color: var(--glass-border-hover);
+    }
+  }
+
+  .swiper-pagination-bullet {
+    background: var(--text-tertiary);
+    opacity: 0.5;
+    transition: all var(--duration-base);
+
+    &-active {
+      background: var(--color-primary);
+      opacity: 1;
+      width: 24px;
+      border-radius: 10px;
+    }
+  }
+}

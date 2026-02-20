@@ -1,0 +1,13 @@
+{# Products Listing Page #}
+{% extends "layouts.master" %}
+{% block content %}
+    <div class="container py-8 lg:py-12">
+        {% if theme.settings.get('enable_breadcrumb', true) %}
+            <salla-breadcrumb></salla-breadcrumb>
+        {% endif %}
+        <salla-products-list></salla-products-list>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script defer src="{{ 'product.js' | asset }}"></script>
+{% endblock %}

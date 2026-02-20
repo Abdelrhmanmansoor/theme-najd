@@ -1,0 +1,28 @@
+/* ============================================================
+   Product Card — Adapts to glass/light/dark modes
+   ============================================================ */
+
+/* Override Salla's default product card with glass awareness */
+custom-salla-product-card {
+  .product-entry {
+    background: var(--surface-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    transition: all var(--duration-base) var(--ease-out);
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--border-hover);
+    }
+  }
+}
+
+/* Glass mode: add backdrop-filter to product cards */
+[data-theme="glass"] custom-salla-product-card .product-entry {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--glass-shadow);
+}

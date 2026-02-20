@@ -1,0 +1,22 @@
+{# ============================================================
+   Marquee Banner — Scrolling text banner
+   Fields: component.text, .url, .bg_color
+   ============================================================ #}
+
+<section class="najd-block najd-block--marquee"
+         {% if component.bg_color %}style="--marquee-bg: {{ component.bg_color }}"{% endif %}>
+    <div class="najd-marquee glass-surface">
+        <div class="najd-marquee__track">
+            {# Duplicate text for seamless loop #}
+            {% for i in 0..5 %}
+                {% if component.url %}
+                    <a href="{{ component.url }}" class="najd-marquee__text">
+                        {{ component.text }}
+                    </a>
+                {% else %}
+                    <span class="najd-marquee__text">{{ component.text }}</span>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>

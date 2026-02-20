@@ -1,0 +1,52 @@
+{# ============================================================
+   Custom Reviews — Testimonials carousel
+   Fields: component.title, component.items[].name, .avatar,
+           .stars, .text
+   ============================================================ #}
+
+<section class="najd-block najd-block--reviews container">
+    {% if component.title %}
+        <div class="najd-block__header text-center mb-8">
+            <h2 class="text-2xl font-bold">{{ component.title }}</h2>
+        </div>
+    {% endif %}
+
+    <salla-slider id="najd-reviews-{{ position }}"
+                  type="testimonials"
+                  centered
+                  slides-per-view="1"
+                  controls-outer
+                  auto-play>
+        <div slot="items">
+            {% for item in component.items %}
+                <div class="swiper-slide" style="max-width: 700px;">
+                    <div class="najd-review glass-surface rounded-glass p-8">
+                        <div class="najd-review__inner">
+                            {# Avatar #}
+                            <div class="najd-review__avatar">
+                                {% if item.avatar %}
+                                    <img src="{{ item.avatar }}"
+                                         alt="{{ item.name }}"
+                                         loading="lazy"
+                                         width="56"
+                                         height="56">
+                                {% else %}
+                                    <span>{{ item.name|first }}</span>
+                                {% endif %}
+                            </div>
+
+                            {# Content #}
+                            <div class="najd-review__body">
+                                <p class="najd-review__text">{{ item.text }}</p>
+                                <div class="najd-review__footer">
+                                    <strong class="text-sm">{{ item.name }}</strong>
+                                    <salla-rating-stars class="flex" size="small" value="{{ item.stars }}"></salla-rating-stars>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </salla-slider>
+</section>

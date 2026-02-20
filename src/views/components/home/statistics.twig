@@ -1,0 +1,18 @@
+{# ============================================================
+   Statistics — Animated counter section
+   Fields: component.items[].number, .label, .icon
+   ============================================================ #}
+
+<section class="najd-block najd-block--stats container">
+    <div class="grid grid-cols-2 md:grid-cols-{{ component.items|length > 4 ? '4' : component.items|length }} gap-4">
+        {% for item in component.items %}
+            <div class="najd-stat glass-surface rounded-glass p-6 text-center">
+                {% if item.icon %}
+                    <i class="{{ item.icon }} najd-stat__icon"></i>
+                {% endif %}
+                <span class="najd-stat__number" data-count="{{ item.number }}">0</span>
+                <span class="najd-stat__label">{{ item.label }}</span>
+            </div>
+        {% endfor %}
+    </div>
+</section>

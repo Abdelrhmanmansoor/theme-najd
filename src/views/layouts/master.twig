@@ -1,0 +1,219 @@
+{# ============================================================
+   NAJD THEME — Master Layout
+   3 Modes: Light / Dark / Glass (Liquid Glass)
+   ============================================================ #}
+<!DOCTYPE html>
+<html lang="{{ user.language.code }}" dir="{{ user.language.dir }}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {{ theme.settings.set('placeholder', 'images/placeholder.png') }}
+
+    {# ---- Page-specific head scripts ---- #}
+    <script defer data-cfasync="false" crossorigin="anonymous" src="{{ 'product-card.js'|asset }}"></script>
+    <script defer src="{{ 'main-menu.js'|asset }}"></script>
+    <script defer src="{{ 'theme-mode.js'|asset }}"></script>
+    {% if theme.settings.get('default_theme_mode') == 'glass' or theme.settings.get('enable_theme_switcher') %}
+        <script defer src="{{ 'liquid-glass.js'|asset }}"></script>
+    {% endif %}
+    {% if theme.settings.get('enable_add_product_toast', true) %}
+        <script defer src="{{ 'add-product-toast.js'|asset }}"></script>
+    {% endif %}
+
+    {% block head_scripts %}{% endblock %}
+
+    {# ---- Pass theme settings to JS ---- #}
+    <script data-cfasync="false">
+        window.najdConfig = {
+            defaultMode:        "{{ theme.settings.get('default_theme_mode', 'light') }}",
+            enableSwitcher:     {{ theme.settings.get('enable_theme_switcher', true) ? 'true' : 'false' }},
+            glassBlur:          "{{ theme.settings.get('glass_blur_intensity', 'medium') }}",
+            headerIsSticky:     {{ theme.settings.get('header_is_sticky', true) ? 'true' : 'false' }},
+            imageZoom:          {{ theme.settings.get('imageZoom', true) ? 'true' : 'false' }},
+            enableToast:        {{ theme.settings.get('enable_add_product_toast', true) ? 'true' : 'false' }},
+            enableAnimations:   {{ theme.settings.get('enable_home_animations', true) ? 'true' : 'false' }},
+            protectContent:     {{ theme.settings.get('protect_content', false) ? 'true' : 'false' }},
+            isRtl:              {{ theme.is_rtl ? 'true' : 'false' }},
+            canAccessWallet:    {{ user.can_access_wallet | json_encode }},
+            enableMoreMenu:     {{ theme.settings.get('enable_more_menu', true) ? 'true' : 'false' }},
+        };
+    </script>
+
+    {# ---- Salla hooks & styles ---- #}
+    {% hook 'head:start' %}
+    {% hook head %}
+    {% block styles %}{% endblock %}
+    <link rel="stylesheet" href="{{ 'app.css' | asset }}">
+    <link rel="stylesheet" href="{{ theme.font.path|cdn }}"/>
+    <link rel="stylesheet" href="{{ 'fonts/sallaicons.css'|cdn }}"/>
+
+    {# ---- CSS Custom Properties from theme settings ---- #}
+    <style>
+        :root {
+            /* Font */
+            --font-main: '{{ theme.font.name }}';
+
+            /* Primary color from Salla dashboard */
+            --color-primary:         {{ theme.color.primary }};
+            --color-primary-dark:    {{ theme.color.darker(0.15) }};
+            --color-primary-light:   {{ theme.color.lighter(0.15) }};
+            --color-primary-reverse: {{ theme.color.reverse_text }};
+
+            /* Light mode colors */
+            --light-bg-primary:    {{ theme.settings.get('light_bg_primary',   '#ffffff') }};
+            --light-bg-secondary:  {{ theme.settings.get('light_bg_secondary', '#f8f9fc') }};
+            --light-text-primary:  {{ theme.settings.get('light_text_primary', '#111827') }};
+            --light-text-secondary:{{ theme.settings.get('light_text_secondary','#4b5563') }};
+            --light-header-bg:     {{ theme.settings.get('light_header_bg',    '#ffffff') }};
+            --light-header-text:   {{ theme.settings.get('light_header_text',  '#111827') }};
+            --light-card-bg:       {{ theme.settings.get('light_card_bg',      '#ffffff') }};
+
+            /* Dark mode colors */
+            --dark-bg-primary:     {{ theme.settings.get('dark_bg_primary',    '#1d1f1f') }};
+            --dark-bg-secondary:   {{ theme.settings.get('dark_bg_secondary',  '#0e0f0f') }};
+            --dark-text-primary:   {{ theme.settings.get('dark_text_primary',  '#ffffff') }};
+            --dark-text-secondary: {{ theme.settings.get('dark_text_secondary','#cccccc') }};
+            --dark-header-bg:      {{ theme.settings.get('dark_header_bg',     '#0e0f0f') }};
+            --dark-card-bg:        {{ theme.settings.get('dark_card_bg',       '#1d1f1f') }};
+
+            /* Glass mode scene */
+            --glass-scene-1:  {{ theme.settings.get('glass_scene_color_1', '#0f0f1a') }};
+            --glass-scene-2:  {{ theme.settings.get('glass_scene_color_2', '#1a0f2e') }};
+            --glass-orb-1:    {{ theme.settings.get('glass_orb_color_1',   '#7c5cfc') }};
+            --glass-orb-2:    {{ theme.settings.get('glass_orb_color_2',   '#06d6a0') }};
+            --glass-orb-3:    {{ theme.settings.get('glass_orb_color_3',   '#fc5c7d') }};
+
+            /* Footer */
+            --footer-bg:   {{ theme.settings.get('footer_bg_color',   '#f3f4f6') }};
+            --footer-text: {{ theme.settings.get('footer_text_color', '#374151') }};
+
+            /* Announcement */
+            {% if theme.settings.get('announcement_bg_color') %}
+            --announcement-bg:   {{ theme.settings.get('announcement_bg_color') }};
+            {% endif %}
+            {% if theme.settings.get('announcement_text_color') %}
+            --announcement-text: {{ theme.settings.get('announcement_text_color') }};
+            {% endif %}
+        }
+    </style>
+    {% hook 'head:end' %}
+</head>
+
+<body
+    id="app"
+    class="theme-najd overflow-x-hidden {% hook 'body:classes' %}
+        {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
+        {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
+        {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}"
+    data-theme="{{ theme.settings.get('default_theme_mode', 'light') }}"
+>
+<noscript>
+    To get full functionality of this site you need to enable JavaScript. Here is how
+    <a href="https://www.enable-javascript.com/" rel="noreferrer" target="_blank">To enable JavaScript on webpage</a>.
+</noscript>
+
+{# ---- Glass Mode Background Scene ---- #}
+<div class="najd-bg-scene" aria-hidden="true">
+    <div class="najd-bg-scene__gradient"></div>
+    <div class="najd-bg-scene__orb najd-bg-scene__orb--1"></div>
+    <div class="najd-bg-scene__orb najd-bg-scene__orb--2"></div>
+    <div class="najd-bg-scene__orb najd-bg-scene__orb--3"></div>
+    <div class="najd-bg-scene__mesh"></div>
+</div>
+
+<div class="app-inner flex flex-col min-h-full">
+    {% hook 'body:start' %}
+
+    {# ---- Announcement Bar ---- #}
+    {% if theme.settings.get('announcement_text') %}
+        <div class="najd-announcement" id="najd-announcement">
+            <div class="container">
+                <div class="najd-announcement__inner">
+                    <div class="najd-announcement__marquee">
+                        {% if theme.settings.get('announcement_url') %}
+                            <a href="{{ theme.settings.get('announcement_url') }}" class="najd-announcement__link">
+                                {{ theme.settings.get('announcement_text') }}
+                            </a>
+                        {% else %}
+                            <span>{{ theme.settings.get('announcement_text') }}</span>
+                        {% endif %}
+                    </div>
+                    {% if theme.settings.get('announcement_closable', true) %}
+                        <button class="najd-announcement__close" onclick="this.closest('.najd-announcement').remove(); localStorage.setItem('najd-ann-closed','1')" aria-label="Close">
+                            <i class="sicon-cancel"></i>
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {# ---- Header ---- #}
+    {% component 'header.header' %}
+
+    {# ---- Main Content ---- #}
+    <main id="main-content" role="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    {# ---- Footer ---- #}
+    {% component 'footer.footer' %}
+</div>
+
+{# ---- Theme Mode Switcher ---- #}
+{% if theme.settings.get('enable_theme_switcher', true) %}
+    <div class="najd-mode-switcher" id="najd-mode-switcher">
+        <button class="najd-mode-switcher__btn" data-mode="light" title="{{ trans('common.elements.light_mode') }}" aria-label="Light mode">
+            <i class="sicon-sun"></i>
+        </button>
+        <button class="najd-mode-switcher__btn" data-mode="dark" title="{{ trans('common.elements.dark_mode') }}" aria-label="Dark mode">
+            <i class="sicon-moon"></i>
+        </button>
+        <button class="najd-mode-switcher__btn" data-mode="glass" title="Liquid Glass" aria-label="Glass mode">
+            <i class="sicon-layers"></i>
+        </button>
+    </div>
+{% endif %}
+
+{# ---- WhatsApp Button ---- #}
+{% if theme.settings.get('show_whatsapp_btn', true) and store.contacts.whatsapp %}
+    <a href="https://wa.me/{{ store.contacts.whatsapp }}"
+       class="najd-whatsapp-btn glass-surface"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="WhatsApp">
+        <i class="sicon-whatsapp"></i>
+    </a>
+{% endif %}
+
+{# ---- Back to Top ---- #}
+{% if theme.settings.get('show_back_to_top', true) %}
+    <button class="najd-back-to-top glass-surface" id="najd-back-to-top" aria-label="Back to top">
+        <i class="sicon-keyboard-arrow-up"></i>
+    </button>
+{% endif %}
+
+{# ---- Salla hooks & components ---- #}
+{% hook 'body:end' %}
+
+{% if theme.settings.get('enable_add_product_toast', true) %}
+    <salla-add-product-toast></salla-add-product-toast>
+{% endif %}
+
+<salla-offer-modal></salla-offer-modal>
+<salla-search></salla-search>
+
+{% if user.type == 'guest' %}
+    <salla-login-modal></salla-login-modal>
+{% endif %}
+
+{% if store.scope %}
+    <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
+{% endif %}
+
+<script defer crossorigin="anonymous" src="{{ 'app.js' | asset }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

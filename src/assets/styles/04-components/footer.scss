@@ -1,0 +1,46 @@
+/* ============================================================
+   Footer Component
+   ============================================================ */
+
+.najd-footer {
+  position: relative;
+  z-index: var(--z-above);
+  margin-top: var(--space-2xl);
+}
+
+/* Newsletter */
+.najd-footer__newsletter {
+  padding-bottom: var(--space-2xl);
+}
+
+/* Main footer area */
+.najd-footer__main {
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+
+  background: var(--footer-bg, var(--surface-secondary));
+  color: var(--footer-text, var(--text-primary));
+}
+
+.footer-is-dark .najd-footer__main {
+  background: var(--dark-bg-secondary, #0e0f0f);
+  color: #ccc;
+}
+
+[data-theme="glass"] .najd-footer__main {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+.najd-footer__heading {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: var(--space-lg);
+}
+
+/* Bottom bar */
+.najd-footer__bottom {
+  border-top: 1px solid var(--border-color);
+}

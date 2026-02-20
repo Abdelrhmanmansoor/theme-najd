@@ -1,0 +1,26 @@
+{# ============================================================
+   Store Features — Icon + title + description grid
+   Fields: component.items[].icon, .title, .text
+   ============================================================ #}
+
+<section class="najd-block najd-block--features">
+    <div class="container">
+        <div class="najd-features glass-surface rounded-glass">
+            <div class="grid grid-cols-2 md:grid-cols-{{ component.items|length > 4 ? '4' : component.items|length }} gap-0">
+                {% for item in component.items %}
+                    <div class="najd-features__item">
+                        {% if item.icon %}
+                            <i class="{{ item.icon }} najd-features__icon"></i>
+                        {% endif %}
+                        {% if item.title %}
+                            <h3 class="najd-features__title">{{ item.title }}</h3>
+                        {% endif %}
+                        {% if item.text %}
+                            <p class="najd-features__text">{{ item.text }}</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>

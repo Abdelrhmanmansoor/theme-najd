@@ -1,0 +1,38 @@
+{
+  "common": {
+    "elements": {
+      "light_mode": "Light Mode",
+      "dark_mode": "Dark Mode",
+      "glass_mode": "Glass Mode",
+      "tax_number": "Tax Number",
+      "show_all": "Show All",
+      "add_to_cart": "Add to Cart",
+      "quick_view": "Quick View",
+      "wishlist": "Wishlist",
+      "compare": "Compare",
+      "search": "Search",
+      "my_account": "My Account",
+      "day": "Day",
+      "hour": "Hour",
+      "minute": "Min",
+      "second": "Sec",
+      "new": "New",
+      "sale": "Sale",
+      "sold_out": "Sold Out",
+      "best_seller": "Best Seller"
+    }
+  },
+  "blocks": {
+    "home": {
+      "display_all": "View All",
+      "latest_products": "Latest Products",
+      "testimonials": "Customer Reviews",
+      "faq": "FAQ"
+    },
+    "footer": {
+      "pages_links": "Quick Links",
+      "newsletter": "Newsletter",
+      "newsletter_desc": "Subscribe to get the latest offers and products"
+    }
+  }
+}

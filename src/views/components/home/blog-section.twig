@@ -1,0 +1,18 @@
+{# ============================================================
+   Blog Section — Latest blog posts
+   Fields: component.title, component.count
+   ============================================================ #}
+
+<section class="najd-block najd-block--blog container">
+    {% if component.title %}
+        <div class="najd-block__header mb-8">
+            <h2 class="text-2xl font-bold">{{ component.title }}</h2>
+            <a href="{{ link('blog') }}" class="najd-btn najd-btn--outline text-sm">
+                {{ trans('blocks.home.display_all') }}
+                <i class="sicon-keyboard-arrow-{{ theme.is_rtl ? 'left' : 'right' }} text-xs"></i>
+            </a>
+        </div>
+    {% endif %}
+
+    <salla-blog-posts count="{{ component.count ? component.count : 4 }}"></salla-blog-posts>
+</section>

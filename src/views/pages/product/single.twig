@@ -1,0 +1,115 @@
+{# ============================================================
+   Single Product Page
+   Variables: product (Product object)
+   ============================================================ #}
+{% extends "layouts.master" %}
+
+{% block content %}
+    <div class="container py-8 lg:py-12">
+        {% if theme.settings.get('enable_breadcrumb', true) %}
+            <salla-breadcrumb></salla-breadcrumb>
+        {% endif %}
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            {# ===== Product Images ===== #}
+            <div class="najd-product-gallery">
+                <salla-slider type="thumbs" id="product-images-slider">
+                    <div slot="items">
+                        {% for image in product.images %}
+                            <div class="swiper-slide">
+                                <img src="{{ image.url }}"
+                                     alt="{{ product.name }}"
+                                     class="w-full rounded-glass object-{{ theme.settings.get('slider_background_size', 'cover') }}"
+                                     loading="{{ loop.first ? 'eager' : 'lazy' }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </salla-slider>
+            </div>
+
+            {# ===== Product Details ===== #}
+            <div class="najd-product-details">
+                {# Category #}
+                {% if theme.settings.get('show_product_category', true) and product.category %}
+                    <a href="{{ product.category.url }}" class="text-xs font-bold uppercase tracking-wider opacity-60 mb-2 block">
+                        {{ product.category.name }}
+                    </a>
+                {% endif %}
+
+                {# Name #}
+                <h1 class="text-2xl lg:text-3xl font-bold mb-4">{{ product.name }}</h1>
+
+                {# Rating #}
+                {% if store.settings.rating_enabled %}
+                    <salla-rating-stars value="{{ product.rating.stars }}" reviews-count="{{ product.rating.count }}"></salla-rating-stars>
+                {% endif %}
+
+                {# Price #}
+                <div class="najd-product-price my-4">
+                    <salla-product-price product-id="{{ product.id }}"></salla-product-price>
+                </div>
+
+                {# Description #}
+                {% if product.description %}
+                    <div class="text-sm leading-relaxed opacity-80 mb-6">
+                        {{ product.description|raw }}
+                    </div>
+                {% endif %}
+
+                {# Options #}
+                {% if product.options|length %}
+                    {% include 'pages.partials.product.options' %}
+                {% endif %}
+
+                {# Quantity + Add to Cart #}
+                <div class="flex items-center gap-4 my-6">
+                    <salla-quantity-input product-id="{{ product.id }}" max="{{ product.max_quantity }}"></salla-quantity-input>
+                    <salla-add-product-button product-id="{{ product.id }}" class="flex-1">
+                        {{ trans('common.elements.add_to_cart') }}
+                    </salla-add-product-button>
+                </div>
+
+                {# Installment #}
+                <salla-installment product-id="{{ product.id }}"></salla-installment>
+
+                {# Payment Methods #}
+                {% if theme.settings.get('show_payment_methods', true) %}
+                    <salla-payments product-page></salla-payments>
+                {% endif %}
+
+                {# Tags #}
+                {% if theme.settings.get('show_tags', true) and product.tags|length %}
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        {% for tag in product.tags %}
+                            <a href="{{ tag.url }}" class="najd-btn--ghost text-xs px-3 py-1 rounded-full">
+                                {{ tag.name }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {# Share #}
+                <salla-social-share class="mt-6"></salla-social-share>
+            </div>
+        </div>
+
+        {# Store Features on Product #}
+        {% if theme.settings.get('show_store_features_on_product', true) %}
+            <div class="mt-12">
+                {% component 'home.store-features-custom' %}
+            </div>
+        {% endif %}
+
+        {# Related Products #}
+        <div class="mt-12">
+            <salla-products-slider source="related" source-value="{{ product.id }}"
+                                   block-title="{{ trans('blocks.home.display_all') }}"
+                                   slider-id="related-products">
+            </salla-products-slider>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script defer src="{{ 'product.js' | asset }}"></script>
+{% endblock %}

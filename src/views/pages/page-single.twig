@@ -1,0 +1,15 @@
+{# Static Page Template (About, Terms, etc.) #}
+{% extends "layouts.master" %}
+{% block content %}
+    <div class="container py-8 lg:py-12">
+        {% if theme.settings.get('enable_breadcrumb', true) %}
+            <salla-breadcrumb></salla-breadcrumb>
+        {% endif %}
+        <div class="glass-surface rounded-glass p-8 lg:p-12">
+            <h1 class="text-2xl lg:text-3xl font-bold mb-6">{{ page.title|raw }}</h1>
+            <div class="prose max-w-none leading-relaxed text-sm" style="color: var(--text-secondary);">
+                {{ page.content|raw }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

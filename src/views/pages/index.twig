@@ -1,0 +1,14 @@
+{# ============================================================
+   NAJD THEME — Home Page
+   {% component home %} renders all configured components
+   from twilight.json in the merchant's chosen order.
+   ============================================================ #}
+{% extends "layouts.master" %}
+
+{% block content %}
+    {% component home %}
+{% endblock %}
+
+{% block scripts %}
+    <script defer src="{{ 'home.js' | asset }}"></script>
+{% endblock %}

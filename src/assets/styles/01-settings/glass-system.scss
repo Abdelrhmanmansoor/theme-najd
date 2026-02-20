@@ -1,0 +1,118 @@
+/* ============================================================
+   Liquid Glass Design System
+   Core glass surface mixin + background scene
+   ============================================================ */
+
+/* ---- Glass Surface: the foundational building block ---- */
+.glass-surface {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  transition:
+    background var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+
+  /* Glass highlight layer (only visible in glass mode) */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--glass-highlight);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Ensure children sit above the highlight */
+  > * { position: relative; z-index: 1; }
+
+  &:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+  }
+}
+
+/* Rounded glass — common shorthand */
+.rounded-glass { border-radius: var(--radius-xl); }
+
+/* ---- Background Scene (floating orbs for glass mode) ---- */
+.najd-bg-scene {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-bg);
+  pointer-events: none;
+  opacity: var(--scene-opacity, 0);
+  transition: opacity var(--duration-slow) var(--ease-out);
+
+  &__gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      var(--glass-scene-1, #0f0f1a) 0%,
+      var(--glass-scene-2, #1a0f2e) 50%,
+      var(--glass-scene-1, #0f0f1a) 100%
+    );
+  }
+
+  &__orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: najd-float 20s ease-in-out infinite;
+  }
+
+  &__orb--1 {
+    width: 500px;
+    height: 500px;
+    background: var(--glass-orb-1, #7c5cfc);
+    opacity: 0.35;
+    top: -10%;
+    right: -5%;
+    animation-delay: 0s;
+  }
+
+  &__orb--2 {
+    width: 400px;
+    height: 400px;
+    background: var(--glass-orb-2, #06d6a0);
+    opacity: 0.25;
+    bottom: 10%;
+    left: -8%;
+    animation-delay: -7s;
+  }
+
+  &__orb--3 {
+    width: 350px;
+    height: 350px;
+    background: var(--glass-orb-3, #fc5c7d);
+    opacity: 0.2;
+    top: 40%;
+    left: 35%;
+    animation-delay: -14s;
+  }
+
+  &__mesh {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
+
+@keyframes najd-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%      { transform: translate(30px, -25px) scale(1.04); }
+  50%      { transform: translate(-15px, 30px) scale(0.96); }
+  75%      { transform: translate(25px, 15px) scale(1.02); }
+}
+
+/* ---- Glass blur intensity levels ---- */
+[data-glass-blur="light"]  { --glass-blur: 12px; }
+[data-glass-blur="medium"] { --glass-blur: 20px; }
+[data-glass-blur="strong"] { --glass-blur: 30px; }

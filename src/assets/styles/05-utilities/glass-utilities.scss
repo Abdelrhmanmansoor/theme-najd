@@ -1,0 +1,105 @@
+/* ============================================================
+   Glass Utility Classes
+   ============================================================ */
+
+/* Mode Switcher */
+.najd-mode-switcher {
+  position: fixed;
+  z-index: var(--z-modal);
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-lg);
+  transition: all var(--duration-base) var(--ease-out);
+
+  /* Desktop: left side */
+  bottom: var(--space-xl);
+  inset-inline-start: var(--space-lg);
+
+  /* Mobile: bottom center */
+  @media (max-width: 767px) {
+    bottom: var(--space-lg);
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+[dir="rtl"] .najd-mode-switcher {
+  @media (max-width: 767px) {
+    transform: translateX(50%);
+  }
+}
+
+.najd-mode-switcher__btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 18px;
+  color: var(--text-secondary);
+  transition: all var(--duration-base) var(--ease-out);
+
+  &:hover {
+    color: var(--text-primary);
+    background: var(--glass-bg);
+  }
+
+  &.is-active {
+    background: var(--color-primary);
+    color: var(--color-primary-reverse, #fff);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* WhatsApp Button */
+.najd-whatsapp-btn {
+  position: fixed;
+  z-index: var(--z-overlay);
+  bottom: var(--space-xl);
+  inset-inline-end: var(--space-lg);
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 24px;
+  color: #25d366;
+
+  &:hover { transform: scale(1.08); }
+}
+
+/* Back to Top */
+.najd-back-to-top {
+  position: fixed;
+  z-index: var(--z-overlay);
+  bottom: 88px;
+  inset-inline-end: var(--space-lg);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 22px;
+  color: var(--text-secondary);
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: all var(--duration-base) var(--ease-out);
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  &:hover { color: var(--text-primary); }
+}

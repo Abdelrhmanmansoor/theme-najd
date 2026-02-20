@@ -1,0 +1,8 @@
+node_modules/
+public/*.js
+public/*.css
+public/*.js.LICENSE.txt
+.DS_Store
+Thumbs.db
+*.log
+.env

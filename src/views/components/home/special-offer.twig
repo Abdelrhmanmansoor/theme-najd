@@ -1,0 +1,57 @@
+{# ============================================================
+   Special Offer — Countdown timer with CTA
+   Fields: component.title, .description, .image, .end_date,
+           .btn_text, .btn_url
+   ============================================================ #}
+
+<section class="najd-block najd-block--offer">
+    <div class="container">
+        <div class="najd-offer glass-surface rounded-glass overflow-hidden">
+            {# Background #}
+            {% if component.image %}
+                <div class="najd-offer__bg"
+                     style="background-image: url({{ component.image }});">
+                </div>
+            {% endif %}
+
+            {# Content #}
+            <div class="najd-offer__content">
+                {% if component.title %}
+                    <h2 class="text-2xl lg:text-4xl font-bold mb-3">{{ component.title }}</h2>
+                {% endif %}
+
+                {% if component.description %}
+                    <p class="text-sm opacity-70 mb-6 max-w-md">{{ component.description }}</p>
+                {% endif %}
+
+                {# Countdown #}
+                {% if component.end_date %}
+                    <div class="najd-countdown" data-end-date="{{ component.end_date }}">
+                        <div class="najd-countdown__item glass-surface rounded-lg">
+                            <span class="najd-countdown__num" data-days>00</span>
+                            <span class="najd-countdown__label">{{ trans('common.elements.day') }}</span>
+                        </div>
+                        <div class="najd-countdown__item glass-surface rounded-lg">
+                            <span class="najd-countdown__num" data-hours>00</span>
+                            <span class="najd-countdown__label">{{ trans('common.elements.hour') }}</span>
+                        </div>
+                        <div class="najd-countdown__item glass-surface rounded-lg">
+                            <span class="najd-countdown__num" data-minutes>00</span>
+                            <span class="najd-countdown__label">{{ trans('common.elements.minute') }}</span>
+                        </div>
+                        <div class="najd-countdown__item glass-surface rounded-lg">
+                            <span class="najd-countdown__num" data-seconds>00</span>
+                            <span class="najd-countdown__label">{{ trans('common.elements.second') }}</span>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if component.btn_text and component.btn_url %}
+                    <a href="{{ component.btn_url }}" class="najd-btn najd-btn--primary mt-6">
+                        {{ component.btn_text }}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>

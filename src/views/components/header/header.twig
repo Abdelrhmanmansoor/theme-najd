@@ -1,0 +1,135 @@
+{# ============================================================
+   NAJD THEME — Header Component
+   Supports: classic / centered / advanced layouts
+   Glass-aware: adapts to all 3 modes
+   ============================================================
+   Variables:
+   | cart.items_count | int    |
+   | cart.total       | string | Formatted total
+   ============================================================ #}
+
+{% set important_links = theme.settings.get('important_links') %}
+{% set header_style   = theme.settings.get('header_style', 'classic') %}
+{% set center_logo    = theme.settings.get('center_logo', false) %}
+{% set hide_top_bar   = theme.settings.get('hide_top_bar', false) %}
+{% set alt_logo       = theme.settings.get('alt_logo') %}
+
+<header class="najd-header" id="najd-header">
+
+    {# ===== Top Navigation Bar ===== #}
+    {% if not hide_top_bar %}
+    <div class="najd-header__topbar">
+        <div class="container flex items-center justify-between gap-4">
+            {# Left: Links + Language #}
+            <div class="flex items-center gap-3 flex-1">
+                {% if important_links %}
+                    <salla-menu source="footer" topnav></salla-menu>
+                {% endif %}
+
+                {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+                    <button type="button"
+                            onclick="salla.event.dispatch('localization::open')"
+                            class="najd-header__locale-btn">
+                        <span>{{ user.language.name }}</span>
+                        <span class="mx-1">|</span>
+                        <span>{{ currency.symbol }}</span>
+                    </button>
+                    <salla-localization-modal></salla-localization-modal>
+                {% endif %}
+
+                {% if store.scope %}
+                    <button class="najd-header__scope-btn"
+                            onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
+                        <i class="sicon-location rtl:ml-1 ltr:mr-1"></i>
+                        {{ store.scope.name }}
+                    </button>
+                {% endif %}
+            </div>
+
+            {# Right: Contacts #}
+            <salla-contacts is-header></salla-contacts>
+        </div>
+    </div>
+    {% endif %}
+
+    {# ===== Main Navigation ===== #}
+    <div class="najd-header__main glass-surface" id="najd-header-main">
+        <div class="container">
+            <div class="najd-header__inner {{ center_logo ? 'najd-header__inner--centered' : '' }}">
+
+                {# Mobile menu toggle #}
+                <a class="lg:hidden najd-header__mobile-toggle"
+                   href="#mobile-menu"
+                   aria-label="Open menu">
+                    <i class="sicon-menu"></i>
+                </a>
+
+                {# Logo #}
+                <a class="najd-header__logo" href="{{ store.url }}">
+                    <img fetchpriority="high"
+                         width="100%"
+                         height="100%"
+                         loading="eager"
+                         src="{{ store.logo|cdn(175) }}"
+                         alt="{{ store.name }} logo"
+                         class="najd-header__logo-img najd-header__logo-img--default">
+
+                    {% if alt_logo %}
+                        <img fetchpriority="high"
+                             width="100%"
+                             height="100%"
+                             loading="eager"
+                             src="{{ alt_logo }}"
+                             alt="{{ store.name }} logo"
+                             class="najd-header__logo-img najd-header__logo-img--alt">
+                    {% endif %}
+
+                    {% if is_page('index') %}
+                        <h1 class="sr-only">{{ store.name }}</h1>
+                    {% else %}
+                        <h2 class="sr-only">{{ store.name }}</h2>
+                    {% endif %}
+                </a>
+
+                {# Desktop navigation #}
+                <custom-main-menu></custom-main-menu>
+
+                {# Search (inline on desktop) #}
+                <div class="najd-header__search hidden lg:block flex-1 max-w-md mx-4">
+                    <salla-search inline oval height="40"></salla-search>
+                </div>
+
+                {# Action buttons #}
+                <div class="najd-header__actions">
+                    {# Search (mobile) #}
+                    <button class="najd-header__action-btn lg:hidden"
+                            onclick="salla.event.dispatch('search::open')"
+                            aria-label="Search">
+                        <i class="sicon-search"></i>
+                    </button>
+
+                    {# User #}
+                    {% if user.type == 'user' %}
+                        <salla-user-menu avatar-only show-header></salla-user-menu>
+                    {% else %}
+                        <button class="najd-header__action-btn"
+                                onclick="salla.event.dispatch('login::open')"
+                                aria-label="Login">
+                            <i class="sicon-user-circle"></i>
+                        </button>
+                    {% endif %}
+
+                    {# Wishlist #}
+                    <a href="{{ link('wishlist') }}" class="najd-header__action-btn" aria-label="Wishlist">
+                        <i class="sicon-heart"></i>
+                    </a>
+
+                    {# Cart #}
+                    <salla-cart-summary class="najd-header__cart">
+                        <i slot="icon" class="sicon-shopping-bag najd-header__cart-icon"></i>
+                    </salla-cart-summary>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

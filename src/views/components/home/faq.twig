@@ -1,0 +1,26 @@
+{# ============================================================
+   FAQ — Accordion-style Q&A section
+   Fields: component.title, component.items[].question, .answer
+   ============================================================ #}
+
+<section class="najd-block najd-block--faq container">
+    {% if component.title %}
+        <div class="najd-block__header text-center mb-8">
+            <h2 class="text-2xl font-bold">{{ component.title }}</h2>
+        </div>
+    {% endif %}
+
+    <div class="najd-faq max-w-3xl mx-auto">
+        {% for item in component.items %}
+            <details class="najd-faq__item glass-surface rounded-glass mb-3 group">
+                <summary class="najd-faq__question">
+                    <span>{{ item.question }}</span>
+                    <i class="sicon-keyboard-arrow-down najd-faq__icon"></i>
+                </summary>
+                <div class="najd-faq__answer">
+                    {{ item.answer|raw }}
+                </div>
+            </details>
+        {% endfor %}
+    </div>
+</section>
