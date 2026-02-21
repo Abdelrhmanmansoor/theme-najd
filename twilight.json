@@ -34,7 +34,7 @@
             "type": "static",
             "format": "title",
             "id": "section-theme-mode",
-            "value": "<div>أوضاع العرض (فاتح / داكن / زجاجي)</div>",
+            "value": "<div><b>أوضاع العرض</b><br><small style='color:#888'>اختر وضع العرض الافتراضي: فاتح (أبيض نظيف) أو داكن أو الزجاجي المتقدم. العميل يقدر يبدّل بينهم لو فعّلت زر التنقل</small></div>",
             "variant": "h5"
         },
         {
@@ -109,7 +109,7 @@
             "type": "static",
             "format": "title",
             "id": "section-store-ui",
-            "value": "<div>خيارات واجهة المتجر</div>",
+            "value": "<div><b>واجهة المتجر العامة</b><br><small style='color:#888'>تحكم في المظهر العام: الأنيميشن، حماية المحتوى، مسار التنقل، والمزيد</small></div>",
             "variant": "h5"
         },
         {
@@ -208,7 +208,7 @@
             "type": "static",
             "format": "title",
             "id": "section-announcement",
-            "value": "<div>إعلان ترويجي متحرك أعلى المتجر</div>",
+            "value": "<div><b>شريط إعلاني ترويجي</b><br><small style='color:#888'>شريط متحرك أعلى المتجر لعرض العروض والتنبيهات — يدعم لون مخصص ورابط قابل للنقر</small></div>",
             "variant": "h5"
         },
         {
@@ -264,7 +264,7 @@
             "type": "static",
             "format": "title",
             "id": "section-product-card",
-            "value": "<div>خيارات بطاقة المنتج</div>",
+            "value": "<div><b>بطاقة المنتج</b><br><small style='color:#888'>تحكم في شكل بطاقة المنتج: الستايل، الهوفر، الأزرار، التقييم، ونسبة الخصم</small></div>",
             "variant": "h5"
         },
         {
@@ -404,7 +404,7 @@
             "type": "static",
             "format": "title",
             "id": "section-colors-light",
-            "value": "<div>ألوان الوضع الفاتح</div>",
+            "value": "<div><b>ألوان الوضع الفاتح</b><br><small style='color:#888'>خصّص ألوان الخلفية والنصوص والهيدر والبطاقات في الوضع الفاتح. اللون الأساسي أبيض نظيف</small></div>",
             "variant": "h5"
         },
         {
@@ -419,7 +419,7 @@
             "type": "string",
             "format": "text",
             "label": "لون خلفية المتجر (ثانوي)",
-            "value": "#f8f9fc"
+            "value": "#f7f7f8"
         },
         {
             "id": "light_text_primary",
@@ -465,7 +465,7 @@
             "type": "static",
             "format": "title",
             "id": "section-colors-dark",
-            "value": "<div>ألوان الوضع الداكن</div>",
+            "value": "<div><b>ألوان الوضع الداكن</b><br><small style='color:#888'>خصّص ألوان الوضع الداكن حسب هوية متجرك</small></div>",
             "variant": "h5"
         },
         {
@@ -519,7 +519,7 @@
             "type": "static",
             "format": "title",
             "id": "section-colors-glass",
-            "value": "<div>ألوان الوضع الزجاجي</div>",
+            "value": "<div><b>ألوان الوضع الزجاجي (Liquid Glass)</b><br><small style='color:#888'>ألوان الخلفية والكرات المتحركة في الوضع الزجاجي — مستوحى من تصاميم Apple Intelligence</small></div>",
             "variant": "h5"
         },
         {
@@ -566,7 +566,7 @@
             "type": "static",
             "format": "title",
             "id": "section-header",
-            "value": "<div>خيارات أعلى الصفحة</div>",
+            "value": "<div><b>أعلى الصفحة (الهيدر)</b><br><small style='color:#888'>6 أشكال مختلفة للهيدر: كلاسيكي، وسطي، مينيمال، ميغا، شفاف، همبرغر. اختر اللي يناسب متجرك</small></div>",
             "variant": "h5"
         },
         {
@@ -576,33 +576,33 @@
             "label": "نمط أعلى الصفحة",
             "selected": [
                 {
-                    "label": "كلاسيكي",
+                    "label": "كلاسيكي — شعار يسار، قائمة وسط، أزرار يمين",
                     "value": "classic"
                 }
             ],
             "options": [
                 {
-                    "label": "كلاسيكي",
+                    "label": "كلاسيكي — شعار يسار، قائمة وسط، أزرار يمين",
                     "value": "classic"
                 },
                 {
-                    "label": "وسطي",
+                    "label": "وسطي — شعار في المنتصف، قائمة أسفله",
                     "value": "centered"
                 },
                 {
-                    "label": "مينيمال",
+                    "label": "مينيمال — هيدر رفيع بدون شريط علوي",
                     "value": "minimal"
                 },
                 {
-                    "label": "ميغا",
+                    "label": "ميغا — بحث كبير + شريط تنقل كامل",
                     "value": "mega"
                 },
                 {
-                    "label": "شفاف",
+                    "label": "شفاف — يندمج مع السلايدر ويتحول عند السكرول",
                     "value": "transparent"
                 },
                 {
-                    "label": "همبرغر",
+                    "label": "همبرغر — قائمة جانبية دائمة + شعار في المنتصف",
                     "value": "hamburger"
                 }
             ],
@@ -665,7 +665,7 @@
             "type": "static",
             "format": "title",
             "id": "section-footer",
-            "value": "<div>خيارات أسفل الصفحة</div>",
+            "value": "<div><b>أسفل الصفحة (الفوتر)</b><br><small style='color:#888'>5 أشكال مختلفة للفوتر: كلاسيكي، وسطي، مينيمال، أعمدة غنية، ماجازين</small></div>",
             "variant": "h5"
         },
         {
@@ -675,29 +675,29 @@
             "label": "نمط أسفل الصفحة",
             "selected": [
                 {
-                    "label": "كلاسيكي",
+                    "label": "كلاسيكي — نشرة بريدية + شبكة أعمدة + شريط سفلي",
                     "value": "classic"
                 }
             ],
             "options": [
                 {
-                    "label": "كلاسيكي",
+                    "label": "كلاسيكي — نشرة بريدية + شبكة أعمدة + شريط سفلي",
                     "value": "classic"
                 },
                 {
-                    "label": "وسطي",
+                    "label": "وسطي — كل شيء في المنتصف، أنيق وبسيط",
                     "value": "centered"
                 },
                 {
-                    "label": "مينيمال",
+                    "label": "مينيمال — صف واحد: شعار + روابط + تواصل",
                     "value": "minimal"
                 },
                 {
-                    "label": "أعمدة غنية",
+                    "label": "أعمدة غنية — نشرة بريدية عريضة + 6 أعمدة",
                     "value": "columns"
                 },
                 {
-                    "label": "ماجازين",
+                    "label": "ماجازين — نشرة بريدية كبيرة + 3 أعمدة بعناوين كبيرة",
                     "value": "magazine"
                 }
             ],
@@ -716,7 +716,7 @@
             "type": "string",
             "format": "text",
             "label": "لون خلفية أسفل الموقع",
-            "value": "#f3f4f6"
+            "value": "#f7f7f8"
         },
         {
             "id": "footer_text_color",
@@ -766,7 +766,7 @@
             "type": "static",
             "format": "title",
             "id": "section-product-page",
-            "value": "<div>خيارات صفحة المنتج</div>",
+            "value": "<div><b>صفحة المنتج</b><br><small style='color:#888'>تحكم في زر الإضافة الثابت، الزوم، وسائل الدفع، الوسوم، والمزيد</small></div>",
             "variant": "h5"
         },
         {
@@ -842,7 +842,7 @@
             "type": "static",
             "format": "title",
             "id": "section-extras",
-            "value": "<div>خيارات إضافية</div>",
+            "value": "<div><b>إضافات عامة</b><br><small style='color:#888'>واتساب عائم، زر الرجوع للأعلى، شاشة التحميل، وخيارات السلايدر</small></div>",
             "variant": "h5"
         },
         {
@@ -901,7 +901,7 @@
             "type": "static",
             "format": "title",
             "id": "section-premium",
-            "value": "<div>مزايا متقدمة (بريميوم)</div>",
+            "value": "<div><b>مزايا بريميوم متقدمة ⭐</b><br><small style='color:#888'>شاشة تحميل احترافية، نافذة نشرة بريدية، شحن مجاني، تنقل سفلي للجوال، جدول مقاسات، وغيرها</small></div>",
             "variant": "h5"
         },
         {
@@ -1044,7 +1044,7 @@
             "type": "static",
             "format": "title",
             "id": "section-design",
-            "value": "<div>خيارات التصميم العامة</div>",
+            "value": "<div><b>خيارات التصميم العامة</b><br><small style='color:#888'>تحكم في تأثيرات الهوفر، نمط البطاقات، شكل الحواف، والمسافات بين الأقسام</small></div>",
             "variant": "h5"
         },
         {

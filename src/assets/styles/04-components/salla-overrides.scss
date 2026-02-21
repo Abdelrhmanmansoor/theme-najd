@@ -1,24 +1,25 @@
 /* ============================================================
    Salla Web Component Overrides — NAJD PREMIUM
-   Aggressive styling overrides for Salla's built-in components
+   Clean, modern overrides for Salla's built-in components
    ============================================================ */
 
-/* ---- Global Salla component resets ---- */
 
-/* Product card (salla-product-card) */
+/* ---- Product Card (salla-product-card) ---- */
+
 salla-product-card,
 custom-salla-product-card {
   .s-product-card-entry {
     border-radius: var(--card-radius, var(--radius-2xl)) !important;
     overflow: hidden !important;
-    border: 1px solid var(--border-color) !important;
-    background: var(--surface-card) !important;
-    transition: all var(--duration-slow) var(--ease-out) !important;
+    border: none !important;
+    background: #fff !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+    transition: transform var(--duration-base) var(--ease-out),
+                box-shadow var(--duration-base) var(--ease-out) !important;
 
     &:hover {
-      transform: translateY(-6px) !important;
-      box-shadow: var(--shadow-xl) !important;
-      border-color: var(--border-hover) !important;
+      transform: translateY(-4px) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04) !important;
     }
   }
 
@@ -31,7 +32,7 @@ custom-salla-product-card {
   }
 
   &:hover .s-product-card-image img {
-    transform: scale(1.06) !important;
+    transform: scale(1.04) !important;
   }
 
   .s-product-card-content {
@@ -40,38 +41,35 @@ custom-salla-product-card {
 
   .s-product-card-title {
     font-weight: 600 !important;
-    font-size: var(--text-base) !important;
+    font-size: var(--text-sm) !important;
     color: var(--text-primary) !important;
-    line-height: 1.4 !important;
+    line-height: 1.5 !important;
   }
 
   .s-product-card-price {
-    font-weight: 800 !important;
-    color: var(--color-primary) !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
   }
 
   .s-product-card-fitment-btn,
   .s-product-card-add-to-cart-btn {
-    background: var(--gradient-primary) !important;
+    background: var(--color-primary) !important;
     color: var(--color-primary-reverse, #fff) !important;
     border-radius: var(--radius-lg) !important;
     border: none !important;
     font-weight: 600 !important;
-    box-shadow: var(--shadow-primary) !important;
-    transition: all var(--duration-base) var(--ease-out) !important;
+    transition: opacity var(--duration-fast) var(--ease-out) !important;
 
     &:hover {
-      filter: brightness(1.05) !important;
-      transform: translateY(-1px) !important;
+      opacity: 0.9 !important;
     }
   }
 
   .s-product-card-wishlist-btn {
-    transition: all var(--duration-fast) var(--ease-out) !important;
+    transition: color var(--duration-fast) var(--ease-out) !important;
 
     &:hover {
       color: #ef4444 !important;
-      transform: scale(1.12) !important;
     }
   }
 
@@ -81,7 +79,20 @@ custom-salla-product-card {
     border-radius: var(--radius-full) !important;
     font-weight: 700 !important;
     font-size: 11px !important;
-    padding: 4px 12px !important;
+    padding: 4px 10px !important;
+  }
+}
+
+/* Dark mode card overrides */
+[data-theme="dark"] {
+  salla-product-card .s-product-card-entry,
+  custom-salla-product-card .s-product-card-entry {
+    background: var(--surface-card) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+
+    &:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+    }
   }
 }
 
@@ -92,42 +103,48 @@ custom-salla-product-card {
     background: var(--glass-bg) !important;
     backdrop-filter: blur(var(--glass-blur)) !important;
     -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
-    border-color: var(--glass-border) !important;
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: none !important;
 
     &:hover {
       background: var(--glass-bg-hover) !important;
       border-color: var(--glass-border-hover) !important;
-      box-shadow: var(--shadow-xl),
-                  0 0 30px color-mix(in srgb, var(--color-primary) 12%, transparent) !important;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
     }
   }
 }
 
+
 /* ---- Products Slider ---- */
+
 salla-products-slider {
   .s-slider-title {
-    font-weight: 800 !important;
-    font-size: var(--text-2xl) !important;
+    font-weight: 700 !important;
+    font-size: 20px !important;
     color: var(--text-primary) !important;
     letter-spacing: -0.01em !important;
   }
 
   .s-slider-show-more {
     color: var(--color-primary) !important;
-    font-weight: 600 !important;
-    border: 1px solid var(--color-primary) !important;
-    border-radius: var(--radius-full) !important;
-    padding: 6px 16px !important;
-    transition: all var(--duration-base) var(--ease-out) !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    transition: opacity var(--duration-fast) var(--ease-out) !important;
 
     &:hover {
-      background: var(--color-primary) !important;
-      color: var(--color-primary-reverse, #fff) !important;
+      opacity: 0.7 !important;
+      text-decoration: underline !important;
     }
   }
 }
 
+
 /* ---- Products List ---- */
+
 salla-products-list {
   .s-products-list-filters-container {
     border-radius: var(--radius-xl) !important;
@@ -146,13 +163,15 @@ salla-products-list {
   }
 }
 
+
 /* ---- Cart Summary ---- */
+
 salla-cart-summary {
   .s-cart-summary-icon {
-    transition: all var(--duration-fast) var(--ease-out) !important;
+    transition: color var(--duration-fast) var(--ease-out);
 
     &:hover {
-      transform: scale(1.1) !important;
+      color: var(--color-primary);
     }
   }
 
@@ -163,16 +182,20 @@ salla-cart-summary {
     min-width: 18px !important;
     height: 18px !important;
     border-radius: var(--radius-full) !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
+    line-height: 18px !important;
   }
 }
 
+
 /* ---- Cart Summary Enhanced ---- */
+
 salla-cart-summary-enhanced {
   .s-cart-enhanced {
     border-radius: var(--radius-2xl) !important;
-    border: 1px solid var(--border-color) !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
     overflow: hidden !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
   }
 
   .s-cart-enhanced-header {
@@ -180,11 +203,11 @@ salla-cart-summary-enhanced {
   }
 
   .s-cart-enhanced-item {
-    border-color: var(--border-color) !important;
+    border-color: rgba(0, 0, 0, 0.04) !important;
     transition: background var(--duration-fast) !important;
 
     &:hover {
-      background: var(--surface-secondary) !important;
+      background: rgba(0, 0, 0, 0.02) !important;
     }
   }
 }
@@ -198,17 +221,35 @@ salla-cart-summary-enhanced {
   }
 }
 
+[data-theme="dark"] salla-cart-summary-enhanced {
+  .s-cart-enhanced {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: none !important;
+  }
+
+  .s-cart-enhanced-item {
+    border-color: rgba(255, 255, 255, 0.06) !important;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.03) !important;
+    }
+  }
+}
+
+
 /* ---- Search ---- */
+
 salla-search {
   .s-search-input {
     border-radius: var(--radius-full) !important;
-    border: 1px solid var(--border-color) !important;
-    background: var(--surface-secondary) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    background: #f5f5f5 !important;
     transition: all var(--duration-fast) !important;
 
     &:focus-within {
+      background: #fff !important;
       border-color: var(--color-primary) !important;
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent) !important;
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 10%, transparent) !important;
     }
   }
 }
@@ -220,13 +261,29 @@ salla-search {
     color: #fff !important;
 
     &:focus-within {
+      background: rgba(255, 255, 255, 0.1) !important;
       border-color: rgba(255, 255, 255, 0.25) !important;
       box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06) !important;
     }
   }
 }
 
+[data-theme="dark"] salla-search {
+  .s-search-input {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+
+    &:focus-within {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: var(--color-primary) !important;
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 10%, transparent) !important;
+    }
+  }
+}
+
+
 /* ---- Login Modal ---- */
+
 salla-login-modal {
   .s-login-modal {
     border-radius: var(--radius-2xl) !important;
@@ -234,24 +291,28 @@ salla-login-modal {
   }
 }
 
+
 /* ---- User Menu ---- */
+
 salla-user-menu {
   .s-user-menu-avatar {
-    border-radius: var(--radius-md) !important;
-    transition: all var(--duration-fast) !important;
+    border-radius: var(--radius-full) !important;
+    transition: opacity var(--duration-fast) !important;
 
     &:hover {
-      transform: scale(1.05) !important;
+      opacity: 0.8 !important;
     }
   }
 }
 
+
 /* ---- Add Product Toast ---- */
+
 salla-add-product-toast {
   .s-add-product-toast {
     border-radius: var(--radius-xl) !important;
-    box-shadow: var(--shadow-xl) !important;
-    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
   }
 }
 
@@ -264,46 +325,60 @@ salla-add-product-toast {
   }
 }
 
+
 /* ---- Offer Modal ---- */
+
 salla-offer-modal {
   .s-offer-modal {
     border-radius: var(--radius-2xl) !important;
   }
 }
 
+
 /* ---- Breadcrumb ---- */
+
 salla-breadcrumb {
   .s-breadcrumb {
-    padding: var(--space-md) 0 !important;
-    font-size: var(--text-sm) !important;
+    padding: var(--space-sm) 0 !important;
+    font-size: 12px !important;
   }
 
   .s-breadcrumb-item {
-    color: var(--text-tertiary) !important;
+    color: #999 !important;
 
     &:last-child {
-      color: var(--text-primary) !important;
-      font-weight: 600 !important;
+      color: var(--text-secondary) !important;
+      font-weight: 500 !important;
     }
   }
+
+  .s-breadcrumb-separator {
+    opacity: 0.4;
+  }
 }
+
 
 /* ---- Blog Posts ---- */
+
 salla-blog-posts {
   .s-blog-card {
-    border-radius: var(--radius-2xl) !important;
+    border-radius: var(--radius-xl) !important;
     overflow: hidden !important;
-    border: 1px solid var(--border-color) !important;
-    transition: all var(--duration-base) var(--ease-out) !important;
+    border: none !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+    transition: transform var(--duration-base) var(--ease-out),
+                box-shadow var(--duration-base) var(--ease-out) !important;
 
     &:hover {
-      transform: translateY(-4px) !important;
-      box-shadow: var(--shadow-lg) !important;
+      transform: translateY(-3px) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
     }
   }
 }
 
+
 /* ---- Contacts ---- */
+
 salla-contacts {
   a {
     transition: color var(--duration-fast) !important;
@@ -314,60 +389,74 @@ salla-contacts {
   }
 }
 
+
 /* ---- Product Price ---- */
+
 salla-product-price {
   .s-product-price-current {
-    font-weight: 800 !important;
+    font-weight: 700 !important;
     color: var(--text-primary) !important;
     font-size: var(--text-2xl) !important;
   }
 
   .s-product-price-old {
-    color: var(--text-muted) !important;
+    color: #bbb !important;
     text-decoration: line-through !important;
+    font-weight: 400 !important;
   }
 
   .s-product-price-discount {
     background: #ef4444 !important;
     color: #fff !important;
     border-radius: var(--radius-full) !important;
-    font-weight: 700 !important;
-    padding: 2px 10px !important;
-    font-size: var(--text-xs) !important;
+    font-weight: 600 !important;
+    padding: 2px 8px !important;
+    font-size: 11px !important;
   }
 }
 
+
 /* ---- Rating Stars ---- */
+
 salla-rating-stars {
   .s-rating-stars-star {
     color: #f59e0b !important;
   }
 }
 
+
 /* ---- Thank You page ---- */
+
 salla-thank-you {
   .s-thank-you-card {
     border-radius: var(--radius-2xl) !important;
-    border: 1px solid var(--border-color) !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
     overflow: hidden !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
   }
 }
 
+
 /* ---- Scopes ---- */
+
 salla-scopes {
   .s-scopes-modal {
     border-radius: var(--radius-2xl) !important;
   }
 }
 
+
 /* ---- Main Menu ---- */
+
 salla-menu,
 custom-main-menu {
   font-size: var(--text-sm) !important;
   font-weight: 500 !important;
 }
 
+
 /* ---- Grid/List View Toggle ---- */
+
 .najd-view-toggle__btn {
   display: flex;
   align-items: center;
@@ -432,7 +521,9 @@ custom-main-menu {
   }
 }
 
+
 /* ---- Size Chart Modal ---- */
+
 .najd-size-chart-modal {
   position: fixed;
   inset: 0;
@@ -490,7 +581,9 @@ custom-main-menu {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+
 /* ---- Back-in-Stock ---- */
+
 .najd-back-in-stock {
   animation: najd-pulse-border 2s ease-in-out infinite;
 }
@@ -499,4 +592,3 @@ custom-main-menu {
   0%, 100% { border-color: var(--border-color); }
   50% { border-color: color-mix(in srgb, var(--color-primary) 40%, var(--border-color)); }
 }
-

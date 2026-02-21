@@ -1,5 +1,5 @@
 /* ============================================================
-   Header Component — NAJD PREMIUM
+   Header Component — NAJD PREMIUM (Wokiee-inspired)
    Supports 6 layout variations: classic, centered, minimal,
    mega, transparent, hamburger
    Themes: light (default), dark, glass (liquid glass)
@@ -14,57 +14,45 @@
   position: sticky;
   top: 0;
   z-index: var(--z-header);
-  transition: transform var(--duration-slow) var(--ease-out);
-}
+  transition: transform var(--duration-slow) var(--ease-out),
+              box-shadow var(--duration-slow) var(--ease-out);
 
-
-/* ---- Accent gradient line at very top ---- */
-
-.najd-header::before {
-  content: '';
-  display: block;
-  height: 3px;
-  background: var(--gradient-primary);
-  position: relative;
-  z-index: 10;
-}
-
-[data-theme="glass"] .najd-header::before {
-  background: linear-gradient(
-    90deg,
-    var(--glass-orb-1, #BC82F3),
-    var(--glass-orb-2, #5AC8FA),
-    var(--glass-orb-3, #F5B9EA),
-    var(--glass-orb-1, #BC82F3)
-  );
-  background-size: 300% 100%;
-  animation: najd-gradient-flow 8s linear infinite;
-}
-
-@keyframes najd-gradient-flow {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 300% 50%; }
+  /* Scrolled state — subtle shadow appears */
+  &.is-scrolled {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
 }
 
 
 /* ---- Top Bar ---- */
 
 .najd-header__topbar {
-  padding: 8px 0;
-  font-size: var(--text-xs);
+  padding: 6px 0;
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
   color: var(--text-secondary);
-  background: var(--surface-secondary);
-  border-bottom: 1px solid var(--border-color);
-  transition: all var(--duration-slow) var(--ease-out);
+  background: #f7f7f8;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: background var(--duration-slow) var(--ease-out),
+              border-color var(--duration-slow) var(--ease-out);
 }
 
-.topnav-is-dark .najd-header__topbar {
+.najd-header__topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+[data-theme="dark"] .najd-header__topbar {
   background: var(--dark-bg-secondary, #0e0f0f);
-  color: #aaa;
+  color: rgba(255, 255, 255, 0.55);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
 }
 
 [data-theme="glass"] .najd-header__topbar {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.55);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -73,18 +61,40 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 5px 14px;
+  padding: 3px 10px;
   border-radius: var(--radius-full);
-  font-size: var(--text-xs);
-  border: 1px solid var(--border-color);
+  font-size: 11px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   color: var(--text-secondary);
   background: transparent;
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
 
   &:hover {
-    background: var(--glass-bg);
     border-color: var(--color-primary);
     color: var(--color-primary);
+  }
+}
+
+[data-theme="dark"] .najd-header__locale-btn,
+[data-theme="dark"] .najd-header__scope-btn {
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.55);
+
+  &:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+}
+
+[data-theme="glass"] .najd-header__locale-btn,
+[data-theme="glass"] .najd-header__scope-btn {
+  border-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.55);
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.85);
   }
 }
 
@@ -92,25 +102,37 @@
 /* ---- Main Navigation Bar ---- */
 
 .najd-header__main {
-  border-radius: 0;
-  border-left: none;
-  border-right: none;
-  border-top: none;
-  background: var(--header-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-color);
-  transition: all var(--duration-slow) var(--ease-out);
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  transition: background var(--duration-slow) var(--ease-out),
+              border-color var(--duration-slow) var(--ease-out),
+              box-shadow var(--duration-slow) var(--ease-out),
+              backdrop-filter var(--duration-slow) var(--ease-out);
+}
+
+.is-scrolled .najd-header__main {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+[data-theme="dark"] .najd-header__main {
+  background: var(--dark-bg, #111);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .is-scrolled .najd-header__main {
+  background: rgba(17, 17, 17, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 [data-theme="glass"] .najd-header__main {
   background: rgba(255, 255, 255, 0.06);
   border-bottom-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
-}
-
-[data-theme="dark"] .najd-header__main {
-  border-bottom-color: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.1);
 }
 
 .najd-header__inner {
@@ -118,8 +140,8 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-lg);
-  min-height: 68px;
-  padding: 4px 0;
+  min-height: 60px;
+  padding: 0;
 }
 
 
@@ -129,17 +151,17 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  transition: transform var(--duration-base) var(--ease-spring);
+  transition: opacity var(--duration-fast) var(--ease-out);
 
   &:hover {
-    transform: scale(1.03);
+    opacity: 0.8;
   }
 }
 
 .najd-header__logo-img {
-  height: 52px;
+  height: 48px;
   width: auto;
-  max-width: 200px;
+  max-width: 180px;
   object-fit: contain;
 }
 
@@ -163,19 +185,70 @@
 }
 
 
+/* ---- Desktop Navigation ---- */
+
+.najd-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.najd-header__nav a,
+.najd-header__nav .nav-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+  transition: color var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    color: var(--color-primary);
+  }
+
+  &.is-active {
+    color: var(--color-primary);
+  }
+}
+
+[data-theme="dark"] .najd-header__nav a,
+[data-theme="dark"] .najd-header__nav .nav-link {
+  color: rgba(255, 255, 255, 0.85);
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+
+[data-theme="glass"] .najd-header__nav a,
+[data-theme="glass"] .najd-header__nav .nav-link {
+  color: rgba(255, 255, 255, 0.8);
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+
 /* ---- Desktop Search ---- */
 
 .najd-header__search {
   salla-search {
-    --search-bg: var(--surface-secondary);
-    --search-border: var(--border-color);
-    --search-radius: var(--radius-full);
+    --search-bg: #f5f5f5;
+    --search-border: rgba(0, 0, 0, 0.06);
+    --search-radius: 100px;
   }
+}
+
+[data-theme="dark"] .najd-header__search salla-search {
+  --search-bg: rgba(255, 255, 255, 0.06);
+  --search-border: rgba(255, 255, 255, 0.08);
 }
 
 [data-theme="glass"] .najd-header__search salla-search {
   --search-bg: rgba(255, 255, 255, 0.06);
-  --search-border: rgba(255, 255, 255, 0.10);
+  --search-border: rgba(255, 255, 255, 0.08);
 }
 
 
@@ -185,49 +258,72 @@
   display: none;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  font-size: 22px;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
   color: var(--text-primary);
-  border-radius: var(--radius-md);
-  transition: all var(--duration-fast) var(--ease-out);
+  border-radius: 50%;
+  transition: color var(--duration-fast) var(--ease-out);
 
   &:hover {
-    background: var(--glass-bg);
+    color: var(--color-primary);
   }
 }
 
+[data-theme="dark"] .najd-header__mobile-toggle {
+  color: rgba(255, 255, 255, 0.85);
+}
 
-/* ---- Action Buttons — Pills style ---- */
+[data-theme="glass"] .najd-header__mobile-toggle {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+
+/* ---- Action Buttons — Clean icon style ---- */
 
 .najd-header__actions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .najd-header__action-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: var(--radius-lg);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   font-size: 20px;
   color: var(--text-secondary);
+  background: transparent;
   position: relative;
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: color var(--duration-fast) var(--ease-out);
 
   &:hover {
-    background: var(--glass-bg);
     color: var(--color-primary);
-    transform: translateY(-1px);
+  }
+}
+
+[data-theme="dark"] .najd-header__action-btn {
+  color: rgba(255, 255, 255, 0.65);
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+
+[data-theme="glass"] .najd-header__action-btn {
+  color: rgba(255, 255, 255, 0.65);
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.95);
   }
 }
 
 .najd-header__cart-icon {
   font-size: 22px;
-  color: var(--text-secondary);
+  color: inherit;
   transition: color var(--duration-fast);
 }
 
@@ -243,6 +339,7 @@
     height: 18px !important;
     border-radius: var(--radius-full) !important;
     font-weight: 700 !important;
+    line-height: 18px !important;
   }
 }
 
@@ -254,9 +351,8 @@
 
 /* ------------------------------------------------------------
    A. Classic (.najd-header--classic)
-   Default layout — no extra rules needed beyond base styles.
-   The base .najd-header + .najd-header__inner already produce
-   the classic look: logo left, nav center, actions right.
+   Default layout — logo left, nav center, actions right.
+   Inherits all base styles without modification.
    ------------------------------------------------------------ */
 
 .najd-header--classic {
@@ -276,7 +372,7 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    padding: 12px 0;
+    min-height: 60px;
   }
 
   /* Actions / utility on the start column */
@@ -304,12 +400,12 @@
 
   /* Navigation row — full width beneath logo */
   .najd-header__centered-nav {
-    border-top: 1px solid var(--border-color);
-    padding-top: 8px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 6px 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-md);
+    gap: 2px;
   }
 }
 
@@ -322,10 +418,6 @@
 [data-theme="glass"] .najd-header--centered {
   .najd-header__centered-nav {
     border-top-color: rgba(255, 255, 255, 0.08);
-  }
-
-  .najd-header__centered-logo {
-    filter: drop-shadow(0 0 12px rgba(188, 130, 243, 0.15));
   }
 }
 
@@ -340,11 +432,11 @@
 
   /* Thinner bar */
   .najd-header__main--minimal {
-    min-height: 60px;
+    min-height: 54px;
   }
 
   .najd-header__inner {
-    min-height: 52px;
+    min-height: 54px;
   }
 
   /* Always show the hamburger toggle, even on desktop */
@@ -354,7 +446,7 @@
 
   /* Slightly smaller logo in minimal mode */
   .najd-header__logo-img {
-    height: 44px;
+    height: 40px;
   }
 
   /* Hide desktop navigation — it lives inside the drawer */
@@ -365,22 +457,20 @@
 
 [data-theme="dark"] .najd-header--minimal {
   .najd-header__main--minimal {
-    border-bottom-color: rgba(255, 255, 255, 0.04);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
   }
 }
 
 [data-theme="glass"] .najd-header--minimal {
   .najd-header__main--minimal {
     background: rgba(255, 255, 255, 0.04);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
   }
 
   .najd-header__mobile-toggle--always {
     color: rgba(255, 255, 255, 0.85);
 
     &:hover {
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 0 10px rgba(188, 130, 243, 0.12);
+      color: #fff;
     }
   }
 }
@@ -399,38 +489,42 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 0;
+    padding: 10px 0;
     gap: var(--space-lg);
   }
 
   /* Search field takes available space */
   .najd-header__mega-search {
     flex: 1;
-    max-width: 600px;
+    max-width: 560px;
     margin-inline: auto;
+
+    salla-search {
+      --search-bg: #f5f5f5;
+      --search-border: rgba(0, 0, 0, 0.06);
+      --search-radius: 100px;
+    }
   }
 
   /* Bottom tier: navigation */
   .najd-header__mega-nav {
-    border-top: 1px solid var(--border-color);
-    padding: 8px 0;
-    font-size: 14px;
-    font-weight: 600;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 0;
     display: flex;
     align-items: center;
-    gap: var(--space-md);
+    gap: 2px;
   }
 
   .najd-header__mega-nav a,
   .najd-header__mega-nav .nav-link {
+    font-size: 14px;
+    font-weight: 500;
     color: var(--text-primary);
-    padding: 6px 12px;
-    border-radius: var(--radius-md);
-    transition: all var(--duration-fast) var(--ease-out);
+    padding: 10px 14px;
     white-space: nowrap;
+    transition: color var(--duration-fast) var(--ease-out);
 
     &:hover {
-      background: var(--glass-bg);
       color: var(--color-primary);
     }
   }
@@ -440,41 +534,39 @@
   .najd-header__mega-nav {
     border-top-color: rgba(255, 255, 255, 0.06);
   }
-}
 
-[data-theme="glass"] .najd-header--mega {
-  .najd-header__mega-nav {
-    border-top-color: rgba(255, 255, 255, 0.08);
-    position: relative;
+  .najd-header__mega-nav a,
+  .najd-header__mega-nav .nav-link {
+    color: rgba(255, 255, 255, 0.85);
 
-    /* Subtle glow line along the top border */
-    &::before {
-      content: '';
-      position: absolute;
-      top: -1px;
-      left: 10%;
-      right: 10%;
-      height: 1px;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(188, 130, 243, 0.25),
-        rgba(90, 200, 250, 0.25),
-        transparent
-      );
-      pointer-events: none;
+    &:hover {
+      color: var(--color-primary);
     }
   }
 
   .najd-header__mega-search salla-search {
     --search-bg: rgba(255, 255, 255, 0.06);
-    --search-border: rgba(255, 255, 255, 0.10);
+    --search-border: rgba(255, 255, 255, 0.08);
+  }
+}
+
+[data-theme="glass"] .najd-header--mega {
+  .najd-header__mega-nav {
+    border-top-color: rgba(255, 255, 255, 0.08);
   }
 
-  .najd-header__mega-nav a:hover,
-  .najd-header__mega-nav .nav-link:hover {
-    background: rgba(255, 255, 255, 0.06);
-    box-shadow: 0 0 8px rgba(188, 130, 243, 0.1);
+  .najd-header__mega-nav a,
+  .najd-header__mega-nav .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .najd-header__mega-search salla-search {
+    --search-bg: rgba(255, 255, 255, 0.06);
+    --search-border: rgba(255, 255, 255, 0.08);
   }
 }
 
@@ -482,7 +574,7 @@
 /* ------------------------------------------------------------
    E. Transparent (.najd-header--transparent)
    Overlays the hero/banner with a see-through header.
-   Becomes solid on scroll via the .header-scrolled body class.
+   Becomes solid on scroll via .is-scrolled class.
    ------------------------------------------------------------ */
 
 .najd-header--transparent {
@@ -500,11 +592,6 @@
       box-shadow: none;
     }
 
-    /* Remove accent line when transparent */
-    &::before {
-      display: none;
-    }
-
     /* All child text / icons turn white */
     .najd-header__inner,
     .najd-header__action-btn,
@@ -513,6 +600,15 @@
     .najd-header__locale-btn,
     .najd-header__scope-btn {
       color: #fff;
+    }
+
+    .najd-header__nav a,
+    .najd-header__nav .nav-link {
+      color: rgba(255, 255, 255, 0.9);
+
+      &:hover {
+        color: #fff;
+      }
     }
 
     .najd-header__topbar {
@@ -527,18 +623,7 @@
       color: rgba(255, 255, 255, 0.85);
 
       &:hover {
-        background: rgba(255, 255, 255, 0.1);
         border-color: rgba(255, 255, 255, 0.4);
-        color: #fff;
-      }
-    }
-
-    /* Navigation links */
-    .najd-header__nav a,
-    .najd-header__nav .nav-link {
-      color: rgba(255, 255, 255, 0.9);
-
-      &:hover {
         color: #fff;
       }
     }
@@ -548,20 +633,17 @@
     .najd-header__logo-img--alt { display: block; }
   }
 
-  /* Scrolled state — body class triggers solid background */
+  /* Scrolled state — solid background returns */
+  &.is-scrolled[data-transparent="true"],
   .header-scrolled &[data-transparent="true"],
   body.header-scrolled &[data-transparent="true"] {
     position: sticky;
 
-    &::before {
-      display: block;
-    }
-
     .najd-header__main {
-      background: var(--header-bg);
-      border-bottom: 1px solid var(--border-color);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .najd-header__inner,
@@ -571,15 +653,24 @@
       color: var(--text-primary);
     }
 
+    .najd-header__nav a,
+    .najd-header__nav .nav-link {
+      color: var(--text-primary);
+
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+
     .najd-header__topbar {
-      background: var(--surface-secondary);
-      border-bottom-color: var(--border-color);
+      background: #f7f7f8;
+      border-bottom-color: rgba(0, 0, 0, 0.05);
       color: var(--text-secondary);
     }
 
     .najd-header__locale-btn,
     .najd-header__scope-btn {
-      border-color: var(--border-color);
+      border-color: rgba(0, 0, 0, 0.08);
       color: var(--text-secondary);
     }
 
@@ -596,10 +687,16 @@
     }
   }
 
+  &.is-scrolled[data-transparent="true"],
   .header-scrolled &[data-transparent="true"],
   body.header-scrolled &[data-transparent="true"] {
     .najd-header__main {
-      border-bottom-color: rgba(255, 255, 255, 0.04);
+      background: rgba(17, 17, 17, 0.95);
+      border-bottom-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .najd-header__topbar {
+      background: var(--dark-bg-secondary, #0e0f0f);
     }
   }
 }
@@ -612,12 +709,18 @@
     }
   }
 
+  &.is-scrolled[data-transparent="true"],
   .header-scrolled &[data-transparent="true"],
   body.header-scrolled &[data-transparent="true"] {
     .najd-header__main {
       background: rgba(255, 255, 255, 0.06);
       border-bottom-color: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .najd-header__topbar {
+      background: rgba(255, 255, 255, 0.04);
     }
   }
 }
@@ -661,7 +764,7 @@
 
 [data-theme="dark"] .najd-header--hamburger {
   .najd-header__mobile-toggle--always {
-    color: var(--text-primary);
+    color: rgba(255, 255, 255, 0.85);
   }
 }
 
@@ -670,86 +773,103 @@
     color: rgba(255, 255, 255, 0.85);
 
     &:hover {
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 0 10px rgba(188, 130, 243, 0.12);
+      color: #fff;
     }
-  }
-
-  .najd-header__logo-wrapper {
-    filter: drop-shadow(0 0 10px rgba(90, 200, 250, 0.1));
   }
 }
 
 
 /* ============================================================
-   III. GLASS MODE — shared enhancements across all variants
+   III. DARK MODE — shared enhancements across all variants
+   ============================================================ */
+
+[data-theme="dark"] .najd-header {
+
+  &.is-scrolled {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .najd-header__cart .s-cart-summary-count {
+    box-shadow: none;
+  }
+}
+
+
+/* ============================================================
+   IV. GLASS MODE — shared enhancements across all variants
+   (Subtle and restrained — no purple glow effects)
    ============================================================ */
 
 [data-theme="glass"] .najd-header {
 
-  /* Subtle inner glow on the entire header */
+  &.is-scrolled {
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Subtle inner highlight on the main bar */
   .najd-header__main {
     box-shadow:
-      0 4px 30px rgba(0, 0, 0, 0.15),
+      0 1px 20px rgba(0, 0, 0, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
-  /* Action buttons pick up a glass hover */
+  /* Action buttons — simple color change on hover, no glow */
   .najd-header__action-btn:hover {
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 8px rgba(188, 130, 243, 0.1);
+    color: rgba(255, 255, 255, 0.95);
   }
 
-  /* Cart badge glow */
+  /* Cart badge — clean, no glow */
   .najd-header__cart .s-cart-summary-count {
-    box-shadow: 0 0 6px rgba(var(--color-primary-rgb, 188, 130, 243), 0.35);
+    box-shadow: none;
   }
 
-  /* Search field glass border */
+  /* Search field glass style */
   .najd-header__search salla-search {
     --search-bg: rgba(255, 255, 255, 0.06);
-    --search-border: rgba(255, 255, 255, 0.10);
+    --search-border: rgba(255, 255, 255, 0.08);
   }
 
-  /* Topbar utility buttons */
+  /* Topbar utility buttons — simple hover, no glow */
   .najd-header__locale-btn:hover,
   .najd-header__scope-btn:hover {
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 6px rgba(90, 200, 250, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.85);
   }
 }
 
 
 /* ============================================================
-   IV. RESPONSIVE STYLES
+   V. RESPONSIVE STYLES
    ============================================================ */
 
 @media (max-width: 1023px) {
 
-  /* Base mobile overrides */
+  /* Show mobile toggle */
   .najd-header__mobile-toggle {
     display: flex;
   }
 
+  /* Hide desktop search on tablet */
   .najd-header__search {
     display: none !important;
   }
 
   .najd-header__inner {
-    min-height: 56px;
+    min-height: 54px;
   }
 
   .najd-header__logo-img {
     height: 40px;
   }
 
-  /* ---- Centered: stack to single row on mobile ---- */
+  /* ---- Centered: collapse to single row ---- */
   .najd-header--centered {
     .najd-header__centered-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 0;
+      padding: 0;
+      min-height: 54px;
     }
 
     .najd-header__centered-nav {
@@ -757,10 +877,11 @@
     }
   }
 
-  /* ---- Mega: collapse to single row on mobile ---- */
+  /* ---- Mega: collapse to single row ---- */
   .najd-header--mega {
     .najd-header__mega-top {
-      padding: 8px 0;
+      padding: 0;
+      min-height: 54px;
     }
 
     .najd-header__mega-search {
@@ -775,7 +896,7 @@
   /* ---- Transparent: reduce topbar padding ---- */
   .najd-header--transparent {
     &[data-transparent="true"] .najd-header__topbar {
-      padding: 6px 0;
+      padding: 4px 0;
     }
   }
 }
@@ -784,26 +905,31 @@
 
   .najd-header__inner {
     gap: var(--space-sm);
-    min-height: 52px;
+    min-height: 48px;
   }
 
   .najd-header__logo-img {
-    height: 36px;
+    height: 34px;
   }
 
   .najd-header__action-btn {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     font-size: 18px;
   }
 
   .najd-header__actions {
-    gap: 4px;
+    gap: 2px;
   }
 
   .najd-header__mobile-toggle {
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .najd-header__topbar {
+    font-size: 10px;
+    padding: 4px 0;
   }
 }

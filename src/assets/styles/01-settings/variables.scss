@@ -15,12 +15,12 @@
   --space-4xl: 96px;
 
   /* ---- Radius Scale ---- */
-  --radius-sm:   8px;
-  --radius-md:   12px;
-  --radius-lg:   16px;
-  --radius-xl:   20px;
-  --radius-2xl:  28px;
-  --radius-3xl:  36px;
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   14px;
+  --radius-xl:   18px;
+  --radius-2xl:  24px;
+  --radius-3xl:  32px;
   --radius-full: 9999px;
 
   /* ---- Transitions ---- */
@@ -43,15 +43,15 @@
   --z-toast:  110;
 
   /* ---- Typography Scale ---- */
-  --text-xs:   12px;
-  --text-sm:   13px;
-  --text-base: 15px;
-  --text-lg:   17px;
-  --text-xl:   20px;
-  --text-2xl:  24px;
-  --text-3xl:  32px;
-  --text-4xl:  40px;
-  --text-5xl:  52px;
+  --text-xs:   11px;
+  --text-sm:   12px;
+  --text-base: 14px;
+  --text-lg:   16px;
+  --text-xl:   18px;
+  --text-2xl:  22px;
+  --text-3xl:  28px;
+  --text-4xl:  36px;
+  --text-5xl:  48px;
 
   /* ---- Section spacing (configurable) ---- */
   --section-gap: 80px;
@@ -85,50 +85,50 @@
 [data-theme="light"],
 :root {
   --surface-bg:         var(--light-bg-primary, #ffffff);
-  --surface-secondary:  var(--light-bg-secondary, #f5f6fa);
+  --surface-secondary:  var(--light-bg-secondary, #f7f7f8);
   --surface-card:       var(--light-card-bg, #ffffff);
   --surface-elevated:   #ffffff;
 
-  --text-primary:       var(--light-text-primary, #0a0a0f);
-  --text-secondary:     var(--light-text-secondary, #4a4a5a);
-  --text-tertiary:      #8a8a9a;
-  --text-muted:         #b0b0be;
+  --text-primary:       var(--light-text-primary, #111114);
+  --text-secondary:     var(--light-text-secondary, #555566);
+  --text-tertiary:      #8c8c9a;
+  --text-muted:         #b8b8c6;
 
   --header-bg:          var(--light-header-bg, #ffffff);
-  --header-text:        var(--light-header-text, #0a0a0f);
+  --header-text:        var(--light-header-text, #111114);
 
-  --border-color:       rgba(0, 0, 0, 0.06);
-  --border-hover:       rgba(0, 0, 0, 0.12);
+  --border-color:       rgba(0, 0, 0, 0.08);
+  --border-hover:       rgba(0, 0, 0, 0.15);
   --border-active:      var(--color-primary);
 
-  --shadow-xs:          0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-sm:          0 2px 4px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-  --shadow-md:          0 4px 16px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.03);
-  --shadow-lg:          0 8px 32px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
-  --shadow-xl:          0 16px 48px rgba(0, 0, 0, 0.10), 0 8px 16px rgba(0, 0, 0, 0.05);
-  --shadow-glow:        0 0 0 1px var(--color-primary), 0 4px 24px rgba(var(--color-primary), 0.15);
-  --shadow-primary:     0 4px 20px color-mix(in srgb, var(--color-primary) 25%, transparent);
+  --shadow-xs:          0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-sm:          0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md:          0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg:          0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-xl:          0 12px 40px rgba(0, 0, 0, 0.10);
+  --shadow-glow:        0 0 0 1px var(--color-primary), 0 4px 20px rgba(var(--color-primary), 0.12);
+  --shadow-primary:     0 4px 16px color-mix(in srgb, var(--color-primary) 20%, transparent);
 
   /* Glass properties — minimal in light mode */
-  --glass-bg:           rgba(255, 255, 255, 0.75);
-  --glass-bg-hover:     rgba(255, 255, 255, 0.90);
-  --glass-bg-strong:    rgba(255, 255, 255, 0.92);
+  --glass-bg:           rgba(255, 255, 255, 0.80);
+  --glass-bg-hover:     rgba(255, 255, 255, 0.92);
+  --glass-bg-strong:    rgba(255, 255, 255, 0.95);
   --glass-border:       rgba(0, 0, 0, 0.06);
-  --glass-border-hover: rgba(0, 0, 0, 0.12);
+  --glass-border-hover: rgba(0, 0, 0, 0.10);
   --glass-blur:         16px;
-  --glass-shadow:       0 4px 24px rgba(0, 0, 0, 0.06);
+  --glass-shadow:       0 4px 20px rgba(0, 0, 0, 0.05);
   --glass-highlight:    none;
 
   /* Background scene — hidden in light */
   --scene-opacity: 0;
 
   /* Card specific */
-  --card-hover-lift:    -6px;
-  --card-radius:        var(--radius-2xl);
+  --card-hover-lift:    -4px;
+  --card-radius:        var(--radius-xl);
 
-  /* Accent gradient */
-  --gradient-primary:   linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-  --gradient-text:      linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  /* Accent — flat primary color (no gradient in light mode for clean look) */
+  --gradient-primary:   var(--color-primary);
+  --gradient-text:      var(--color-primary);
 }
 
 /* ============================================================
