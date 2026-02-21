@@ -66,46 +66,53 @@
   &__gradient {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      135deg,
-      var(--glass-scene-1, #08081a) 0%,
-      var(--glass-scene-2, #1a0f2e) 40%,
-      color-mix(in srgb, var(--glass-scene-1, #08081a) 70%, var(--glass-scene-2, #1a0f2e)) 100%
-    );
+    background:
+      radial-gradient(ellipse at 20% 50%, var(--glass-scene-2, #0C1120) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(124, 92, 252, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(90, 200, 250, 0.04) 0%, transparent 50%),
+      linear-gradient(
+        135deg,
+        var(--glass-scene-1, #050511) 0%,
+        var(--glass-scene-2, #0C1120) 50%,
+        #1A1A2E 100%
+      );
   }
 
   &__orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(100px);
+    filter: blur(120px);
     will-change: transform;
   }
 
+  /* AI Purple Orb — Apple Intelligence inspired */
   &__orb--1 {
-    width: 600px;
-    height: 600px;
-    background: var(--glass-orb-1, #7c5cfc);
-    opacity: 0.30;
+    width: 650px;
+    height: 650px;
+    background: var(--glass-orb-1, #BC82F3);
+    opacity: 0.25;
     top: -15%;
     right: -10%;
     animation: najd-float-1 25s ease-in-out infinite;
   }
 
+  /* Tech Cyan Orb — Futuristic blue */
   &__orb--2 {
-    width: 500px;
-    height: 500px;
-    background: var(--glass-orb-2, #06d6a0);
-    opacity: 0.22;
+    width: 550px;
+    height: 550px;
+    background: var(--glass-orb-2, #5AC8FA);
+    opacity: 0.18;
     bottom: 5%;
     left: -10%;
     animation: najd-float-2 30s ease-in-out infinite;
   }
 
+  /* Warm Rose Orb — Human warmth in AI palette */
   &__orb--3 {
-    width: 450px;
-    height: 450px;
-    background: var(--glass-orb-3, #fc5c7d);
-    opacity: 0.18;
+    width: 480px;
+    height: 480px;
+    background: var(--glass-orb-3, #F5B9EA);
+    opacity: 0.15;
     top: 45%;
     left: 30%;
     animation: najd-float-3 22s ease-in-out infinite;

@@ -527,35 +527,35 @@
             "type": "string",
             "format": "text",
             "label": "لون خلفية المشهد الأول",
-            "value": "#0f0f1a"
+            "value": "#050511"
         },
         {
             "id": "glass_scene_color_2",
             "type": "string",
             "format": "text",
             "label": "لون خلفية المشهد الثاني",
-            "value": "#1a0f2e"
+            "value": "#0C1120"
         },
         {
             "id": "glass_orb_color_1",
             "type": "string",
             "format": "text",
-            "label": "لون الكرة المتحركة الأولى",
-            "value": "#7c5cfc"
+            "label": "لون الكرة المتحركة الأولى (بنفسجي AI)",
+            "value": "#BC82F3"
         },
         {
             "id": "glass_orb_color_2",
             "type": "string",
             "format": "text",
-            "label": "لون الكرة المتحركة الثانية",
-            "value": "#06d6a0"
+            "label": "لون الكرة المتحركة الثانية (سماوي تقني)",
+            "value": "#5AC8FA"
         },
         {
             "id": "glass_orb_color_3",
             "type": "string",
             "format": "text",
-            "label": "لون الكرة المتحركة الثالثة",
-            "value": "#fc5c7d"
+            "label": "لون الكرة المتحركة الثالثة (وردي دافئ)",
+            "value": "#F5B9EA"
         },
         {
             "type": "static",

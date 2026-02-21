@@ -23,10 +23,10 @@
 [data-theme="glass"] .najd-header::before {
   background: linear-gradient(
     90deg,
-    var(--glass-orb-1, #7c5cfc),
-    var(--glass-orb-2, #06d6a0),
-    var(--glass-orb-3, #fc5c7d),
-    var(--glass-orb-1, #7c5cfc)
+    var(--glass-orb-1, #BC82F3),
+    var(--glass-orb-2, #5AC8FA),
+    var(--glass-orb-3, #F5B9EA),
+    var(--glass-orb-1, #BC82F3)
   );
   background-size: 300% 100%;
   animation: najd-gradient-flow 8s linear infinite;
