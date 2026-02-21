@@ -848,7 +848,7 @@
     ],
     "components": [
         {
-            "key": "najd-hero-slider",
+            "key": "208051c6-da38-4034-9b79-76fa395260e9",
             "title": {
                 "ar": "سلايدر متقدم (نجد)",
                 "en": "Advanced Slider (Najd)"
@@ -910,7 +910,7 @@
             ]
         },
         {
-            "key": "najd-about-store",
+            "key": "aea18fff-e49b-4b1a-84f5-b9b03b6211ba",
             "title": {
                 "ar": "عن المتجر (نجد)",
                 "en": "About Store (Najd)"
@@ -954,7 +954,7 @@
             ]
         },
         {
-            "key": "najd-store-features",
+            "key": "11388237-56bd-4348-a179-7d0051eefdb4",
             "title": {
                 "ar": "مميزات المتجر (نجد)",
                 "en": "Store Features (Najd)"
@@ -995,7 +995,7 @@
             ]
         },
         {
-            "key": "najd-custom-products",
+            "key": "fe2d6dde-dc28-4b07-b857-c715c4eb88f0",
             "title": {
                 "ar": "منتجات مخصصة (نجد)",
                 "en": "Custom Products (Najd)"
@@ -1033,7 +1033,7 @@
             ]
         },
         {
-            "key": "najd-double-banner",
+            "key": "8f73dce2-8c88-47cc-b4e0-107c633ea2ec",
             "title": {
                 "ar": "بانر مزدوج (نجد)",
                 "en": "Double Banner (Najd)"
@@ -1081,7 +1081,7 @@
             ]
         },
         {
-            "key": "najd-triple-banner",
+            "key": "cdc4955c-0eab-4f74-9e0d-5aa71d311e91",
             "title": {
                 "ar": "بانر ثلاثي (نجد)",
                 "en": "Triple Banner (Najd)"
@@ -1122,7 +1122,7 @@
             ]
         },
         {
-            "key": "najd-custom-reviews",
+            "key": "adc3cde1-de15-44da-97f0-512d42ec8bef",
             "title": {
                 "ar": "آراء عملاء مخصصة (نجد)",
                 "en": "Custom Reviews (Najd)"
@@ -1179,7 +1179,7 @@
             ]
         },
         {
-            "key": "najd-faq",
+            "key": "e98a0346-5eb4-4e2b-8db5-740764a08cc4",
             "title": {
                 "ar": "الأسئلة الشائعة (نجد)",
                 "en": "FAQ (Najd)"
@@ -1223,7 +1223,7 @@
             ]
         },
         {
-            "key": "najd-special-offer",
+            "key": "249dad11-7e1a-4e52-a9f2-3bf56e39103c",
             "title": {
                 "ar": "عرض خاص مع عد تنازلي (نجد)",
                 "en": "Special Offer with Countdown (Najd)"
@@ -1273,7 +1273,7 @@
             ]
         },
         {
-            "key": "najd-blog",
+            "key": "60ec0aa2-eeaa-431e-98e8-6342df189eed",
             "title": {
                 "ar": "المدونة (نجد)",
                 "en": "Blog (Najd)"
@@ -1300,7 +1300,7 @@
             ]
         },
         {
-            "key": "najd-statistics",
+            "key": "e37a73e8-24ba-4909-8430-e3536da6b89f",
             "title": {
                 "ar": "إحصائيات (نجد)",
                 "en": "Statistics (Najd)"
@@ -1342,7 +1342,7 @@
             ]
         },
         {
-            "key": "najd-marquee",
+            "key": "420c5711-e451-4534-896b-826207ca46aa",
             "title": {
                 "ar": "شريط إعلاني متحرك (نجد)",
                 "en": "Marquee Banner (Najd)"
