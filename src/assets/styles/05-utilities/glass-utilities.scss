@@ -1,18 +1,19 @@
 /* ============================================================
-   Glass Utility Classes
+   Glass Utility Classes — NAJD PREMIUM
+   Mode switcher, WhatsApp, Back to top, global utilities
    ============================================================ */
 
-/* Mode Switcher */
+/* ---- Mode Switcher (distinctive pill design) ---- */
 .najd-mode-switcher {
   position: fixed;
   z-index: var(--z-modal);
   display: flex;
   gap: 4px;
-  padding: 4px;
-  background: var(--glass-bg-strong);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
+  padding: 5px;
+  background: var(--surface-card);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-full);
   box-shadow: var(--shadow-lg);
   transition: all var(--duration-base) var(--ease-out);
@@ -35,6 +36,17 @@
   }
 }
 
+[data-theme="glass"] .najd-mode-switcher {
+  background: var(--glass-bg-strong);
+  border-color: var(--glass-border);
+  box-shadow: var(--shadow-lg),
+              0 0 20px color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+
+[data-theme="dark"] .najd-mode-switcher {
+  background: var(--surface-elevated);
+}
+
 .najd-mode-switcher__btn {
   width: 40px;
   height: 40px;
@@ -42,54 +54,67 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  font-size: 18px;
-  color: var(--text-secondary);
-  transition: all var(--duration-base) var(--ease-out);
+  font-size: 17px;
+  color: var(--text-tertiary);
+  transition: all var(--duration-base) var(--ease-spring);
+  position: relative;
 
   &:hover {
     color: var(--text-primary);
     background: var(--glass-bg);
+    transform: scale(1.05);
   }
 
   &.is-active {
-    background: var(--color-primary);
+    background: var(--gradient-primary);
     color: var(--color-primary-reverse, #fff);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-primary);
+    transform: scale(1.08);
   }
 }
 
-/* WhatsApp Button */
+/* ---- WhatsApp Button ---- */
 .najd-whatsapp-btn {
   position: fixed;
   z-index: var(--z-overlay);
   bottom: var(--space-xl);
   inset-inline-end: var(--space-lg);
-  width: 52px;
-  height: 52px;
+  width: 54px;
+  height: 54px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  font-size: 24px;
-  color: #25d366;
+  font-size: 26px;
+  color: #fff;
+  background: #25d366;
+  border: none;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+  transition: all var(--duration-base) var(--ease-spring);
 
-  &:hover { transform: scale(1.08); }
+  &:hover {
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45);
+  }
 }
 
-/* Back to Top */
+/* ---- Back to Top ---- */
 .najd-back-to-top {
   position: fixed;
   z-index: var(--z-overlay);
-  bottom: 88px;
+  bottom: 92px;
   inset-inline-end: var(--space-lg);
   width: 44px;
   height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: var(--radius-lg);
   font-size: 22px;
   color: var(--text-secondary);
+  background: var(--surface-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
   opacity: 0;
   transform: translateY(16px);
   pointer-events: none;
@@ -101,5 +126,16 @@
     pointer-events: auto;
   }
 
-  &:hover { color: var(--text-primary); }
+  &:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+  }
+}
+
+[data-theme="glass"] .najd-back-to-top {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-color: var(--glass-border);
 }

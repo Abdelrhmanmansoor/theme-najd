@@ -1,14 +1,15 @@
 /* ============================================================
-   Animations — Scroll reveal + interaction feedback
+   Animations — NAJD PREMIUM
+   Scroll reveal, entrance effects, micro-interactions
    ============================================================ */
 
-/* Fade-in-up for scroll-triggered elements */
+/* ---- Scroll-triggered entrance animations ---- */
 .najd-animate {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(24px);
   transition:
-    opacity 0.5s var(--ease-out),
-    transform 0.5s var(--ease-out);
+    opacity 0.6s var(--ease-out),
+    transform 0.6s var(--ease-out);
 }
 
 .najd-animate.is-visible {
@@ -16,16 +17,98 @@
   transform: translateY(0);
 }
 
-/* Staggered children */
-.najd-stagger > *:nth-child(1) { transition-delay: 0.05s; }
-.najd-stagger > *:nth-child(2) { transition-delay: 0.10s; }
-.najd-stagger > *:nth-child(3) { transition-delay: 0.15s; }
-.najd-stagger > *:nth-child(4) { transition-delay: 0.20s; }
-.najd-stagger > *:nth-child(5) { transition-delay: 0.25s; }
-.najd-stagger > *:nth-child(6) { transition-delay: 0.30s; }
+/* Fade in from left */
+.najd-animate--left {
+  opacity: 0;
+  transform: translateX(-24px);
+}
 
-/* Announcement marquee */
+.najd-animate--left.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Fade in from right */
+.najd-animate--right {
+  opacity: 0;
+  transform: translateX(24px);
+}
+
+.najd-animate--right.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale in */
+.najd-animate--scale {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+.najd-animate--scale.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ---- Staggered children ---- */
+.najd-stagger > *:nth-child(1)  { transition-delay: 0.05s; }
+.najd-stagger > *:nth-child(2)  { transition-delay: 0.10s; }
+.najd-stagger > *:nth-child(3)  { transition-delay: 0.15s; }
+.najd-stagger > *:nth-child(4)  { transition-delay: 0.20s; }
+.najd-stagger > *:nth-child(5)  { transition-delay: 0.25s; }
+.najd-stagger > *:nth-child(6)  { transition-delay: 0.30s; }
+.najd-stagger > *:nth-child(7)  { transition-delay: 0.35s; }
+.najd-stagger > *:nth-child(8)  { transition-delay: 0.40s; }
+.najd-stagger > *:nth-child(9)  { transition-delay: 0.45s; }
+.najd-stagger > *:nth-child(10) { transition-delay: 0.50s; }
+.najd-stagger > *:nth-child(11) { transition-delay: 0.55s; }
+.najd-stagger > *:nth-child(12) { transition-delay: 0.60s; }
+
+/* ---- Announcement marquee ---- */
 @keyframes najd-marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
+}
+
+/* ---- Hover lift effect ---- */
+.najd-hover-lift {
+  transition: all var(--duration-base) var(--ease-out);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+/* ---- Pulse glow for primary buttons in glass mode ---- */
+@keyframes najd-pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-primary) 30%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--color-primary) 0%, transparent);
+  }
+}
+
+/* ---- Counter animation helper ---- */
+.najd-counter {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Text gradient effect ---- */
+.najd-text-gradient {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---- Image reveal on scroll ---- */
+.najd-reveal {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.8s var(--ease-out);
+}
+
+.najd-reveal.is-visible {
+  clip-path: inset(0 0 0 0);
 }

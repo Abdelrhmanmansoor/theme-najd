@@ -1,23 +1,25 @@
-{# Single Blog Post #}
+{# Single Blog Post — NAJD PREMIUM #}
 {% extends "layouts.master" %}
 {% block content %}
-    <div class="container py-8 lg:py-12 max-w-4xl mx-auto">
+    <div class="container py-8 lg:py-16 max-w-4xl mx-auto">
         {% if theme.settings.get('enable_breadcrumb', true) %}
             <salla-breadcrumb></salla-breadcrumb>
         {% endif %}
-        <article class="glass-surface rounded-glass p-8 lg:p-12">
-            <h1 class="text-2xl lg:text-3xl font-bold mb-4">{{ post.title }}</h1>
-            <div class="flex items-center gap-4 text-sm opacity-60 mb-8">
+        <article class="glass-card p-6 lg:p-12">
+            {% if post.image %}
+                <img src="{{ post.image }}" alt="{{ post.title }}" class="w-full rounded-2xl mb-8 -mt-6 lg:-mt-12 -mx-6 lg:-mx-12" style="width: calc(100% + 48px); max-width: none;" loading="eager">
+            {% endif %}
+            <h1 class="text-2xl lg:text-4xl font-extrabold mb-4 leading-tight" style="letter-spacing: -0.02em;">{{ post.title }}</h1>
+            <div class="flex items-center gap-4 text-sm mb-8 pb-6" style="color: var(--text-tertiary); border-bottom: 1px solid var(--border-color);">
                 <span>{{ post.date|date("d/m/Y") }}</span>
                 {% if post.author %}<span>{{ post.author }}</span>{% endif %}
             </div>
-            {% if post.image %}
-                <img src="{{ post.image }}" alt="{{ post.title }}" class="w-full rounded-lg mb-8" loading="eager">
-            {% endif %}
             <div class="prose max-w-none leading-relaxed" style="color: var(--text-secondary);">
                 {{ post.content|raw }}
             </div>
         </article>
-        <salla-social-share class="mt-8"></salla-social-share>
+        <div class="mt-8">
+            <salla-social-share></salla-social-share>
+        </div>
     </div>
 {% endblock %}

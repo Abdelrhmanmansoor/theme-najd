@@ -1,16 +1,53 @@
 /* ============================================================
-   Footer Component
+   Footer Component — NAJD PREMIUM
+   Distinctive footer with gradient border and glass newsletter
    ============================================================ */
 
 .najd-footer {
   position: relative;
   z-index: var(--z-above);
-  margin-top: var(--space-2xl);
+  margin-top: var(--space-3xl);
 }
 
-/* Newsletter */
+/* Gradient top accent line */
+.najd-footer::before {
+  content: '';
+  display: block;
+  height: 2px;
+  background: var(--gradient-primary);
+}
+
+[data-theme="glass"] .najd-footer::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--glass-orb-1, #7c5cfc),
+    var(--glass-orb-2, #06d6a0),
+    transparent
+  );
+}
+
+/* Newsletter section */
 .najd-footer__newsletter {
-  padding-bottom: var(--space-2xl);
+  padding: var(--space-3xl) 0;
+  text-align: center;
+}
+
+.najd-footer__newsletter-inner {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: var(--space-2xl);
+  background: var(--surface-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-2xl);
+}
+
+[data-theme="glass"] .najd-footer__newsletter-inner {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-shadow);
 }
 
 /* Main footer area */
@@ -18,29 +55,109 @@
   border-radius: 0;
   border-left: none;
   border-right: none;
-
   background: var(--footer-bg, var(--surface-secondary));
   color: var(--footer-text, var(--text-primary));
+  padding: var(--space-3xl) 0 var(--space-xl);
 }
 
 .footer-is-dark .najd-footer__main {
-  background: var(--dark-bg-secondary, #0e0f0f);
-  color: #ccc;
+  background: #0c0c0e;
+  color: #b0b0be;
 }
 
 [data-theme="glass"] .najd-footer__main {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-top: 1px solid var(--glass-border);
+}
+
+[data-theme="dark"] .najd-footer__main {
+  background: var(--surface-secondary);
 }
 
 .najd-footer__heading {
-  font-size: 16px;
+  font-size: var(--text-base);
   font-weight: 700;
   margin-bottom: var(--space-lg);
+  color: var(--text-primary);
+  position: relative;
+  padding-bottom: var(--space-sm);
+}
+
+/* Accent underline on footer headings */
+.najd-footer__heading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: 32px;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+}
+
+.footer-is-dark .najd-footer__heading {
+  color: #fff;
+}
+
+/* Footer links */
+.najd-footer__main a {
+  color: var(--text-secondary);
+  transition: all var(--duration-fast) var(--ease-out);
+  font-size: var(--text-sm);
+
+  &:hover {
+    color: var(--color-primary);
+    padding-inline-start: 4px;
+  }
+}
+
+.footer-is-dark .najd-footer__main a {
+  color: #999;
+  &:hover { color: #fff; }
+}
+
+/* Social icons */
+.najd-footer__social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  font-size: 18px;
+  background: var(--glass-bg);
+  border: 1px solid var(--border-color);
+  transition: all var(--duration-base) var(--ease-out);
+
+  &:hover {
+    background: var(--color-primary);
+    color: var(--color-primary-reverse, #fff) !important;
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-primary);
+    padding-inline-start: 0;
+  }
 }
 
 /* Bottom bar */
 .najd-footer__bottom {
   border-top: 1px solid var(--border-color);
+  padding: var(--space-lg) 0;
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.footer-is-dark .najd-footer__bottom {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Payment icons */
+.najd-footer__payments img {
+  height: 28px;
+  opacity: 0.6;
+  transition: opacity var(--duration-fast);
+
+  &:hover { opacity: 1; }
 }

@@ -1,28 +1,165 @@
 /* ============================================================
-   Product Card — Adapts to glass/light/dark modes
+   Product Card — NAJD PREMIUM
+   Glass-aware with dramatic hover effects
    ============================================================ */
 
-/* Override Salla's default product card with glass awareness */
+/* ---- Base product card override ---- */
 custom-salla-product-card {
+  display: block;
+
   .product-entry {
     background: var(--surface-card);
     border: 1px solid var(--border-color);
-    border-radius: var(--radius-xl);
-    transition: all var(--duration-base) var(--ease-out);
+    border-radius: var(--card-radius, var(--radius-2xl));
     overflow: hidden;
+    transition: all var(--duration-slow) var(--ease-out);
+    position: relative;
 
     &:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
+      transform: translateY(var(--card-hover-lift, -6px));
+      box-shadow: var(--shadow-xl);
       border-color: var(--border-hover);
+    }
+
+    /* Product image container */
+    .product-entry__image {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface-secondary);
+
+      img {
+        transition: transform var(--duration-slower) var(--ease-out);
+      }
+    }
+
+    &:hover .product-entry__image img {
+      transform: scale(1.06);
+    }
+
+    /* Quick action overlay on hover */
+    .product-entry__image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent 50%);
+      opacity: 0;
+      transition: opacity var(--duration-base) var(--ease-out);
+      pointer-events: none;
+    }
+
+    &:hover .product-entry__image::after {
+      opacity: 1;
+    }
+
+    /* Title */
+    .product-entry__title {
+      font-weight: 600;
+      font-size: var(--text-base);
+      line-height: 1.4;
+      color: var(--text-primary);
+      transition: color var(--duration-fast);
+    }
+
+    &:hover .product-entry__title {
+      color: var(--color-primary);
+    }
+
+    /* Price area */
+    .product-entry__price {
+      font-weight: 800;
+      color: var(--color-primary);
+      font-size: var(--text-lg);
+    }
+
+    /* Old/sale price */
+    .product-entry__old-price {
+      color: var(--text-muted);
+      text-decoration: line-through;
+      font-size: var(--text-sm);
+    }
+
+    /* Add to cart button */
+    .product-entry__add-to-cart-btn,
+    .s-product-card-add-to-cart-btn {
+      background: var(--gradient-primary) !important;
+      color: var(--color-primary-reverse, #fff) !important;
+      border-radius: var(--radius-lg) !important;
+      border: none !important;
+      font-weight: 600 !important;
+      transition: all var(--duration-base) var(--ease-out) !important;
+      box-shadow: var(--shadow-primary) !important;
+
+      &:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: var(--shadow-lg) !important;
+      }
+    }
+
+    /* Wishlist button */
+    .product-entry__wishlist,
+    .s-product-card-wishlist-btn {
+      border-radius: var(--radius-md) !important;
+      transition: all var(--duration-fast) var(--ease-out) !important;
+
+      &:hover {
+        color: #ef4444 !important;
+        transform: scale(1.1) !important;
+      }
+    }
+
+    /* Sale badge */
+    .product-entry__sale-badge,
+    .s-product-card-sale-badge {
+      background: #ef4444 !important;
+      color: #fff !important;
+      border-radius: var(--radius-full) !important;
+      font-weight: 700 !important;
+      font-size: 11px !important;
+      padding: 4px 10px !important;
     }
   }
 }
 
-/* Glass mode: add backdrop-filter to product cards */
+/* ---- Glass mode product card ---- */
 [data-theme="glass"] custom-salla-product-card .product-entry {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
   box-shadow: var(--glass-shadow);
+  border-color: var(--glass-border);
+
+  &:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--shadow-xl),
+                0 0 30px color-mix(in srgb, var(--color-primary) 15%, transparent);
+  }
+
+  .product-entry__image {
+    background: rgba(255, 255, 255, 0.03);
+  }
+}
+
+/* ---- Dark mode product card ---- */
+[data-theme="dark"] custom-salla-product-card .product-entry {
+  &:hover {
+    box-shadow: var(--shadow-xl),
+                0 0 20px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* ---- Salla products slider/list overrides ---- */
+salla-products-slider,
+salla-products-list {
+  --product-card-radius: var(--card-radius, var(--radius-2xl));
+}
+
+/* Products grid spacing */
+.s-products-list-grid {
+  gap: var(--space-lg) !important;
+}
+
+/* ---- Product quick-view on product cards ---- */
+.s-product-card-content {
+  padding: var(--space-md) !important;
 }

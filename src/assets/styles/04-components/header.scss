@@ -1,26 +1,60 @@
 /* ============================================================
-   Header Component
+   Header Component — NAJD PREMIUM
+   Distinctive floating glass header with accent line
    ============================================================ */
 
 .najd-header {
   position: sticky;
   top: 0;
   z-index: var(--z-header);
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+/* ---- Accent gradient line at very top ---- */
+.najd-header::before {
+  content: '';
+  display: block;
+  height: 3px;
+  background: var(--gradient-primary);
+  position: relative;
+  z-index: 10;
+}
+
+[data-theme="glass"] .najd-header::before {
+  background: linear-gradient(
+    90deg,
+    var(--glass-orb-1, #7c5cfc),
+    var(--glass-orb-2, #06d6a0),
+    var(--glass-orb-3, #fc5c7d),
+    var(--glass-orb-1, #7c5cfc)
+  );
+  background-size: 300% 100%;
+  animation: najd-gradient-flow 8s linear infinite;
+}
+
+@keyframes najd-gradient-flow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
 }
 
 /* ---- Top Bar ---- */
 .najd-header__topbar {
-  padding: 6px 0;
-  font-size: 12px;
+  padding: 8px 0;
+  font-size: var(--text-xs);
   color: var(--text-secondary);
-  border-bottom: 1px solid var(--border-color);
   background: var(--surface-secondary);
-  transition: background var(--duration-slow) var(--ease-out);
+  border-bottom: 1px solid var(--border-color);
+  transition: all var(--duration-slow) var(--ease-out);
 }
 
 .topnav-is-dark .najd-header__topbar {
   background: var(--dark-bg-secondary, #0e0f0f);
-  color: #ccc;
+  color: #aaa;
+}
+
+[data-theme="glass"] .najd-header__topbar {
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .najd-header__locale-btn,
@@ -28,15 +62,18 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 4px 10px;
+  padding: 5px 14px;
   border-radius: var(--radius-full);
-  font-size: 12px;
+  font-size: var(--text-xs);
   border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  background: transparent;
   transition: all var(--duration-fast) var(--ease-out);
 
   &:hover {
     background: var(--glass-bg);
-    border-color: var(--border-hover);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
   }
 }
 
@@ -46,23 +83,30 @@
   border-left: none;
   border-right: none;
   border-top: none;
-
-  /* Override glass-surface for header */
   background: var(--header-bg);
-  backdrop-filter: blur(var(--glass-blur, 12px));
-  -webkit-backdrop-filter: blur(var(--glass-blur, 12px));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-color);
+  transition: all var(--duration-slow) var(--ease-out);
 }
 
 [data-theme="glass"] .najd-header__main {
-  background: var(--glass-bg-strong);
+  background: rgba(255, 255, 255, 0.06);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .najd-header__main {
+  border-bottom-color: rgba(255, 255, 255, 0.04);
 }
 
 .najd-header__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-md);
-  min-height: 60px;
+  gap: var(--space-lg);
+  min-height: 68px;
+  padding: 4px 0;
 }
 
 .najd-header__inner--centered {
@@ -79,12 +123,17 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  transition: transform var(--duration-base) var(--ease-spring);
+
+  &:hover {
+    transform: scale(1.03);
+  }
 }
 
 .najd-header__logo-img {
-  height: 48px;
+  height: 52px;
   width: auto;
-  max-width: 175px;
+  max-width: 200px;
   object-fit: contain;
 }
 
@@ -92,7 +141,6 @@
   display: none;
 }
 
-/* Show alt logo in glass/dark mode if available */
 [data-theme="glass"] .najd-header__logo-img--alt,
 [data-theme="dark"]  .najd-header__logo-img--alt {
   display: block;
@@ -102,10 +150,23 @@
   display: none;
 }
 
-/* If no alt logo, always show default */
 .najd-header__logo-img--alt:only-child,
 .najd-header__logo-img--default:only-child {
   display: block !important;
+}
+
+/* ---- Desktop Search ---- */
+.najd-header__search {
+  salla-search {
+    --search-bg: var(--surface-secondary);
+    --search-border: var(--border-color);
+    --search-radius: var(--radius-full);
+  }
+}
+
+[data-theme="glass"] .najd-header__search salla-search {
+  --search-bg: rgba(255, 255, 255, 0.06);
+  --search-border: rgba(255, 255, 255, 0.10);
 }
 
 /* ---- Mobile Toggle ---- */
@@ -113,43 +174,73 @@
   display: none;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   font-size: 22px;
   color: var(--text-primary);
+  border-radius: var(--radius-md);
+  transition: all var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    background: var(--glass-bg);
+  }
 }
 
-/* ---- Action Buttons ---- */
+/* ---- Action Buttons — Pills style ---- */
 .najd-header__actions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .najd-header__action-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-md);
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-lg);
   font-size: 20px;
   color: var(--text-secondary);
+  position: relative;
   transition: all var(--duration-fast) var(--ease-out);
 
   &:hover {
     background: var(--glass-bg);
-    color: var(--text-primary);
+    color: var(--color-primary);
+    transform: translateY(-1px);
   }
 }
 
 .najd-header__cart-icon {
   font-size: 22px;
   color: var(--text-secondary);
+  transition: color var(--duration-fast);
+}
+
+/* Cart badge styling */
+.najd-header__cart {
+  .s-cart-summary-count {
+    background: var(--color-primary) !important;
+    color: var(--color-primary-reverse, #fff) !important;
+    font-size: 10px !important;
+    min-width: 18px !important;
+    height: 18px !important;
+    border-radius: var(--radius-full) !important;
+    font-weight: 700 !important;
+  }
 }
 
 /* ---- Responsive ---- */
 @media (max-width: 1023px) {
   .najd-header__mobile-toggle { display: flex; }
   .najd-header__search { display: none !important; }
+
+  .najd-header__inner {
+    min-height: 56px;
+  }
+
+  .najd-header__logo-img {
+    height: 40px;
+  }
 }
