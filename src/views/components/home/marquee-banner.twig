@@ -1,22 +1,60 @@
 {# ============================================================
-   Marquee Banner — Scrolling text banner
-   Fields: component.text, .url, .bg_color
+   Marquee Banner — Scrolling text/image banner
+   Fields: component.text, .url, .bg_color, .style, .color_variant, .items[]
+   Supports: Normal, Rotated Ticker, Large text
+   Color variants: default, yellow, primary, dark
+   Items can include images (logos/badges) alongside text
    ============================================================ #}
 
+{% set marquee_style = component.style|default('normal') %}
+{% set color_variant = component.color_variant|default('default') %}
+
 <section class="najd-block najd-block--marquee"
-         {% if component.bg_color %}style="--marquee-bg: {{ component.bg_color }}"{% endif %}>
-    <div class="najd-marquee glass-surface">
+         {% if component.bg_color and color_variant == 'default' %}style="--marquee-bg: {{ component.bg_color }}"{% endif %}>
+    <div class="najd-marquee glass-surface
+        {{ marquee_style == 'ticker' ? ' najd-marquee--ticker' : '' }}
+        {{ marquee_style == 'large' ? ' najd-marquee--large' : '' }}
+        {{ color_variant == 'yellow' ? ' najd-marquee--yellow' : '' }}
+        {{ color_variant == 'primary' ? ' najd-marquee--primary' : '' }}
+        {{ color_variant == 'dark' ? ' najd-marquee--dark' : '' }}">
         <div class="najd-marquee__track">
-            {# Duplicate text for seamless loop #}
-            {% for i in 0..5 %}
-                {% if component.url %}
-                    <a href="{{ component.url }}" class="najd-marquee__text">
-                        {{ component.text }}
-                    </a>
-                {% else %}
-                    <span class="najd-marquee__text">{{ component.text }}</span>
-                {% endif %}
-            {% endfor %}
+            {# If items collection exists (images + text), use it #}
+            {% if component.items|length %}
+                {% for i in 0..3 %}
+                    {% for item in component.items %}
+                        {% if component.url %}
+                            <a href="{{ component.url }}" class="najd-marquee__text">
+                                {% if item.image %}
+                                    <img src="{{ item.image }}" alt="{{ item.text|default('') }}" class="najd-marquee__image" loading="lazy">
+                                {% endif %}
+                                {% if item.text %}
+                                    <span>{{ item.text }}</span>
+                                {% endif %}
+                            </a>
+                        {% else %}
+                            <span class="najd-marquee__text">
+                                {% if item.image %}
+                                    <img src="{{ item.image }}" alt="{{ item.text|default('') }}" class="najd-marquee__image" loading="lazy">
+                                {% endif %}
+                                {% if item.text %}
+                                    <span>{{ item.text }}</span>
+                                {% endif %}
+                            </span>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% else %}
+                {# Fallback: single text repeated #}
+                {% for i in 0..5 %}
+                    {% if component.url %}
+                        <a href="{{ component.url }}" class="najd-marquee__text">
+                            {{ component.text }}
+                        </a>
+                    {% else %}
+                        <span class="najd-marquee__text">{{ component.text }}</span>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </section>

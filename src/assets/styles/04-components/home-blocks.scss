@@ -235,6 +235,7 @@
   }
 }
 
+/* Icon mode */
 .najd-features__icon {
   width: 52px;
   height: 52px;
@@ -261,6 +262,26 @@
 [data-theme="glass"] .najd-features__item:hover .najd-features__icon {
   background: rgba(255, 255, 255, 0.12);
   color: var(--color-primary-light, var(--color-primary));
+}
+
+/* Image mode — uploaded feature images auto-arranged */
+.najd-features__image {
+  width: 64px;
+  height: 64px;
+  margin-bottom: var(--space-md);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform var(--duration-base, 0.3s) var(--ease-out, ease-out);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.najd-features__item:hover .najd-features__image {
+  transform: scale(1.08);
 }
 
 .najd-features__title {
@@ -733,7 +754,7 @@
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-md);
 }
 
 /* Separator dots between marquee items */
@@ -744,6 +765,19 @@
   border-radius: 50%;
   background: var(--color-primary);
   flex-shrink: 0;
+}
+
+/* Marquee image (logo/badge) inside scrolling items */
+.najd-marquee__image {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.najd-marquee--large .najd-marquee__image {
+  height: 40px;
 }
 
 /* Large text marquee variant */
@@ -757,6 +791,11 @@
 .najd-marquee--large .najd-marquee__text::before {
   width: 10px;
   height: 10px;
+}
+
+/* When marquee has images, hide dot separator if text is empty */
+.najd-marquee__text:has(> .najd-marquee__image):not(:has(> span))::before {
+  display: none;
 }
 
 /* ---- Announcement Bar ---- */
@@ -830,16 +869,23 @@
   @media (min-width: 1024px) { grid-template-columns: repeat(6, 1fr); }
 }
 
+/* Wokiee-style: subtle card background with rounded corners */
 .najd-brands-grid__item {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-lg);
-  border-radius: 8px;
-  background: transparent;
-  border: none;
-  transition: opacity var(--duration-base, 0.3s) ease;
+  padding: var(--space-lg) var(--space-xl);
+  border-radius: 12px;
+  background: #f8f8f8;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: all var(--duration-base, 0.3s) var(--ease-out, ease-out);
   aspect-ratio: 3 / 2;
+
+  &:hover {
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.06);
+  }
 }
 
 .najd-brands-grid__logo {
@@ -847,13 +893,23 @@
   max-width: 100%;
   object-fit: contain;
   filter: grayscale(100%);
-  opacity: 0.45;
+  opacity: 0.5;
   transition: all var(--duration-base, 0.3s) var(--ease-out, ease-out);
 }
 
 .najd-brands-grid__item:hover .najd-brands-grid__logo {
   filter: grayscale(0);
   opacity: 1;
+}
+
+[data-theme="glass"] .najd-brands-grid__item {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
 }
 
 [data-theme="glass"] .najd-brands-grid__logo {
@@ -864,6 +920,16 @@
 [data-theme="glass"] .najd-brands-grid__item:hover .najd-brands-grid__logo {
   filter: grayscale(0) brightness(1);
   opacity: 1;
+}
+
+[data-theme="dark"] .najd-brands-grid__item {
+  background: var(--surface-card, #1e1e1e);
+  border-color: rgba(255, 255, 255, 0.06);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
 }
 
 [data-theme="dark"] .najd-brands-grid__logo {

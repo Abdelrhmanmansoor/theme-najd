@@ -1,6 +1,7 @@
 {# ============================================================
-   Store Features — Icon + title + description grid
-   Fields: component.items[].icon, .title, .text
+   Store Features — Image or Icon + title + description grid
+   Fields: component.items[].image, .icon, .title, .text
+   Supports uploaded images (auto-arranged) or Salla icons
    ============================================================ #}
 
 <section class="najd-block najd-block--features">
@@ -9,7 +10,12 @@
             <div class="grid grid-cols-2 md:grid-cols-{{ component.items|length > 4 ? '4' : component.items|length }} gap-0">
                 {% for item in component.items %}
                     <div class="najd-features__item">
-                        {% if item.icon %}
+                        {# Image takes priority over icon #}
+                        {% if item.image %}
+                            <div class="najd-features__image">
+                                <img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy">
+                            </div>
+                        {% elseif item.icon %}
                             <i class="{{ item.icon }} najd-features__icon"></i>
                         {% endif %}
                         {% if item.title %}

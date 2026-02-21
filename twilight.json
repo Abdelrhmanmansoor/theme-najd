@@ -1316,10 +1316,16 @@
                     "maxLength": 8,
                     "fields": [
                         {
+                            "id": "image",
+                            "type": "string",
+                            "format": "image",
+                            "label": "صورة الميزة (اختياري — تظهر بدل الأيقونة إذا رفعتها)"
+                        },
+                        {
                             "id": "icon",
                             "type": "string",
                             "format": "icon",
-                            "label": "الأيقونة"
+                            "label": "الأيقونة (تظهر فقط إذا لم ترفع صورة)"
                         },
                         {
                             "id": "title",
@@ -1699,9 +1705,8 @@
                     "id": "text",
                     "type": "string",
                     "format": "text",
-                    "label": "النص",
-                    "multilanguage": true,
-                    "required": true
+                    "label": "النص (يظهر إذا لم تضف عناصر أدناه)",
+                    "multilanguage": true
                 },
                 {
                     "id": "url",
@@ -1710,10 +1715,91 @@
                     "label": "الرابط"
                 },
                 {
+                    "id": "style",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "نمط الشريط",
+                    "selected": [
+                        {
+                            "label": "عادي — شريط أفقي مستقيم",
+                            "value": "normal"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "عادي — شريط أفقي مستقيم",
+                            "value": "normal"
+                        },
+                        {
+                            "label": "مائل — شريط مائل بزاوية (مثل Wokiee)",
+                            "value": "ticker"
+                        },
+                        {
+                            "label": "كبير — نص كبير عريض",
+                            "value": "large"
+                        }
+                    ],
+                    "source": "Manual"
+                },
+                {
+                    "id": "color_variant",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "لون الشريط",
+                    "selected": [
+                        {
+                            "label": "افتراضي — يتبع لون الخلفية",
+                            "value": "default"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "افتراضي — يتبع لون الخلفية",
+                            "value": "default"
+                        },
+                        {
+                            "label": "أصفر — لافت للنظر (مثل Wokiee)",
+                            "value": "yellow"
+                        },
+                        {
+                            "label": "اللون الأساسي — يتبع لون المتجر",
+                            "value": "primary"
+                        },
+                        {
+                            "label": "داكن — خلفية سوداء ونص أبيض",
+                            "value": "dark"
+                        }
+                    ],
+                    "source": "Manual"
+                },
+                {
                     "id": "bg_color",
                     "type": "string",
                     "format": "text",
-                    "label": "لون الخلفية"
+                    "label": "لون خلفية مخصص (يعمل فقط مع النمط الافتراضي)"
+                },
+                {
+                    "id": "items",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "عناصر الشريط (صور + نصوص — تتكرر تلقائياً)",
+                    "minLength": 0,
+                    "maxLength": 20,
+                    "fields": [
+                        {
+                            "id": "image",
+                            "type": "string",
+                            "format": "image",
+                            "label": "صورة / شعار (اختياري)"
+                        },
+                        {
+                            "id": "text",
+                            "type": "string",
+                            "format": "text",
+                            "label": "نص (اختياري)",
+                            "multilanguage": true
+                        }
+                    ]
                 }
             ]
         },
