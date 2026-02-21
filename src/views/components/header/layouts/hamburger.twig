@@ -1,0 +1,19 @@
+{# ===== Header Layout: Hamburger (Sidebar) ===== #}
+{# Always hamburger, logo center, actions right, app-like feel #}
+
+<div class="najd-header__main najd-header__main--hamburger glass-surface" id="najd-header-main">
+    <div class="container">
+        <div class="najd-header__inner">
+            {# Hamburger (always visible, all screens) #}
+            <a class="najd-header__mobile-toggle najd-header__mobile-toggle--always" href="#mobile-menu" aria-label="Open menu">
+                <i class="sicon-menu"></i>
+            </a>
+
+            <div class="flex-1 flex justify-center">
+                {% include 'components.header.partials.logo' %}
+            </div>
+
+            {% include 'components.header.partials.actions' %}
+        </div>
+    </div>
+</div>

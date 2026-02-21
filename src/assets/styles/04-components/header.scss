@@ -1,6 +1,13 @@
 /* ============================================================
    Header Component — NAJD PREMIUM
-   Distinctive floating glass header with accent line
+   Supports 6 layout variations: classic, centered, minimal,
+   mega, transparent, hamburger
+   Themes: light (default), dark, glass (liquid glass)
+   ============================================================ */
+
+
+/* ============================================================
+   I. BASE STYLES — shared across all layouts
    ============================================================ */
 
 .najd-header {
@@ -10,7 +17,9 @@
   transition: transform var(--duration-slow) var(--ease-out);
 }
 
+
 /* ---- Accent gradient line at very top ---- */
+
 .najd-header::before {
   content: '';
   display: block;
@@ -37,7 +46,9 @@
   100% { background-position: 300% 50%; }
 }
 
+
 /* ---- Top Bar ---- */
+
 .najd-header__topbar {
   padding: 8px 0;
   font-size: var(--text-xs);
@@ -77,7 +88,9 @@
   }
 }
 
-/* ---- Main Navigation ---- */
+
+/* ---- Main Navigation Bar ---- */
+
 .najd-header__main {
   border-radius: 0;
   border-left: none;
@@ -109,16 +122,9 @@
   padding: 4px 0;
 }
 
-.najd-header__inner--centered {
-  justify-content: center;
-  flex-wrap: wrap;
-
-  .najd-header__logo { order: 0; flex: 0 0 100%; text-align: center; }
-  .najd-header__search { order: 2; }
-  .najd-header__actions { order: 1; }
-}
 
 /* ---- Logo ---- */
+
 .najd-header__logo {
   display: flex;
   align-items: center;
@@ -145,6 +151,7 @@
 [data-theme="dark"]  .najd-header__logo-img--alt {
   display: block;
 }
+
 [data-theme="glass"] .najd-header__logo-img--default,
 [data-theme="dark"]  .najd-header__logo-img--default {
   display: none;
@@ -155,7 +162,9 @@
   display: block !important;
 }
 
+
 /* ---- Desktop Search ---- */
+
 .najd-header__search {
   salla-search {
     --search-bg: var(--surface-secondary);
@@ -169,7 +178,9 @@
   --search-border: rgba(255, 255, 255, 0.10);
 }
 
+
 /* ---- Mobile Toggle ---- */
+
 .najd-header__mobile-toggle {
   display: none;
   align-items: center;
@@ -186,7 +197,9 @@
   }
 }
 
+
 /* ---- Action Buttons — Pills style ---- */
+
 .najd-header__actions {
   display: flex;
   align-items: center;
@@ -218,7 +231,9 @@
   transition: color var(--duration-fast);
 }
 
-/* Cart badge styling */
+
+/* ---- Cart badge ---- */
+
 .najd-header__cart {
   .s-cart-summary-count {
     background: var(--color-primary) !important;
@@ -231,10 +246,494 @@
   }
 }
 
-/* ---- Responsive ---- */
+
+/* ============================================================
+   II. LAYOUT VARIATIONS
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   A. Classic (.najd-header--classic)
+   Default layout — no extra rules needed beyond base styles.
+   The base .najd-header + .najd-header__inner already produce
+   the classic look: logo left, nav center, actions right.
+   ------------------------------------------------------------ */
+
+.najd-header--classic {
+  /* Intentionally inherits base styles without modification */
+}
+
+
+/* ------------------------------------------------------------
+   B. Centered (.najd-header--centered)
+   Logo sits centered on top row; navigation spans full width
+   below with a border separator.
+   ------------------------------------------------------------ */
+
+.najd-header--centered {
+
+  .najd-header__centered-top {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 12px 0;
+  }
+
+  /* Actions / utility on the start column */
+  .najd-header__centered-start {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  /* Logo occupies the center column */
+  .najd-header__centered-logo {
+    grid-column: 2;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Actions on the end column */
+  .najd-header__centered-end {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  /* Navigation row — full width beneath logo */
+  .najd-header__centered-nav {
+    border-top: 1px solid var(--border-color);
+    padding-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+  }
+}
+
+[data-theme="dark"] .najd-header--centered {
+  .najd-header__centered-nav {
+    border-top-color: rgba(255, 255, 255, 0.06);
+  }
+}
+
+[data-theme="glass"] .najd-header--centered {
+  .najd-header__centered-nav {
+    border-top-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .najd-header__centered-logo {
+    filter: drop-shadow(0 0 12px rgba(188, 130, 243, 0.15));
+  }
+}
+
+
+/* ------------------------------------------------------------
+   C. Minimal (.najd-header--minimal)
+   Thin header with a hamburger menu toggle always visible.
+   Intended for clean, content-first layouts.
+   ------------------------------------------------------------ */
+
+.najd-header--minimal {
+
+  /* Thinner bar */
+  .najd-header__main--minimal {
+    min-height: 60px;
+  }
+
+  .najd-header__inner {
+    min-height: 52px;
+  }
+
+  /* Always show the hamburger toggle, even on desktop */
+  .najd-header__mobile-toggle--always {
+    display: flex;
+  }
+
+  /* Slightly smaller logo in minimal mode */
+  .najd-header__logo-img {
+    height: 44px;
+  }
+
+  /* Hide desktop navigation — it lives inside the drawer */
+  .najd-header__nav--desktop {
+    display: none;
+  }
+}
+
+[data-theme="dark"] .najd-header--minimal {
+  .najd-header__main--minimal {
+    border-bottom-color: rgba(255, 255, 255, 0.04);
+  }
+}
+
+[data-theme="glass"] .najd-header--minimal {
+  .najd-header__main--minimal {
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .najd-header__mobile-toggle--always {
+    color: rgba(255, 255, 255, 0.85);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 10px rgba(188, 130, 243, 0.12);
+    }
+  }
+}
+
+
+/* ------------------------------------------------------------
+   D. Mega (.najd-header--mega)
+   Two-tier header: top row has logo + search + actions,
+   bottom row is a full-width navigation bar.
+   ------------------------------------------------------------ */
+
+.najd-header--mega {
+
+  /* Top tier: logo, search, actions */
+  .najd-header__mega-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    gap: var(--space-lg);
+  }
+
+  /* Search field takes available space */
+  .najd-header__mega-search {
+    flex: 1;
+    max-width: 600px;
+    margin-inline: auto;
+  }
+
+  /* Bottom tier: navigation */
+  .najd-header__mega-nav {
+    border-top: 1px solid var(--border-color);
+    padding: 8px 0;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .najd-header__mega-nav a,
+  .najd-header__mega-nav .nav-link {
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: var(--radius-md);
+    transition: all var(--duration-fast) var(--ease-out);
+    white-space: nowrap;
+
+    &:hover {
+      background: var(--glass-bg);
+      color: var(--color-primary);
+    }
+  }
+}
+
+[data-theme="dark"] .najd-header--mega {
+  .najd-header__mega-nav {
+    border-top-color: rgba(255, 255, 255, 0.06);
+  }
+}
+
+[data-theme="glass"] .najd-header--mega {
+  .najd-header__mega-nav {
+    border-top-color: rgba(255, 255, 255, 0.08);
+    position: relative;
+
+    /* Subtle glow line along the top border */
+    &::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(188, 130, 243, 0.25),
+        rgba(90, 200, 250, 0.25),
+        transparent
+      );
+      pointer-events: none;
+    }
+  }
+
+  .najd-header__mega-search salla-search {
+    --search-bg: rgba(255, 255, 255, 0.06);
+    --search-border: rgba(255, 255, 255, 0.10);
+  }
+
+  .najd-header__mega-nav a:hover,
+  .najd-header__mega-nav .nav-link:hover {
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 0 8px rgba(188, 130, 243, 0.1);
+  }
+}
+
+
+/* ------------------------------------------------------------
+   E. Transparent (.najd-header--transparent)
+   Overlays the hero/banner with a see-through header.
+   Becomes solid on scroll via the .header-scrolled body class.
+   ------------------------------------------------------------ */
+
+.najd-header--transparent {
+
+  /* Base transparent state */
+  &[data-transparent="true"] {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: var(--z-header, 100);
+
+    .najd-header__main {
+      background: transparent;
+      border-bottom: none;
+      box-shadow: none;
+    }
+
+    /* Remove accent line when transparent */
+    &::before {
+      display: none;
+    }
+
+    /* All child text / icons turn white */
+    .najd-header__inner,
+    .najd-header__action-btn,
+    .najd-header__cart-icon,
+    .najd-header__mobile-toggle,
+    .najd-header__locale-btn,
+    .najd-header__scope-btn {
+      color: #fff;
+    }
+
+    .najd-header__topbar {
+      background: rgba(0, 0, 0, 0.15);
+      border-bottom-color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .najd-header__locale-btn,
+    .najd-header__scope-btn {
+      border-color: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.85);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.4);
+        color: #fff;
+      }
+    }
+
+    /* Navigation links */
+    .najd-header__nav a,
+    .najd-header__nav .nav-link {
+      color: rgba(255, 255, 255, 0.9);
+
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    /* Logo — prefer the alt (white) version */
+    .najd-header__logo-img--default { display: none; }
+    .najd-header__logo-img--alt { display: block; }
+  }
+
+  /* Scrolled state — body class triggers solid background */
+  .header-scrolled &[data-transparent="true"],
+  body.header-scrolled &[data-transparent="true"] {
+    position: sticky;
+
+    &::before {
+      display: block;
+    }
+
+    .najd-header__main {
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .najd-header__inner,
+    .najd-header__action-btn,
+    .najd-header__cart-icon,
+    .najd-header__mobile-toggle {
+      color: var(--text-primary);
+    }
+
+    .najd-header__topbar {
+      background: var(--surface-secondary);
+      border-bottom-color: var(--border-color);
+      color: var(--text-secondary);
+    }
+
+    .najd-header__locale-btn,
+    .najd-header__scope-btn {
+      border-color: var(--border-color);
+      color: var(--text-secondary);
+    }
+
+    /* Restore default logo behaviour */
+    .najd-header__logo-img--default { display: block; }
+    .najd-header__logo-img--alt { display: none; }
+  }
+}
+
+[data-theme="dark"] .najd-header--transparent {
+  &[data-transparent="true"] {
+    .najd-header__topbar {
+      background: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .header-scrolled &[data-transparent="true"],
+  body.header-scrolled &[data-transparent="true"] {
+    .najd-header__main {
+      border-bottom-color: rgba(255, 255, 255, 0.04);
+    }
+  }
+}
+
+[data-theme="glass"] .najd-header--transparent {
+  &[data-transparent="true"] {
+    .najd-header__topbar {
+      background: rgba(0, 0, 0, 0.2);
+      border-bottom-color: rgba(255, 255, 255, 0.06);
+    }
+  }
+
+  .header-scrolled &[data-transparent="true"],
+  body.header-scrolled &[data-transparent="true"] {
+    .najd-header__main {
+      background: rgba(255, 255, 255, 0.06);
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+
+/* ------------------------------------------------------------
+   F. Hamburger (.najd-header--hamburger)
+   Permanently hamburger-driven layout — menu toggle visible
+   at all screen sizes, logo centered via flexbox.
+   ------------------------------------------------------------ */
+
+.najd-header--hamburger {
+
+  .najd-header__inner {
+    justify-content: flex-start;
+  }
+
+  /* Always-visible hamburger trigger */
+  .najd-header__mobile-toggle--always {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  /* Logo centered: push it with flex-1 spacers */
+  .najd-header__logo-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Hide desktop navigation — everything lives in the drawer */
+  .najd-header__nav--desktop {
+    display: none;
+  }
+
+  /* Actions stay at the end */
+  .najd-header__actions {
+    flex-shrink: 0;
+  }
+}
+
+[data-theme="dark"] .najd-header--hamburger {
+  .najd-header__mobile-toggle--always {
+    color: var(--text-primary);
+  }
+}
+
+[data-theme="glass"] .najd-header--hamburger {
+  .najd-header__mobile-toggle--always {
+    color: rgba(255, 255, 255, 0.85);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 10px rgba(188, 130, 243, 0.12);
+    }
+  }
+
+  .najd-header__logo-wrapper {
+    filter: drop-shadow(0 0 10px rgba(90, 200, 250, 0.1));
+  }
+}
+
+
+/* ============================================================
+   III. GLASS MODE — shared enhancements across all variants
+   ============================================================ */
+
+[data-theme="glass"] .najd-header {
+
+  /* Subtle inner glow on the entire header */
+  .najd-header__main {
+    box-shadow:
+      0 4px 30px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  /* Action buttons pick up a glass hover */
+  .najd-header__action-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 8px rgba(188, 130, 243, 0.1);
+  }
+
+  /* Cart badge glow */
+  .najd-header__cart .s-cart-summary-count {
+    box-shadow: 0 0 6px rgba(var(--color-primary-rgb, 188, 130, 243), 0.35);
+  }
+
+  /* Search field glass border */
+  .najd-header__search salla-search {
+    --search-bg: rgba(255, 255, 255, 0.06);
+    --search-border: rgba(255, 255, 255, 0.10);
+  }
+
+  /* Topbar utility buttons */
+  .najd-header__locale-btn:hover,
+  .najd-header__scope-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 6px rgba(90, 200, 250, 0.1);
+  }
+}
+
+
+/* ============================================================
+   IV. RESPONSIVE STYLES
+   ============================================================ */
+
 @media (max-width: 1023px) {
-  .najd-header__mobile-toggle { display: flex; }
-  .najd-header__search { display: none !important; }
+
+  /* Base mobile overrides */
+  .najd-header__mobile-toggle {
+    display: flex;
+  }
+
+  .najd-header__search {
+    display: none !important;
+  }
 
   .najd-header__inner {
     min-height: 56px;
@@ -242,5 +741,69 @@
 
   .najd-header__logo-img {
     height: 40px;
+  }
+
+  /* ---- Centered: stack to single row on mobile ---- */
+  .najd-header--centered {
+    .najd-header__centered-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+    }
+
+    .najd-header__centered-nav {
+      display: none;
+    }
+  }
+
+  /* ---- Mega: collapse to single row on mobile ---- */
+  .najd-header--mega {
+    .najd-header__mega-top {
+      padding: 8px 0;
+    }
+
+    .najd-header__mega-search {
+      display: none;
+    }
+
+    .najd-header__mega-nav {
+      display: none;
+    }
+  }
+
+  /* ---- Transparent: reduce topbar padding ---- */
+  .najd-header--transparent {
+    &[data-transparent="true"] .najd-header__topbar {
+      padding: 6px 0;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+
+  .najd-header__inner {
+    gap: var(--space-sm);
+    min-height: 52px;
+  }
+
+  .najd-header__logo-img {
+    height: 36px;
+  }
+
+  .najd-header__action-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+  }
+
+  .najd-header__actions {
+    gap: 4px;
+  }
+
+  .najd-header__mobile-toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
   }
 }

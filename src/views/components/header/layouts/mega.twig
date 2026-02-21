@@ -1,0 +1,44 @@
+{# ===== Header Layout: Mega ===== #}
+{# Full-width top bar, large logo + search, full mega-menu bar below #}
+
+{% include 'components.header.partials.topbar' %}
+
+<div class="najd-header__main najd-header__main--mega glass-surface" id="najd-header-main">
+    <div class="container">
+        {# Row 1: Logo + Search + Actions #}
+        <div class="najd-header__mega-top">
+            <a class="lg:hidden najd-header__mobile-toggle" href="#mobile-menu" aria-label="Open menu">
+                <i class="sicon-menu"></i>
+            </a>
+
+            {% include 'components.header.partials.logo' %}
+
+            {# Large inline search #}
+            <div class="najd-header__mega-search hidden lg:block flex-1 max-w-2xl mx-8">
+                <salla-search inline oval height="44"></salla-search>
+            </div>
+
+            {% include 'components.header.partials.actions' %}
+        </div>
+
+        {# Row 2: Full-width navigation bar #}
+        <div class="najd-header__mega-nav hidden lg:block border-t" style="border-color: var(--border-color);">
+            <div class="flex items-center justify-between py-2">
+                {# Categories menu button #}
+                <div class="flex items-center gap-2 font-bold text-sm" style="color: var(--color-primary);">
+                    <i class="sicon-menu text-lg"></i>
+                    <span>{{ trans('common.elements.all_categories') }}</span>
+                </div>
+
+                <custom-main-menu></custom-main-menu>
+
+                {# Extra CTA #}
+                {% if theme.settings.get('announcement_text') %}
+                    <a href="{{ theme.settings.get('announcement_url', '#') }}" class="text-xs font-bold" style="color: var(--color-primary);">
+                        {{ theme.settings.get('announcement_text')|slice(0, 40) }}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

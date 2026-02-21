@@ -1,13 +1,56 @@
-{# Products Listing Page #}
+{# ============================================================
+   Products Listing Page — NAJD PREMIUM
+   Features: Grid/List toggle, Breadcrumbs
+   ============================================================ #}
 {% extends "layouts.master" %}
+
 {% block content %}
     <div class="container py-8 lg:py-12">
         {% if theme.settings.get('enable_breadcrumb', true) %}
             <salla-breadcrumb></salla-breadcrumb>
         {% endif %}
-        <salla-products-list></salla-products-list>
+
+        {# Grid/List Toggle #}
+        {% if theme.settings.get('grid_list_toggle', true) %}
+            <div class="najd-view-toggle flex items-center justify-end gap-2 mb-6">
+                <button class="najd-view-toggle__btn is-active" data-view="grid" aria-label="Grid view">
+                    <i class="sicon-list2"></i>
+                </button>
+                <button class="najd-view-toggle__btn" data-view="list" aria-label="List view">
+                    <i class="sicon-menu"></i>
+                </button>
+            </div>
+        {% endif %}
+
+        <salla-products-list id="najd-products-list"></salla-products-list>
     </div>
 {% endblock %}
+
 {% block scripts %}
     <script defer src="{{ 'product.js' | asset }}"></script>
+    {% if theme.settings.get('grid_list_toggle', true) %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtns = document.querySelectorAll('.najd-view-toggle__btn');
+            const productsList = document.getElementById('najd-products-list');
+            if (!toggleBtns.length || !productsList) return;
+
+            // Restore saved preference
+            const saved = localStorage.getItem('najd-view-mode');
+            if (saved === 'list') {
+                productsList.classList.add('najd-list-view');
+                toggleBtns.forEach(b => b.classList.toggle('is-active', b.dataset.view === 'list'));
+            }
+
+            toggleBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const mode = this.dataset.view;
+                    toggleBtns.forEach(b => b.classList.toggle('is-active', b === this));
+                    productsList.classList.toggle('najd-list-view', mode === 'list');
+                    localStorage.setItem('najd-view-mode', mode);
+                });
+            });
+        });
+    </script>
+    {% endif %}
 {% endblock %}

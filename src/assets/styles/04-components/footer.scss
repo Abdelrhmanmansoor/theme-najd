@@ -1,6 +1,13 @@
 /* ============================================================
    Footer Component — NAJD PREMIUM
-   Distinctive footer with gradient border and glass newsletter
+   Supports 5 layout variations:
+     classic / centered / minimal / columns / magazine
+   Adapts to 3 display modes: light (default), dark, glass
+   ============================================================ */
+
+
+/* ============================================================
+   1. BASE STYLES (shared across all layouts)
    ============================================================ */
 
 .najd-footer {
@@ -9,7 +16,8 @@
   margin-top: var(--space-3xl);
 }
 
-/* Gradient top accent line */
+/* ---- Gradient top accent line ---- */
+
 .najd-footer::before {
   content: '';
   display: block;
@@ -27,7 +35,8 @@
   );
 }
 
-/* Newsletter section */
+/* ---- Newsletter section (base) ---- */
+
 .najd-footer__newsletter {
   padding: var(--space-3xl) 0;
   text-align: center;
@@ -50,7 +59,8 @@
   box-shadow: var(--glass-shadow);
 }
 
-/* Main footer area */
+/* ---- Main footer area (base) ---- */
+
 .najd-footer__main {
   border-radius: 0;
   border-left: none;
@@ -75,6 +85,8 @@
 [data-theme="dark"] .najd-footer__main {
   background: var(--surface-secondary);
 }
+
+/* ---- Footer headings ---- */
 
 .najd-footer__heading {
   font-size: var(--text-base);
@@ -101,7 +113,8 @@
   color: #fff;
 }
 
-/* Footer links */
+/* ---- Footer links ---- */
+
 .najd-footer__main a {
   color: var(--text-secondary);
   transition: all var(--duration-fast) var(--ease-out);
@@ -118,7 +131,8 @@
   &:hover { color: #fff; }
 }
 
-/* Social icons */
+/* ---- Social icons ---- */
+
 .najd-footer__social a {
   display: inline-flex;
   align-items: center;
@@ -141,7 +155,8 @@
   }
 }
 
-/* Bottom bar */
+/* ---- Bottom bar (base) ---- */
+
 .najd-footer__bottom {
   border-top: 1px solid var(--border-color);
   padding: var(--space-lg) 0;
@@ -153,11 +168,446 @@
   border-top-color: rgba(255, 255, 255, 0.06);
 }
 
-/* Payment icons */
+[data-theme="glass"] .najd-footer__bottom {
+  border-top-color: var(--glass-border);
+}
+
+[data-theme="dark"] .najd-footer__bottom {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ---- Payment icons ---- */
+
 .najd-footer__payments img {
   height: 28px;
   opacity: 0.6;
   transition: opacity var(--duration-fast);
 
   &:hover { opacity: 1; }
+}
+
+
+/* ============================================================
+   2. LAYOUT: CLASSIC (default)
+   Newsletter top, 5-column grid, bottom bar with copyright
+   ============================================================ */
+
+/* Classic uses the base styles as-is — no additional overrides needed.
+   The 5-column grid and newsletter-top structure are defined in the
+   template via utility classes (grid-cols-5, etc.). */
+
+
+/* ============================================================
+   3. LAYOUT: CENTERED
+   Everything centered — elegant, fashion-store feel
+   ============================================================ */
+
+.najd-footer__main--centered {
+  text-align: center;
+  padding: var(--space-3xl) 0 var(--space-2xl);
+}
+
+/* Center the logo */
+.najd-footer__main--centered .najd-footer__logo {
+  display: inline-block;
+  margin-bottom: var(--space-lg);
+}
+
+.najd-footer__main--centered .najd-footer__logo img {
+  height: 56px;
+  width: auto;
+  margin-inline: auto;
+}
+
+/* Center heading underline */
+.najd-footer__main--centered .najd-footer__heading::after {
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+}
+
+/* Horizontal inline links */
+.najd-footer__centered-links salla-menu {
+  display: inline-flex;
+}
+
+.najd-footer__centered-links salla-menu::part(wrapper),
+.najd-footer__centered-links salla-menu ul,
+.najd-footer__centered-links salla-menu nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+}
+
+.najd-footer__centered-links salla-menu li {
+  display: inline;
+}
+
+/* Override the link slide effect for centered layout — keep centered */
+.najd-footer--centered .najd-footer__main a:hover {
+  padding-inline-start: 0;
+}
+
+/* Centered social icons */
+.najd-footer--centered salla-social {
+  display: flex;
+  justify-content: center;
+}
+
+/* Bottom bar centered */
+.najd-footer--centered .najd-footer__bottom {
+  text-align: center;
+}
+
+/* -- Centered: Glass mode -- */
+[data-theme="glass"] .najd-footer__main--centered {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-top: 1px solid var(--glass-border);
+}
+
+/* -- Centered: Dark mode -- */
+[data-theme="dark"] .najd-footer__main--centered {
+  background: var(--surface-secondary);
+}
+
+.footer-is-dark .najd-footer__main--centered {
+  background: #0c0c0e;
+  color: #b0b0be;
+}
+
+
+/* ============================================================
+   4. LAYOUT: MINIMAL
+   Single row: logo left, links center, social right. Thin.
+   ============================================================ */
+
+.najd-footer__main--minimal {
+  padding: 20px 0;
+}
+
+/* Single-row flex layout is handled via template utility classes,
+   but we ensure the correct spacing and sizing here. */
+.najd-footer__main--minimal .najd-footer__logo img {
+  height: 40px;
+  width: auto;
+}
+
+/* Horizontal inline links */
+.najd-footer__minimal-links salla-menu {
+  display: inline-flex;
+}
+
+.najd-footer__minimal-links salla-menu::part(wrapper),
+.najd-footer__minimal-links salla-menu ul,
+.najd-footer__minimal-links salla-menu nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 24px;
+}
+
+.najd-footer__minimal-links salla-menu li {
+  display: inline;
+}
+
+/* Override the link slide effect for minimal — keep alignment stable */
+.najd-footer--minimal .najd-footer__main a:hover {
+  padding-inline-start: 0;
+}
+
+/* No heading underlines needed in minimal */
+.najd-footer--minimal .najd-footer__heading::after {
+  display: none;
+}
+
+/* Minimal footer has no newsletter section — hidden via template,
+   but just in case: */
+.najd-footer--minimal .najd-footer__newsletter {
+  display: none;
+}
+
+/* -- Minimal: Glass mode -- */
+[data-theme="glass"] .najd-footer__main--minimal {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-top: 1px solid var(--glass-border);
+}
+
+/* -- Minimal: Dark mode -- */
+[data-theme="dark"] .najd-footer__main--minimal {
+  background: var(--surface-secondary);
+}
+
+.footer-is-dark .najd-footer__main--minimal {
+  background: #0c0c0e;
+  color: #b0b0be;
+}
+
+
+/* ============================================================
+   5. LAYOUT: COLUMNS (Rich)
+   Wide newsletter banner, 6-column grid, rich bottom bar
+   ============================================================ */
+
+/* ---- Wide newsletter banner (flex row: text left, form right) ---- */
+
+.najd-footer__newsletter--wide {
+  padding: var(--space-2xl) 0;
+  text-align: start;
+}
+
+.najd-footer__newsletter--wide .glass-surface {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  background: var(--surface-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-2xl);
+}
+
+@media (min-width: 1024px) {
+  .najd-footer__newsletter--wide .glass-surface {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+[data-theme="glass"] .najd-footer__newsletter--wide .glass-surface {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+[data-theme="dark"] .najd-footer__newsletter--wide .glass-surface {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.footer-is-dark .najd-footer__newsletter--wide .glass-surface {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ---- Rich bottom bar ---- */
+
+.najd-footer__bottom--rich {
+  padding: var(--space-xl) 0;
+  font-size: var(--text-sm);
+}
+
+.najd-footer__bottom--rich salla-payments img {
+  height: 32px;
+}
+
+/* -- Columns: Glass mode -- */
+[data-theme="glass"] .najd-footer--columns .najd-footer__main {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-top: 1px solid var(--glass-border);
+}
+
+/* -- Columns: Dark mode -- */
+[data-theme="dark"] .najd-footer--columns .najd-footer__main {
+  background: var(--surface-secondary);
+}
+
+[data-theme="dark"] .najd-footer__bottom--rich {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+
+/* ============================================================
+   6. LAYOUT: MAGAZINE
+   Hero newsletter, 3-column with large headings,
+   styled for content-heavy stores
+   ============================================================ */
+
+/* ---- Hero newsletter section ---- */
+
+.najd-footer__newsletter--hero {
+  padding: 0;
+  text-align: center;
+  background: var(--gradient-primary);
+  color: var(--color-primary-reverse, #fff);
+}
+
+.najd-footer__newsletter--hero h3 {
+  color: inherit;
+  font-weight: 800;
+}
+
+.najd-footer__newsletter--hero p {
+  color: inherit;
+  opacity: 0.85;
+}
+
+/* Ensure newsletter input is visible on gradient bg */
+.najd-footer__newsletter--hero salla-newsletter {
+  --salla-newsletter-bg: rgba(255, 255, 255, 0.15);
+  --salla-newsletter-border: rgba(255, 255, 255, 0.25);
+  --salla-newsletter-text: #fff;
+  --salla-newsletter-placeholder: rgba(255, 255, 255, 0.6);
+}
+
+/* -- Hero newsletter: Glass mode -- */
+[data-theme="glass"] .najd-footer__newsletter--hero {
+  background: linear-gradient(
+    135deg,
+    var(--glass-orb-1, #7c5cfc),
+    var(--glass-orb-2, #06d6a0)
+  );
+  position: relative;
+}
+
+[data-theme="glass"] .najd-footer__newsletter--hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+/* -- Hero newsletter: Dark mode -- */
+[data-theme="dark"] .najd-footer__newsletter--hero {
+  background: var(--gradient-primary);
+}
+
+/* ---- Magazine main section ---- */
+
+.najd-footer__main--magazine {
+  padding: var(--space-3xl) 0 var(--space-2xl);
+}
+
+/* Larger headings for magazine style */
+.najd-footer__heading--lg {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: var(--space-xl);
+  letter-spacing: -0.01em;
+}
+
+.najd-footer__heading--lg::after {
+  width: 40px;
+  height: 3px;
+}
+
+/* Magazine logo is slightly larger */
+.najd-footer__main--magazine .najd-footer__logo img {
+  height: 56px;
+  width: auto;
+}
+
+/* Generous spacing between columns handled via template gap utilities,
+   reinforced here for consistency */
+.najd-footer__main--magazine .najd-footer__heading {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* Magazine tax number card */
+.najd-footer--magazine .rounded-xl {
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.najd-footer--magazine .rounded-xl:hover {
+  border-color: var(--color-primary);
+}
+
+/* -- Magazine: Glass mode -- */
+[data-theme="glass"] .najd-footer__main--magazine {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-top: 1px solid var(--glass-border);
+}
+
+[data-theme="glass"] .najd-footer--magazine .rounded-xl {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+}
+
+/* -- Magazine: Dark mode -- */
+[data-theme="dark"] .najd-footer__main--magazine {
+  background: var(--surface-secondary);
+}
+
+[data-theme="dark"] .najd-footer--magazine .rounded-xl {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.footer-is-dark .najd-footer__main--magazine {
+  background: #0c0c0e;
+  color: #b0b0be;
+}
+
+.footer-is-dark .najd-footer__heading--lg {
+  color: #fff;
+}
+
+.footer-is-dark .najd-footer--magazine .rounded-xl {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+
+/* ============================================================
+   7. RESPONSIVE ADJUSTMENTS
+   ============================================================ */
+
+@media (max-width: 767px) {
+
+  /* Centered: stack vertically on mobile */
+  .najd-footer__centered-links salla-menu::part(wrapper),
+  .najd-footer__centered-links salla-menu ul,
+  .najd-footer__centered-links salla-menu nav {
+    gap: 4px 16px;
+  }
+
+  /* Minimal: stack vertically on mobile */
+  .najd-footer__main--minimal {
+    padding: 16px 0;
+  }
+
+  .najd-footer__minimal-links salla-menu::part(wrapper),
+  .najd-footer__minimal-links salla-menu ul,
+  .najd-footer__minimal-links salla-menu nav {
+    gap: 4px 16px;
+  }
+
+  /* Magazine: reduce heading size on mobile */
+  .najd-footer__heading--lg {
+    font-size: 16px;
+  }
+
+  /* Columns: newsletter stacks on mobile */
+  .najd-footer__newsletter--wide .glass-surface {
+    text-align: center;
+  }
+}
+
+@media (max-width: 1023px) {
+
+  /* Minimal: center-align on tablet */
+  .najd-footer__main--minimal {
+    text-align: center;
+  }
+
+  .najd-footer__main--minimal .najd-footer__logo {
+    display: inline-block;
+  }
+
+  .najd-footer--minimal salla-social {
+    display: flex;
+    justify-content: center;
+  }
 }

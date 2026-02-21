@@ -53,9 +53,31 @@
   --text-4xl:  40px;
   --text-5xl:  52px;
 
-  /* ---- Section spacing ---- */
+  /* ---- Section spacing (configurable) ---- */
   --section-gap: 80px;
+
+  /* ---- Border radius style (configurable) ---- */
+  --radius-global: var(--radius-lg);
+
+  /* ---- Card style ---- */
+  --card-shadow: var(--shadow-sm);
+  --card-border: 1px solid var(--border-color);
 }
+
+/* ---- Section spacing variants ---- */
+[data-spacing="compact"]  { --section-gap: 48px; }
+[data-spacing="normal"]   { --section-gap: 80px; }
+[data-spacing="spacious"] { --section-gap: 120px; }
+
+/* ---- Border radius variants ---- */
+[data-radius="rounded"] { --radius-global: 16px; --card-radius: var(--radius-2xl); }
+[data-radius="sharp"]   { --radius-global: 4px;  --card-radius: 8px; }
+[data-radius="pill"]    { --radius-global: 9999px; --card-radius: var(--radius-2xl); }
+
+/* ---- Card style variants ---- */
+[data-card-style="shadow"]   { --card-shadow: var(--shadow-md); --card-border: none; }
+[data-card-style="bordered"] { --card-shadow: none; --card-border: 2px solid var(--border-color); }
+[data-card-style="flat"]     { --card-shadow: none; --card-border: none; }
 
 /* ============================================================
    LIGHT MODE (default)

@@ -26,6 +26,10 @@
 @use './04-components/product-card';
 @use './04-components/slider';
 @use './04-components/salla-overrides';
+@use './04-components/preloader';
+@use './04-components/mobile-nav';
+@use './04-components/newsletter-popup';
+@use './04-components/shipping-bar';
 
 /* 05 — Utilities: Helpers, overrides */
 @use './05-utilities/glass-utilities';

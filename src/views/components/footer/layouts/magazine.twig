@@ -1,0 +1,86 @@
+{# ===== Footer Layout: Magazine ===== #}
+{# Hero newsletter, 3-column with large headings, styled for content-heavy stores #}
+
+{% set show_newsletter = theme.settings.get('show_newsletter', true) %}
+{% set newsletter_title = theme.settings.get('newsletter_title') %}
+{% set alt_logo = theme.settings.get('alt_logo') %}
+{% set show_alt_logo_in_footer = theme.settings.get('show_alt_logo_in_footer', false) %}
+
+{# Hero Newsletter Section #}
+{% if show_newsletter %}
+<div class="najd-footer__newsletter najd-footer__newsletter--hero" style="background: var(--gradient-primary);">
+    <div class="container py-12 lg:py-16 text-center" style="color: var(--color-primary-reverse, #fff);">
+        <h3 class="text-2xl lg:text-3xl font-extrabold mb-3">
+            {{ newsletter_title ? newsletter_title : trans('blocks.footer.newsletter') }}
+        </h3>
+        <p class="text-sm opacity-80 mb-6 max-w-md mx-auto">{{ trans('blocks.footer.newsletter_desc') }}</p>
+        <salla-newsletter class="max-w-md mx-auto"></salla-newsletter>
+    </div>
+</div>
+{% endif %}
+
+{# Main Footer — 3 Large Columns #}
+<div class="najd-footer__main najd-footer__main--magazine glass-surface">
+    <div class="container">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-16 py-12 lg:py-16">
+            {# Column 1: Brand #}
+            <div>
+                <a href="{{ link('/') }}" class="najd-footer__logo mb-5 block">
+                    {% if show_alt_logo_in_footer and alt_logo %}
+                        <img src="{{ alt_logo }}" alt="{{ store.name }}" class="h-14 w-auto">
+                    {% else %}
+                        <img src="{{ store.logo|cdn(175) }}" alt="{{ store.name }}" class="h-14 w-auto">
+                    {% endif %}
+                </a>
+
+                {% if store.description %}
+                    <p class="text-sm opacity-70 leading-relaxed mb-6">{{ store.description|raw }}</p>
+                {% endif %}
+
+                <salla-social class="block mb-4 {{ theme.settings.get('social_icons_circle') ? 'is-circle' : '' }}"></salla-social>
+
+                {% if theme.settings.get('show_business_badge', true) %}
+                    <salla-trust-badges {% if theme.settings.get('footer_is_dark') %} dark {% endif %}></salla-trust-badges>
+                {% endif %}
+            </div>
+
+            {# Column 2: Quick Links + Contact #}
+            <div>
+                <h4 class="najd-footer__heading najd-footer__heading--lg">{{ trans('blocks.footer.pages_links') }}</h4>
+                <salla-menu source="footer"></salla-menu>
+
+                <div class="mt-8">
+                    <salla-contacts></salla-contacts>
+                </div>
+            </div>
+
+            {# Column 3: Apps + Tax #}
+            <div>
+                <salla-apps-icons></salla-apps-icons>
+
+                {% if store.settings.tax.number %}
+                    <div class="mt-8 p-4 rounded-xl" style="background: var(--surface-secondary); border: 1px solid var(--border-color);">
+                        <p class="text-xs opacity-60 mb-1">{{ trans('common.elements.tax_number') }}</p>
+                        <b class="text-lg">{{ store.settings.tax.number }}</b>
+                        {% if store.settings.tax.certificate %}
+                            <a class="load-img-onclick block text-xs mt-2" data-modal-id="modal-tax-mag" href="#/" style="color: var(--color-primary);">
+                                {{ trans('common.elements.show_certificate') }}
+                            </a>
+                            <salla-modal sub-title-first sub-title="{{ trans('common.elements.tax_number') }}" modal-title="{{ store.settings.tax.number }}" id="modal-tax-mag">
+                                <img class="w-full" loading="lazy" src="{{ store.settings.tax.certificate }}" alt="{{ store.settings.tax.number }}"/>
+                            </salla-modal>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Bottom Bar #}
+<div class="najd-footer__bottom">
+    <div class="container flex flex-col md:flex-row items-center justify-between gap-4 py-5">
+        <span class="text-sm opacity-60">{% hook copyright %}</span>
+        <salla-payments></salla-payments>
+    </div>
+</div>

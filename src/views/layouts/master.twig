@@ -1,6 +1,8 @@
 {# ============================================================
    NAJD THEME — Master Layout
    3 Modes: Light / Dark / Glass (Liquid Glass)
+   Premium Features: Preloader, Newsletter Popup, Shipping Bar,
+                     Mobile Bottom Nav, Quick View
    ============================================================ #}
 <!DOCTYPE html>
 <html lang="{{ user.language.code }}" dir="{{ user.language.dir }}">
@@ -27,6 +29,7 @@
             enableSwitcher:     {{ theme.settings.get('enable_theme_switcher', true) ? 'true' : 'false' }},
             glassBlur:          "{{ theme.settings.get('glass_blur_intensity', 'medium') }}",
             headerIsSticky:     {{ theme.settings.get('header_is_sticky', true) ? 'true' : 'false' }},
+            headerStyle:        "{{ theme.settings.get('header_style', 'classic') }}",
             imageZoom:          {{ theme.settings.get('imageZoom', true) ? 'true' : 'false' }},
             enableToast:        {{ theme.settings.get('enable_add_product_toast', true) ? 'true' : 'false' }},
             enableAnimations:   {{ theme.settings.get('enable_home_animations', true) ? 'true' : 'false' }},
@@ -34,6 +37,18 @@
             isRtl:              {{ theme.is_rtl ? 'true' : 'false' }},
             canAccessWallet:    {{ user.can_access_wallet | json_encode }},
             enableMoreMenu:     {{ theme.settings.get('enable_more_menu', true) ? 'true' : 'false' }},
+            quickView:          {{ theme.settings.get('quick_view_enabled', true) ? 'true' : 'false' }},
+            gridListToggle:     {{ theme.settings.get('grid_list_toggle', true) ? 'true' : 'false' }},
+            freeShippingBar:    {{ theme.settings.get('free_shipping_bar_enabled', false) ? 'true' : 'false' }},
+            freeShippingGoal:   {{ theme.settings.get('free_shipping_goal', 200) }},
+            mobileBottomNav:    {{ theme.settings.get('mobile_bottom_nav', false) ? 'true' : 'false' }},
+            parallax:           {{ theme.settings.get('parallax_enabled', true) ? 'true' : 'false' }},
+            hoverEffect:        "{{ theme.settings.get('hover_effect_style', 'lift') }}",
+            preloader:          {{ theme.settings.get('preloader_enabled', false) ? 'true' : 'false' }},
+            preloaderStyle:     "{{ theme.settings.get('preloader_style', 'spinner') }}",
+            newsletterPopup:    {{ theme.settings.get('newsletter_popup_enabled', false) ? 'true' : 'false' }},
+            newsletterDelay:    {{ theme.settings.get('newsletter_popup_delay', 5) }},
+            sizeChart:          {{ theme.settings.get('size_chart_enabled', false) ? 'true' : 'false' }},
         };
     </script>
 
@@ -102,9 +117,29 @@
     class="theme-najd overflow-x-hidden {% hook 'body:classes' %}
         {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
         {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
-        {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}"
+        {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
+        {{ theme.settings.get('mobile_bottom_nav') ? ' has-mobile-nav' : '' }}"
     data-theme="{{ theme.settings.get('default_theme_mode', 'light') }}"
+    data-spacing="{{ theme.settings.get('section_spacing', 'normal') }}"
+    data-radius="{{ theme.settings.get('border_radius_style', 'rounded') }}"
+    data-card-style="{{ theme.settings.get('card_style', 'default') }}"
+    data-hover="{{ theme.settings.get('hover_effect_style', 'lift') }}"
 >
+
+{# ===== Preloader ===== #}
+{% if theme.settings.get('preloader_enabled', false) %}
+    {% set preloader_style = theme.settings.get('preloader_style', 'spinner') %}
+    <div class="najd-preloader najd-preloader--{{ preloader_style }}" id="najd-preloader">
+        {% if preloader_style == 'logo' %}
+            <img src="{{ store.logo|cdn(175) }}" alt="{{ store.name }}" class="najd-preloader__logo">
+        {% elseif preloader_style == 'progress' %}
+            <div class="najd-preloader__bar"><div class="najd-preloader__bar-fill"></div></div>
+        {% else %}
+            <div class="najd-preloader__spinner"></div>
+        {% endif %}
+    </div>
+{% endif %}
+
 <noscript>
     To get full functionality of this site you need to enable JavaScript. Here is how
     <a href="https://www.enable-javascript.com/" rel="noreferrer" target="_blank">To enable JavaScript on webpage</a>.
@@ -118,6 +153,23 @@
     <div class="najd-bg-scene__orb najd-bg-scene__orb--3"></div>
     <div class="najd-bg-scene__mesh"></div>
 </div>
+
+{# ===== Free Shipping Progress Bar ===== #}
+{% if theme.settings.get('free_shipping_bar_enabled', false) %}
+    <div class="najd-shipping-bar" id="najd-shipping-bar">
+        <div class="container">
+            <div class="najd-shipping-bar__inner">
+                <i class="sicon-shipping-fast"></i>
+                <span class="najd-shipping-bar__text">
+                    {{ trans('common.elements.free_shipping_goal') }}
+                </span>
+                <div class="najd-shipping-bar__progress">
+                    <div class="najd-shipping-bar__fill" id="najd-shipping-fill" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
 
 <div class="app-inner flex flex-col min-h-full">
     {% hook 'body:start' %}
@@ -189,6 +241,66 @@
     <button class="najd-back-to-top glass-surface" id="najd-back-to-top" aria-label="Back to top">
         <i class="sicon-keyboard-arrow-up"></i>
     </button>
+{% endif %}
+
+{# ===== Mobile Bottom Navigation ===== #}
+{% if theme.settings.get('mobile_bottom_nav', false) %}
+    <nav class="najd-mobile-nav" id="najd-mobile-nav">
+        <a href="{{ link('/') }}" class="najd-mobile-nav__item {{ is_page('index') ? 'is-active' : '' }}">
+            <i class="sicon-home"></i>
+            <span>{{ trans('common.elements.home') }}</span>
+        </a>
+        <a href="{{ link('products') }}" class="najd-mobile-nav__item {{ is_page('products') ? 'is-active' : '' }}">
+            <i class="sicon-shopping-bag"></i>
+            <span>{{ trans('common.elements.products') }}</span>
+        </a>
+        <button class="najd-mobile-nav__item najd-mobile-nav__item--cart" onclick="salla.event.dispatch('cart::open')">
+            <i class="sicon-shopping-cart"></i>
+            <span>{{ trans('common.elements.cart') }}</span>
+            {% if cart.items_count > 0 %}
+                <span class="najd-mobile-nav__badge">{{ cart.items_count }}</span>
+            {% endif %}
+        </button>
+        <a href="{{ link('wishlist') }}" class="najd-mobile-nav__item">
+            <i class="sicon-heart"></i>
+            <span>{{ trans('common.elements.wishlist') }}</span>
+        </a>
+        {% if user.type == 'user' %}
+            <a href="{{ link('profile') }}" class="najd-mobile-nav__item">
+                <i class="sicon-user-circle"></i>
+                <span>{{ trans('common.elements.account') }}</span>
+            </a>
+        {% else %}
+            <button class="najd-mobile-nav__item" onclick="salla.event.dispatch('login::open')">
+                <i class="sicon-user-circle"></i>
+                <span>{{ trans('common.elements.login') }}</span>
+            </button>
+        {% endif %}
+    </nav>
+{% endif %}
+
+{# ===== Newsletter Popup ===== #}
+{% if theme.settings.get('newsletter_popup_enabled', false) %}
+    <div class="najd-newsletter-popup" id="najd-newsletter-popup" style="display:none">
+        <div class="najd-newsletter-popup__overlay" onclick="document.getElementById('najd-newsletter-popup').style.display='none'; localStorage.setItem('najd-nl-dismissed', Date.now())"></div>
+        <div class="najd-newsletter-popup__content glass-surface">
+            <button class="najd-newsletter-popup__close" onclick="document.getElementById('najd-newsletter-popup').style.display='none'; localStorage.setItem('najd-nl-dismissed', Date.now())">
+                <i class="sicon-cancel"></i>
+            </button>
+            <div class="najd-newsletter-popup__body">
+                {% if theme.settings.get('newsletter_popup_image') %}
+                    <div class="najd-newsletter-popup__image">
+                        <img src="{{ theme.settings.get('newsletter_popup_image') }}" alt="Newsletter" loading="lazy">
+                    </div>
+                {% endif %}
+                <div class="najd-newsletter-popup__form">
+                    <h3 class="text-xl lg:text-2xl font-bold mb-2">{{ trans('blocks.footer.newsletter') }}</h3>
+                    <p class="text-sm opacity-70 mb-6">{{ trans('blocks.footer.newsletter_desc') }}</p>
+                    <salla-newsletter></salla-newsletter>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endif %}
 
 {# ---- Salla hooks & components ---- #}

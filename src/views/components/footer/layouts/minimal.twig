@@ -1,0 +1,36 @@
+{# ===== Footer Layout: Minimal ===== #}
+{# Single row: Logo left, links center, social right. Thin and clean. #}
+
+{% set alt_logo = theme.settings.get('alt_logo') %}
+{% set show_alt_logo_in_footer = theme.settings.get('show_alt_logo_in_footer', false) %}
+
+<div class="najd-footer__main najd-footer__main--minimal glass-surface">
+    <div class="container">
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-6 py-8">
+            {# Logo #}
+            <a href="{{ link('/') }}" class="najd-footer__logo">
+                {% if show_alt_logo_in_footer and alt_logo %}
+                    <img src="{{ alt_logo }}" alt="{{ store.name }}" class="h-10 w-auto">
+                {% else %}
+                    <img src="{{ store.logo|cdn(175) }}" alt="{{ store.name }}" class="h-10 w-auto">
+                {% endif %}
+            </a>
+
+            {# Links inline #}
+            <div class="najd-footer__minimal-links">
+                <salla-menu source="footer"></salla-menu>
+            </div>
+
+            {# Social #}
+            <salla-social class="{{ theme.settings.get('social_icons_circle') ? 'is-circle' : '' }}"></salla-social>
+        </div>
+    </div>
+</div>
+
+{# Bottom Bar #}
+<div class="najd-footer__bottom">
+    <div class="container flex flex-col md:flex-row items-center justify-between gap-4 py-4">
+        <span class="text-sm opacity-60">{% hook copyright %}</span>
+        <salla-payments></salla-payments>
+    </div>
+</div>

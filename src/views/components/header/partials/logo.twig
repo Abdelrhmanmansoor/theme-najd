@@ -1,0 +1,22 @@
+{# ===== Shared Logo Partial ===== #}
+{% set alt_logo = theme.settings.get('alt_logo') %}
+
+<a class="najd-header__logo" href="{{ store.url }}">
+    <img fetchpriority="high" width="100%" height="100%" loading="eager"
+         src="{{ store.logo|cdn(175) }}"
+         alt="{{ store.name }} logo"
+         class="najd-header__logo-img najd-header__logo-img--default">
+
+    {% if alt_logo %}
+        <img fetchpriority="high" width="100%" height="100%" loading="eager"
+             src="{{ alt_logo }}"
+             alt="{{ store.name }} logo"
+             class="najd-header__logo-img najd-header__logo-img--alt">
+    {% endif %}
+
+    {% if is_page('index') %}
+        <h1 class="sr-only">{{ store.name }}</h1>
+    {% else %}
+        <h2 class="sr-only">{{ store.name }}</h2>
+    {% endif %}
+</a>

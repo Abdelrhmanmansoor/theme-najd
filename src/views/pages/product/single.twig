@@ -1,5 +1,6 @@
 {# ============================================================
    Single Product Page — NAJD PREMIUM
+   Features: Size Chart, Back-in-Stock, Sticky Cart
    Variables: product (Product object)
    ============================================================ #}
 {% extends "layouts.master" %}
@@ -67,13 +68,35 @@
                     {% include 'pages.partials.product.options' %}
                 {% endif %}
 
+                {# Size Chart Button #}
+                {% if theme.settings.get('size_chart_enabled', false) and theme.settings.get('size_chart_image') %}
+                    <button class="najd-btn najd-btn--ghost najd-btn--sm mb-4"
+                            onclick="document.getElementById('najd-size-chart-modal').style.display='flex'">
+                        <i class="sicon-ruler rtl:ml-2 ltr:mr-2"></i>
+                        {{ trans('common.elements.size_chart') }}
+                    </button>
+                {% endif %}
+
                 {# Quantity + Add to Cart #}
-                <div class="flex items-center gap-4 my-8">
+                <div class="flex items-center gap-4 my-8" id="najd-add-to-cart-section">
                     <salla-quantity-input product-id="{{ product.id }}" max="{{ product.max_quantity }}"></salla-quantity-input>
                     <salla-add-product-button product-id="{{ product.id }}" class="flex-1">
                         {{ trans('common.elements.add_to_cart') }}
                     </salla-add-product-button>
                 </div>
+
+                {# Back-in-Stock Alert (for out-of-stock products) #}
+                {% if theme.settings.get('back_to_stock_enabled', true) and not product.is_available %}
+                    <div class="najd-back-in-stock p-4 rounded-2xl mb-6" style="background: var(--surface-secondary); border: 1px solid var(--border-color);">
+                        <p class="text-sm font-semibold mb-3" style="color: var(--text-primary);">
+                            <i class="sicon-bell rtl:ml-2 ltr:mr-2" style="color: var(--color-primary);"></i>
+                            {{ trans('common.elements.notify_availability') }}
+                        </p>
+                        <salla-add-product-button product-id="{{ product.id }}" type="notify">
+                            {{ trans('common.elements.notify_me') }}
+                        </salla-add-product-button>
+                    </div>
+                {% endif %}
 
                 {# Installment #}
                 <salla-installment product-id="{{ product.id }}"></salla-installment>
@@ -118,6 +141,21 @@
             </salla-products-slider>
         </div>
     </div>
+
+    {# ===== Size Chart Modal ===== #}
+    {% if theme.settings.get('size_chart_enabled', false) and theme.settings.get('size_chart_image') %}
+        <div class="najd-size-chart-modal" id="najd-size-chart-modal" style="display:none"
+             onclick="if(event.target===this)this.style.display='none'">
+            <div class="najd-size-chart-modal__content glass-surface">
+                <button class="najd-size-chart-modal__close"
+                        onclick="this.closest('.najd-size-chart-modal').style.display='none'">
+                    <i class="sicon-cancel"></i>
+                </button>
+                <h3 class="text-lg font-bold mb-4">{{ trans('common.elements.size_chart') }}</h3>
+                <img src="{{ theme.settings.get('size_chart_image') }}" alt="Size Chart" class="w-full rounded-xl" loading="lazy">
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block scripts %}

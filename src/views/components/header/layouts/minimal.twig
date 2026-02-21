@@ -1,0 +1,19 @@
+{# ===== Header Layout: Minimal ===== #}
+{# No top bar, hamburger on all screens, ultra-clean modern #}
+
+<div class="najd-header__main najd-header__main--minimal glass-surface" id="najd-header-main">
+    <div class="container">
+        <div class="najd-header__inner">
+            {# Hamburger menu (always visible) #}
+            <a class="najd-header__mobile-toggle najd-header__mobile-toggle--always" href="#mobile-menu" aria-label="Open menu">
+                <i class="sicon-menu"></i>
+            </a>
+
+            {% include 'components.header.partials.logo' %}
+
+            <div class="flex-1"></div>
+
+            {% include 'components.header.partials.actions' %}
+        </div>
+    </div>
+</div>

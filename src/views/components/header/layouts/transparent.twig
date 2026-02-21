@@ -1,0 +1,20 @@
+{# ===== Header Layout: Transparent ===== #}
+{# Overlays hero, white text, becomes solid on scroll #}
+
+<div class="najd-header__main najd-header__main--transparent glass-surface" id="najd-header-main" data-transparent="true">
+    <div class="container">
+        <div class="najd-header__inner">
+            <a class="lg:hidden najd-header__mobile-toggle" href="#mobile-menu" aria-label="Open menu">
+                <i class="sicon-menu"></i>
+            </a>
+
+            {% include 'components.header.partials.logo' %}
+
+            <custom-main-menu></custom-main-menu>
+
+            <div class="flex-1"></div>
+
+            {% include 'components.header.partials.actions' %}
+        </div>
+    </div>
+</div>

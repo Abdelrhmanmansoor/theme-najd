@@ -1,0 +1,117 @@
+/* ============================================================
+   Newsletter Popup — NAJD PREMIUM
+   Modal with optional side image
+   ============================================================ */
+
+.najd-newsletter-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: najd-popup-in 0.4s var(--ease-out);
+}
+
+@keyframes najd-popup-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.najd-newsletter-popup__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.najd-newsletter-popup__content {
+  position: relative;
+  max-width: 720px;
+  width: 100%;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  background: var(--surface-bg);
+  box-shadow: var(--shadow-xl);
+  animation: najd-popup-slide 0.4s var(--ease-out);
+}
+
+@keyframes najd-popup-slide {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.najd-newsletter-popup__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--surface-secondary);
+  color: var(--text-secondary);
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+  transition: all var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    background: var(--color-primary);
+    color: var(--color-primary-reverse, #fff);
+  }
+}
+
+[dir="rtl"] .najd-newsletter-popup__close {
+  right: auto;
+  left: 12px;
+}
+
+.najd-newsletter-popup__body {
+  display: flex;
+  min-height: 320px;
+}
+
+.najd-newsletter-popup__image {
+  flex: 0 0 45%;
+  display: none;
+
+  @media (min-width: 640px) {
+    display: block;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.najd-newsletter-popup__form {
+  flex: 1;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Glass mode */
+[data-theme="glass"] .najd-newsletter-popup__content {
+  background: rgba(5, 5, 17, 0.90);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="glass"] .najd-newsletter-popup__close {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Dark mode */
+[data-theme="dark"] .najd-newsletter-popup__content {
+  background: var(--dark-bg-primary);
+}

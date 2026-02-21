@@ -1,0 +1,75 @@
+/* ============================================================
+   Free Shipping Progress Bar — NAJD PREMIUM
+   Shows progress toward free shipping goal
+   ============================================================ */
+
+.najd-shipping-bar {
+  background: color-mix(in srgb, var(--color-primary) 8%, var(--surface-bg));
+  border-bottom: 1px solid var(--border-color);
+  padding: 8px 0;
+  font-size: var(--text-xs);
+}
+
+.najd-shipping-bar__inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  i {
+    color: var(--color-primary);
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+}
+
+.najd-shipping-bar__text {
+  color: var(--text-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.najd-shipping-bar__progress {
+  flex: 1;
+  max-width: 200px;
+  height: 4px;
+  background: var(--border-color);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.najd-shipping-bar__fill {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-full);
+  transition: width 0.6s var(--ease-out);
+}
+
+/* Complete state */
+.najd-shipping-bar.is-complete {
+  .najd-shipping-bar__fill {
+    background: #10b981;
+  }
+
+  .najd-shipping-bar__text {
+    color: #10b981;
+    font-weight: 600;
+  }
+}
+
+/* Dark mode */
+[data-theme="dark"] .najd-shipping-bar {
+  background: color-mix(in srgb, var(--color-primary) 5%, var(--dark-bg-secondary));
+}
+
+/* Glass mode */
+[data-theme="glass"] .najd-shipping-bar {
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Hide on mobile for minimal look */
+@media (max-width: 767px) {
+  .najd-shipping-bar__progress {
+    max-width: 120px;
+  }
+}

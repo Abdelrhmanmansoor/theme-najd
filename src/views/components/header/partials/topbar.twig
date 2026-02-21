@@ -1,0 +1,36 @@
+{# ===== Shared Top Navigation Bar ===== #}
+{% set important_links = theme.settings.get('important_links') %}
+{% set hide_top_bar = theme.settings.get('hide_top_bar', false) %}
+
+{% if not hide_top_bar %}
+<div class="najd-header__topbar {{ theme.settings.get('topnav_is_dark') ? 'topnav-is-dark' : '' }}">
+    <div class="container flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3 flex-1">
+            {% if important_links %}
+                <salla-menu source="footer" topnav></salla-menu>
+            {% endif %}
+
+            {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+                <button type="button"
+                        onclick="salla.event.dispatch('localization::open')"
+                        class="najd-header__locale-btn">
+                    <span>{{ user.language.name }}</span>
+                    <span class="mx-1">|</span>
+                    <span>{{ currency.symbol }}</span>
+                </button>
+                <salla-localization-modal></salla-localization-modal>
+            {% endif %}
+
+            {% if store.scope %}
+                <button class="najd-header__scope-btn"
+                        onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
+                    <i class="sicon-location rtl:ml-1 ltr:mr-1"></i>
+                    {{ store.scope.name }}
+                </button>
+            {% endif %}
+        </div>
+
+        <salla-contacts is-header></salla-contacts>
+    </div>
+</div>
+{% endif %}

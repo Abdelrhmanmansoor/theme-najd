@@ -1,0 +1,12 @@
+{# ===== Shared Search Bar ===== #}
+{% set search_style = theme.settings.get('header_search_style', 'inline') %}
+
+{% if search_style == 'inline' %}
+    <div class="najd-header__search hidden lg:block flex-1 max-w-md mx-4">
+        <salla-search inline oval height="40"></salla-search>
+    </div>
+{% elseif search_style == 'expandable' %}
+    <div class="najd-header__search najd-header__search--expandable hidden lg:block">
+        <salla-search inline oval height="40"></salla-search>
+    </div>
+{% endif %}

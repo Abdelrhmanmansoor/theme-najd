@@ -1,0 +1,39 @@
+{# ============================================================
+   Video Banner Section — NAJD PREMIUM
+   Full-width video with overlay text + CTA
+   ============================================================ #}
+<section class="najd-block najd-block--video py-12 lg:py-16">
+    <div class="container">
+        <div class="najd-video-banner glass-surface rounded-2xl overflow-hidden">
+            <div class="najd-video-banner__media">
+                {% if component.video_url %}
+                    <lite-youtube videoid="{{ component.video_url|split('v=')|last|split('&')|first }}" style="background-image: url('{{ component.cover_image }}');">
+                        <button type="button" class="lty-playbtn">
+                            <span class="lyt-visually-hidden">Play</span>
+                        </button>
+                    </lite-youtube>
+                {% elseif component.cover_image %}
+                    <img src="{{ component.cover_image }}" alt="{{ component.title }}" loading="lazy" class="w-full h-full object-cover">
+                {% endif %}
+            </div>
+
+            {% if component.title or component.subtitle %}
+                <div class="najd-video-banner__overlay">
+                    <div class="najd-video-banner__content text-center text-white">
+                        {% if component.title %}
+                            <h2 class="text-2xl lg:text-4xl font-extrabold mb-3">{{ component.title }}</h2>
+                        {% endif %}
+                        {% if component.subtitle %}
+                            <p class="text-sm lg:text-base opacity-80 mb-6 max-w-lg mx-auto">{{ component.subtitle }}</p>
+                        {% endif %}
+                        {% if component.btn_text and component.btn_url %}
+                            <a href="{{ component.btn_url }}" class="najd-btn najd-btn--primary najd-btn--lg">
+                                {{ component.btn_text }}
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>

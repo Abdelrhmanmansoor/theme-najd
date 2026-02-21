@@ -1,0 +1,31 @@
+{# ============================================================
+   Lookbook / Gallery Grid — NAJD PREMIUM
+   Masonry-style lifestyle image grid
+   ============================================================ #}
+{% if component.items|length %}
+<section class="najd-block najd-block--lookbook py-12 lg:py-16">
+    <div class="container">
+        {% if component.title %}
+            <div class="najd-block__header text-center mb-10">
+                <h2 class="najd-block__title text-xl lg:text-2xl font-bold">{{ component.title }}</h2>
+            </div>
+        {% endif %}
+
+        <div class="najd-lookbook-grid">
+            {% for item in component.items %}
+                <a href="{{ item.url ? item.url : '#' }}"
+                   class="najd-lookbook-grid__item group"
+                   style="{% if loop.index <= 2 %}grid-row: span 2;{% endif %}">
+                    <img src="{{ item.image }}" alt="{{ item.label }}" loading="lazy" class="najd-lookbook-grid__image">
+                    <div class="najd-lookbook-grid__overlay">
+                        {% if item.label %}
+                            <span class="najd-lookbook-grid__label">{{ item.label }}</span>
+                        {% endif %}
+                        <i class="sicon-shopping-bag najd-lookbook-grid__icon"></i>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}

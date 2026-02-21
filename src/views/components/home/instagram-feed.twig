@@ -1,0 +1,34 @@
+{# ============================================================
+   Instagram Gallery Feed — NAJD PREMIUM
+   Display uploaded images in Instagram-style grid
+   ============================================================ #}
+{% if component.items|length %}
+<section class="najd-block najd-block--instagram py-12 lg:py-16">
+    <div class="container">
+        {% if component.title or component.username %}
+            <div class="najd-block__header text-center mb-10">
+                {% if component.title %}
+                    <h2 class="najd-block__title text-xl lg:text-2xl font-bold">{{ component.title }}</h2>
+                {% endif %}
+                {% if component.username %}
+                    <p class="text-sm mt-2" style="color: var(--color-primary);">@{{ component.username }}</p>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div class="najd-insta-grid">
+            {% for item in component.items %}
+                <a href="{{ item.url ? item.url : '#' }}"
+                   class="najd-insta-grid__item group"
+                   target="{{ item.url ? '_blank' : '_self' }}"
+                   rel="noopener noreferrer">
+                    <img src="{{ item.image }}" alt="Instagram post {{ loop.index }}" loading="lazy" class="najd-insta-grid__image">
+                    <div class="najd-insta-grid__overlay">
+                        <i class="sicon-heart"></i>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}

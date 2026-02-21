@@ -1,0 +1,37 @@
+{# ===== Header Layout: Centered ===== #}
+{# Logo centered on top, nav below, elegant fashion-store feel #}
+
+{% include 'components.header.partials.topbar' %}
+
+<div class="najd-header__main najd-header__main--centered glass-surface" id="najd-header-main">
+    <div class="container">
+        {# Row 1: Actions left — Logo center — Actions right #}
+        <div class="najd-header__centered-top">
+            <div class="najd-header__centered-side hidden lg:flex items-center gap-3">
+                {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+                    <button type="button" onclick="salla.event.dispatch('localization::open')" class="najd-header__locale-btn">
+                        <span>{{ user.language.name }}</span> | <span>{{ currency.symbol }}</span>
+                    </button>
+                    <salla-localization-modal></salla-localization-modal>
+                {% endif %}
+            </div>
+
+            <div class="najd-header__centered-logo text-center">
+                <a class="lg:hidden najd-header__mobile-toggle inline-flex" href="#mobile-menu" aria-label="Open menu">
+                    <i class="sicon-menu"></i>
+                </a>
+                {% include 'components.header.partials.logo' %}
+            </div>
+
+            <div class="najd-header__centered-side flex items-center justify-end">
+                {% include 'components.header.partials.actions' %}
+            </div>
+        </div>
+
+        {# Row 2: Navigation centered + search #}
+        <div class="najd-header__centered-nav hidden lg:flex items-center justify-center gap-6 pb-3">
+            <custom-main-menu></custom-main-menu>
+            {% include 'components.header.partials.search' %}
+        </div>
+    </div>
+</div>

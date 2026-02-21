@@ -1,0 +1,23 @@
+{# ===== Header Layout: Classic ===== #}
+{# Logo left, nav center, actions right, top bar #}
+
+{% include 'components.header.partials.topbar' %}
+
+<div class="najd-header__main glass-surface" id="najd-header-main">
+    <div class="container">
+        <div class="najd-header__inner">
+            {# Mobile menu toggle #}
+            <a class="lg:hidden najd-header__mobile-toggle" href="#mobile-menu" aria-label="Open menu">
+                <i class="sicon-menu"></i>
+            </a>
+
+            {% include 'components.header.partials.logo' %}
+
+            <custom-main-menu></custom-main-menu>
+
+            {% include 'components.header.partials.search' %}
+
+            {% include 'components.header.partials.actions' %}
+        </div>
+    </div>
+</div>

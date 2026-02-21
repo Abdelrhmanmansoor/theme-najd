@@ -1,0 +1,40 @@
+{# ===== Shared Action Buttons (Search, User, Wishlist, Cart) ===== #}
+{% set search_style = theme.settings.get('header_search_style', 'inline') %}
+
+<div class="najd-header__actions">
+    {# Search (mobile or icon-only mode) #}
+    {% if search_style == 'icon-only' or search_style == 'expandable' %}
+        <button class="najd-header__action-btn"
+                onclick="salla.event.dispatch('search::open')"
+                aria-label="Search">
+            <i class="sicon-search"></i>
+        </button>
+    {% else %}
+        <button class="najd-header__action-btn lg:hidden"
+                onclick="salla.event.dispatch('search::open')"
+                aria-label="Search">
+            <i class="sicon-search"></i>
+        </button>
+    {% endif %}
+
+    {# User #}
+    {% if user.type == 'user' %}
+        <salla-user-menu avatar-only show-header></salla-user-menu>
+    {% else %}
+        <button class="najd-header__action-btn"
+                onclick="salla.event.dispatch('login::open')"
+                aria-label="Login">
+            <i class="sicon-user-circle"></i>
+        </button>
+    {% endif %}
+
+    {# Wishlist #}
+    <a href="{{ link('wishlist') }}" class="najd-header__action-btn" aria-label="Wishlist">
+        <i class="sicon-heart"></i>
+    </a>
+
+    {# Cart #}
+    <salla-cart-summary class="najd-header__cart">
+        <i slot="icon" class="sicon-shopping-bag najd-header__cart-icon"></i>
+    </salla-cart-summary>
+</div>

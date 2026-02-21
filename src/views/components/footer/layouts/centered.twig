@@ -1,0 +1,70 @@
+{# ===== Footer Layout: Centered ===== #}
+{# Everything centered — elegant, fashion-store feel #}
+
+{% set show_newsletter = theme.settings.get('show_newsletter', true) %}
+{% set newsletter_title = theme.settings.get('newsletter_title') %}
+{% set alt_logo = theme.settings.get('alt_logo') %}
+{% set show_alt_logo_in_footer = theme.settings.get('show_alt_logo_in_footer', false) %}
+
+<div class="najd-footer__main najd-footer__main--centered glass-surface">
+    <div class="container py-12 lg:py-16 text-center">
+        {# Logo #}
+        <a href="{{ link('/') }}" class="najd-footer__logo inline-block mb-6">
+            {% if show_alt_logo_in_footer and alt_logo %}
+                <img src="{{ alt_logo }}" alt="{{ store.name }}" class="h-14 w-auto mx-auto">
+            {% else %}
+                <img src="{{ store.logo|cdn(175) }}" alt="{{ store.name }}" class="h-14 w-auto mx-auto">
+            {% endif %}
+        </a>
+
+        {# Description #}
+        {% if store.description %}
+            <p class="text-sm opacity-70 leading-relaxed mb-8 max-w-lg mx-auto">{{ store.description|raw }}</p>
+        {% endif %}
+
+        {# Social Icons #}
+        <div class="flex justify-center mb-8">
+            <salla-social class="{{ theme.settings.get('social_icons_circle') ? 'is-circle' : '' }}"></salla-social>
+        </div>
+
+        {# Horizontal Links #}
+        <div class="najd-footer__centered-links mb-8">
+            <salla-menu source="footer"></salla-menu>
+        </div>
+
+        {# Newsletter #}
+        {% if show_newsletter %}
+            <div class="max-w-md mx-auto mb-8">
+                <h4 class="text-lg font-bold mb-3">
+                    {{ newsletter_title ? newsletter_title : trans('blocks.footer.newsletter') }}
+                </h4>
+                <salla-newsletter></salla-newsletter>
+            </div>
+        {% endif %}
+
+        {# Trust + Tax #}
+        <div class="flex items-center justify-center gap-4 flex-wrap mb-6">
+            {% if theme.settings.get('show_business_badge', true) %}
+                <salla-trust-badges {% if theme.settings.get('footer_is_dark') %} dark {% endif %}></salla-trust-badges>
+            {% endif %}
+            {% if store.settings.tax.number %}
+                <div class="flex items-center gap-2 text-sm">
+                    <span class="opacity-60">{{ trans('common.elements.tax_number') }}:</span>
+                    <b>{{ store.settings.tax.number }}</b>
+                </div>
+            {% endif %}
+        </div>
+
+        {# Payments #}
+        <div class="flex justify-center mb-4">
+            <salla-payments></salla-payments>
+        </div>
+    </div>
+</div>
+
+{# Bottom Bar #}
+<div class="najd-footer__bottom text-center">
+    <div class="container py-4">
+        <span class="text-sm opacity-60">{% hook copyright %}</span>
+    </div>
+</div>

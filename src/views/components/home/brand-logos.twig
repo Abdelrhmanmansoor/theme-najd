@@ -1,0 +1,29 @@
+{# ============================================================
+   Brand/Partner Logos Section — NAJD PREMIUM
+   Auto-scrolling logo carousel
+   ============================================================ #}
+{% if component.items|length %}
+<section class="najd-block najd-block--brands py-12 lg:py-16">
+    <div class="container">
+        {% if component.title %}
+            <div class="najd-block__header text-center mb-10">
+                <h2 class="najd-block__title text-xl lg:text-2xl font-bold">{{ component.title }}</h2>
+            </div>
+        {% endif %}
+
+        <div class="najd-brands-grid">
+            {% for item in component.items %}
+                {% if item.url %}
+                    <a href="{{ item.url }}" class="najd-brands-grid__item glass-surface" target="_blank" rel="noopener noreferrer" title="{{ item.name }}">
+                        <img src="{{ item.image }}" alt="{{ item.name }}" loading="lazy" class="najd-brands-grid__logo">
+                    </a>
+                {% else %}
+                    <div class="najd-brands-grid__item glass-surface" title="{{ item.name }}">
+                        <img src="{{ item.image }}" alt="{{ item.name }}" loading="lazy" class="najd-brands-grid__logo">
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}

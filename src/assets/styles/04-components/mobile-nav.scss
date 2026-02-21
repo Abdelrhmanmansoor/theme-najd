@@ -1,0 +1,100 @@
+/* ============================================================
+   Mobile Bottom Navigation — NAJD PREMIUM
+   Fixed bottom bar: Home, Products, Cart, Wishlist, Account
+   ============================================================ */
+
+.najd-mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-header);
+  background: var(--surface-bg);
+  border-top: 1px solid var(--border-color);
+  padding: 6px 0 env(safe-area-inset-bottom, 6px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Show only on mobile when enabled */
+.has-mobile-nav .najd-mobile-nav {
+  @media (max-width: 1023px) {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+}
+
+/* Add bottom padding to body so content isn't hidden behind nav */
+.has-mobile-nav {
+  @media (max-width: 1023px) {
+    padding-bottom: 70px;
+
+    .najd-whatsapp-btn { bottom: 80px; }
+    .najd-back-to-top { bottom: 80px; }
+    .najd-mode-switcher { bottom: 80px; }
+  }
+}
+
+.najd-mobile-nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 12px;
+  font-size: 10px;
+  color: var(--text-tertiary);
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out);
+  position: relative;
+
+  i {
+    font-size: 22px;
+    transition: transform var(--duration-fast) var(--ease-spring);
+  }
+
+  &.is-active,
+  &:hover {
+    color: var(--color-primary);
+
+    i { transform: scale(1.1); }
+  }
+}
+
+.najd-mobile-nav__item--cart {
+  i { font-size: 24px; }
+}
+
+.najd-mobile-nav__badge {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  min-width: 16px;
+  height: 16px;
+  background: var(--color-primary);
+  color: var(--color-primary-reverse, #fff);
+  font-size: 9px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+/* Dark mode */
+[data-theme="dark"] .najd-mobile-nav {
+  background: rgba(12, 12, 14, 0.95);
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Glass mode */
+[data-theme="glass"] .najd-mobile-nav {
+  background: rgba(5, 5, 17, 0.85);
+  border-top-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 -4px 30px rgba(31, 38, 135, 0.15);
+}
