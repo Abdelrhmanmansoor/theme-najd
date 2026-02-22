@@ -4,7 +4,7 @@
    ============================================================ #}
 {% if component.items|length %}
 <section class="najd-block najd-block--lookbook py-12 lg:py-16">
-    <div class="container">
+    <div class="{{ component.full_width is defined and component.full_width ? '' : 'container' }}">
         {% if component.title %}
             <div class="najd-block__header text-center mb-10">
                 <h2 class="najd-block__title text-xl lg:text-2xl font-bold">{{ component.title }}</h2>

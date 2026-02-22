@@ -14,6 +14,8 @@ class NajdHome extends AppHelpers {
     this.initImageComparison();
     this.initProgressBars();
     this.initProductTabs();
+    this.initShopTheLook();
+    this.initParallaxBanners();
   }
 
   /** Countdown timers for special offers */
@@ -161,6 +163,56 @@ class NajdHome extends AppHelpers {
         });
       });
     });
+  }
+
+  /** Shop the Look — toggle product popup on hotspot click */
+  initShopTheLook() {
+    document.querySelectorAll('.najd-shop-look').forEach(container => {
+      const hotspots = container.querySelectorAll('.najd-shop-look__hotspot');
+      const popups = container.querySelectorAll('.najd-shop-look__popup');
+
+      hotspots.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const idx = btn.dataset.hotspot;
+          const popup = container.querySelector(`[data-popup="${idx}"]`);
+          if (!popup) return;
+
+          const wasVisible = popup.classList.contains('is-visible');
+          popups.forEach(p => p.classList.remove('is-visible'));
+          hotspots.forEach(h => h.classList.remove('is-active'));
+
+          if (!wasVisible) {
+            popup.classList.add('is-visible');
+            btn.classList.add('is-active');
+          }
+        });
+      });
+
+      document.addEventListener('click', () => {
+        popups.forEach(p => p.classList.remove('is-visible'));
+        hotspots.forEach(h => h.classList.remove('is-active'));
+      });
+    });
+  }
+
+  /** Parallax banners — scroll-based background movement */
+  initParallaxBanners() {
+    const banners = document.querySelectorAll('.najd-parallax-banner');
+    if (!banners.length) return;
+
+    const onScroll = () => {
+      banners.forEach(banner => {
+        const rect = banner.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+        const speed = 0.3;
+        const yPos = -(rect.top * speed);
+        banner.style.backgroundPositionY = yPos + 'px';
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
 
   /** Animated counters (statistics section) */

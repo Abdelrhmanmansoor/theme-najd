@@ -562,3 +562,73 @@ salla-product-card .s-product-card-sale-badge {
     &:hover { box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3); }
   }
 }
+
+/* ============================================================
+   IMAGE RATIO VARIANTS
+   ============================================================ */
+[data-img-ratio="square"] {
+  .s-product-card-image, .product-entry__image {
+    aspect-ratio: 1 / 1;
+    img { object-fit: cover; width: 100%; height: 100%; }
+  }
+}
+
+[data-img-ratio="portrait"] {
+  .s-product-card-image, .product-entry__image {
+    aspect-ratio: 3 / 4;
+    img { object-fit: cover; width: 100%; height: 100%; }
+  }
+}
+
+[data-img-ratio="landscape"] {
+  .s-product-card-image, .product-entry__image {
+    aspect-ratio: 4 / 3;
+    img { object-fit: cover; width: 100%; height: 100%; }
+  }
+}
+
+/* ============================================================
+   CARD HOVER EFFECTS
+   ============================================================ */
+[data-card-hover="none"] {
+  .s-product-card-entry,
+  custom-salla-product-card .product-entry {
+    &:hover { transform: none; box-shadow: var(--shadow-sm); }
+  }
+}
+
+[data-card-hover="shadow-grow"] {
+  .s-product-card-entry,
+  custom-salla-product-card .product-entry {
+    transition: box-shadow var(--duration-base) var(--ease-out);
+    &:hover { box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12); transform: none; }
+  }
+}
+
+[data-card-hover="border-glow"] {
+  .s-product-card-entry,
+  custom-salla-product-card .product-entry {
+    transition: border-color var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+    &:hover {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px var(--color-primary), 0 4px 16px rgba(0, 0, 0, 0.08);
+      transform: none;
+    }
+  }
+}
+
+[data-card-hover="scale"] {
+  .s-product-card-entry,
+  custom-salla-product-card .product-entry {
+    transition: transform var(--duration-base) var(--ease-out);
+    &:hover { transform: scale(1.03); }
+  }
+}
+
+[data-card-hover="slide-up"] {
+  .s-product-card-entry,
+  custom-salla-product-card .product-entry {
+    transition: transform var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+    &:hover { transform: translateY(-6px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); }
+  }
+}

@@ -33,7 +33,7 @@
 
 {% if offer_layout == 'split' %}
     {# === Split: image left, countdown + text right === #}
-    <section class="najd-block najd-block--offer container">
+    <section class="najd-block najd-block--offer {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
         <div class="najd-offer-split">
             {% if component.image %}
                 <div class="najd-offer-split__image">
@@ -59,7 +59,7 @@
     {# === Inline: thin horizontal bar === #}
     <section class="najd-block najd-block--offer">
         <div class="najd-offer-inline">
-            <div class="container">
+            <div class="{{ component.full_width is defined and component.full_width ? '' : 'container' }}">
                 <div class="najd-offer-inline__inner">
                     {% if component.title %}
                         <strong class="najd-offer-inline__title">{{ component.title }}</strong>
@@ -76,7 +76,7 @@
 {% else %}
     {# === Banner (default): full-width with background image === #}
     <section class="najd-block najd-block--offer">
-        <div class="container">
+        <div class="{{ component.full_width is defined and component.full_width ? '' : 'container' }}">
             <div class="najd-offer rounded-lg overflow-hidden">
                 {% if component.image %}
                     <div class="najd-offer__bg" style="background-image: url({{ component.image }});"></div>

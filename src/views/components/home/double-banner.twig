@@ -3,7 +3,7 @@
    Fields: component.banners[].image, .url, .title, .description
    ============================================================ #}
 
-<section class="najd-block najd-block--banners container">
+<section class="najd-block najd-block--banners {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
         {% for banner in component.banners %}
             <a href="{{ banner.url }}"

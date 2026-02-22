@@ -6,11 +6,11 @@
 {% set display_all = component.display_all_url %}
 {% set show_all_btn = theme.settings.get('is_more_button_enabled') %}
 
-<section class="najd-block najd-block--products container">
+<section class="najd-block najd-block--products {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
     <salla-products-slider
-        {% if component.products is defined and component.products|length %}
+        {% if component.products is defined and component.products is iterable and component.products|length %}
             source="selected"
-            source-value="[{{ component.products|map((p) => p.id)|join(',') }}]"
+            source-value="{{ component.products|map((p) => p.id ?? p.value ?? p)|join(',') }}"
         {% else %}
             source="latest"
         {% endif %}

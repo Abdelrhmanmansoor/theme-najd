@@ -1,0 +1,26 @@
+{# Parallax Banner — Full-width image with parallax effect #}
+{% set height = component.height|default('medium') %}
+{% set overlay = component.overlay_opacity|default(40) %}
+{% set align = component.text_align|default('center') %}
+
+<section class="najd-block najd-block--parallax">
+    <div class="najd-parallax-banner najd-parallax-banner--{{ height }}"
+         style="background-image: url('{{ component.image }}')">
+
+        <div class="najd-parallax-banner__overlay" style="opacity: {{ overlay / 100 }}"></div>
+
+        <div class="najd-parallax-banner__content najd-parallax-banner__content--{{ align }}">
+            {% if component.subtitle %}
+                <p>{{ component.subtitle }}</p>
+            {% endif %}
+            {% if component.title %}
+                <h2>{{ component.title }}</h2>
+            {% endif %}
+            {% if component.btn_text and component.btn_url %}
+                <a href="{{ component.btn_url }}" class="najd-btn najd-btn--primary najd-btn--lg">
+                    {{ component.btn_text }}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>

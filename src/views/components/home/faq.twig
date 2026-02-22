@@ -8,7 +8,7 @@
 
 {% if faq_layout == 'side' %}
     {# === Side: title left, questions right === #}
-    <section class="najd-block najd-block--faq container">
+    <section class="najd-block najd-block--faq {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
             <div class="lg:col-span-2">
                 {% if component.title %}
@@ -32,7 +32,7 @@
 
 {% elseif faq_layout == 'cards' %}
     {# === Cards: each Q&A in a separate card === #}
-    <section class="najd-block najd-block--faq container">
+    <section class="najd-block najd-block--faq {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
         {% if component.title %}
             <div class="najd-block__header text-center mb-8">
                 <h2 class="text-2xl font-bold">{{ component.title }}</h2>
@@ -50,7 +50,7 @@
 
 {% else %}
     {# === Accordion (default) === #}
-    <section class="najd-block najd-block--faq container">
+    <section class="najd-block najd-block--faq {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
         {% if component.title %}
             <div class="najd-block__header text-center mb-8">
                 <h2 class="text-2xl font-bold">{{ component.title }}</h2>

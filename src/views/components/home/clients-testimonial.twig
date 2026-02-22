@@ -1,5 +1,5 @@
 {# Clients / Partners Testimonial #}
-<section class="najd-block najd-block--clients container">
+<section class="najd-block najd-block--clients {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
     {% if component.title %}
         <div class="najd-block__header mb-8">
             <h2 class="najd-block__title">{{ component.title }}</h2>

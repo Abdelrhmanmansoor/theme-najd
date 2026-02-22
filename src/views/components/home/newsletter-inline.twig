@@ -2,7 +2,7 @@
 {% set has_gradient = component.bg_gradient_start and component.bg_gradient_end %}
 <section class="najd-block najd-block--newsletter-inline najd-newsletter-inline"
     style="{% if has_gradient %}background: linear-gradient(135deg, {{ component.bg_gradient_start }}, {{ component.bg_gradient_end }});{% endif %}{% if component.bg_image %}background-image: url('{{ component.bg_image }}'); background-size: cover; background-position: center;{% endif %}">
-    <div class="container">
+    <div class="{{ component.full_width is defined and component.full_width ? '' : 'container' }}">
         <div class="najd-newsletter-inline__inner">
             <div class="najd-newsletter-inline__text">
                 {% if component.title %}

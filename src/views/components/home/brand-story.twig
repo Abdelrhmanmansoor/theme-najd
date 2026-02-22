@@ -1,0 +1,29 @@
+{# Brand Story — Timeline #}
+<section class="najd-block najd-block--brand-story {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
+    {% if component.title %}
+        <div class="najd-block__header text-center mb-4">
+            <h2 class="najd-block__title">{{ component.title }}</h2>
+        </div>
+    {% endif %}
+    {% if component.subtitle %}
+        <p class="text-center text-sm opacity-70 mb-8 max-w-xl mx-auto">{{ component.subtitle }}</p>
+    {% endif %}
+
+    <div class="najd-timeline">
+        {% for milestone in component.milestones %}
+            <div class="najd-timeline__item">
+                <div class="najd-timeline__dot"></div>
+                <span class="najd-timeline__year">{{ milestone.year }}</span>
+                <div class="najd-timeline__content">
+                    <h3>{{ milestone.milestone_title }}</h3>
+                    {% if milestone.description %}
+                        <p>{{ milestone.description }}</p>
+                    {% endif %}
+                    {% if milestone.image %}
+                        <img src="{{ milestone.image }}" alt="{{ milestone.milestone_title }}" loading="lazy" class="najd-timeline__image">
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>

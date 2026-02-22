@@ -139,6 +139,10 @@
     data-btn-style="{{ theme.settings.get('button_style', 'rounded') }}"
     data-shadow="{{ theme.settings.get('card_shadow_intensity', 'light') }}"
     data-anim-speed="{{ theme.settings.get('animation_speed', 'normal') }}"
+    data-img-ratio="{{ theme.settings.get('product_image_ratio', 'auto') }}"
+    data-card-hover="{{ theme.settings.get('product_card_hover_effect', 'lift') }}"
+    data-section-alt="{{ theme.settings.get('section_alt_bg') ? 'true' : 'false' }}"
+    data-section-divider="{{ theme.settings.get('section_divider', 'none') }}"
 >
 
 {# ===== Preloader ===== #}
@@ -227,8 +231,11 @@
 
 {# ---- WhatsApp Button ---- #}
 {% if theme.settings.get('show_whatsapp_btn', true) and store.contacts.whatsapp %}
+    {% set wa_pos   = theme.settings.get('whatsapp_btn_position', 'right') %}
+    {% set wa_shape = theme.settings.get('whatsapp_btn_shape', 'circle') %}
+    {% set wa_color = theme.settings.get('whatsapp_btn_color', 'official') %}
     <a href="https://wa.me/{{ store.contacts.whatsapp }}"
-       class="najd-whatsapp-btn glass-surface"
+       class="najd-whatsapp-btn najd-whatsapp-btn--{{ wa_pos }} najd-whatsapp-btn--{{ wa_shape }} najd-whatsapp-btn--{{ wa_color }} glass-surface"
        target="_blank"
        rel="noopener noreferrer"
        aria-label="WhatsApp">
@@ -238,7 +245,9 @@
 
 {# ---- Back to Top ---- #}
 {% if theme.settings.get('show_back_to_top', true) %}
-    <button class="najd-back-to-top glass-surface" id="najd-back-to-top" aria-label="Back to top">
+    {% set btt_pos   = theme.settings.get('back_to_top_position', 'right') %}
+    {% set btt_shape = theme.settings.get('back_to_top_shape', 'rounded-square') %}
+    <button class="najd-back-to-top najd-back-to-top--{{ btt_pos }} najd-back-to-top--{{ btt_shape }} glass-surface" id="najd-back-to-top" aria-label="Back to top">
         <i class="sicon-keyboard-arrow-up"></i>
     </button>
 {% endif %}

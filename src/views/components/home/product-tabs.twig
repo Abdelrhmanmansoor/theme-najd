@@ -1,5 +1,5 @@
 {# Product Tabs — Tabbed product sliders #}
-<section class="najd-block najd-block--product-tabs container">
+<section class="najd-block najd-block--product-tabs {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
     {% if component.title %}
         <div class="najd-block__header mb-8">
             <h2 class="najd-block__title">{{ component.title }}</h2>
@@ -21,9 +21,9 @@
         {% for tab in component.tabs %}
             <div class="najd-product-tabs__panel {{ loop.first ? 'is-active' : '' }}" data-tab-panel="{{ loop.index0 }}">
                 <salla-products-slider
-                    {% if tab.products is defined and tab.products|length %}
+                    {% if tab.products is defined and tab.products is iterable and tab.products|length %}
                         source="selected"
-                        source-value="[{{ tab.products|map((p) => p.id)|join(',') }}]"
+                        source-value="{{ tab.products|map((p) => p.id ?? p.value ?? p)|join(',') }}"
                     {% else %}
                         source="latest"
                     {% endif %}

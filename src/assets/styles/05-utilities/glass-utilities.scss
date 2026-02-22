@@ -8,27 +8,51 @@
   position: fixed;
   z-index: var(--z-overlay);
   bottom: var(--space-xl);
-  inset-inline-end: var(--space-lg);
   width: 54px;
   height: 54px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
   font-size: 26px;
   color: #fff;
-  background: #25d366;
   border: none;
-  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
   transition: all var(--duration-base) var(--ease-out);
+  
+  i {
+    display: block;
+    line-height: 1;
+  }
 
   &:hover {
-    opacity: 0.9;
-    box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+    transform: translateY(-4px);
+    opacity: 0.95;
+  }
+
+  /* Variations */
+  &--right { inset-inline-end: var(--space-lg); }
+  &--left  { inset-inline-start: var(--space-lg); }
+
+  &--circle { border-radius: 50%; }
+  &--square { border-radius: var(--radius-lg); }
+  &--pill   { border-radius: var(--radius-full); width: auto; padding: 0 16px; }
+
+  &--official {
+    background: #25d366;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  }
+  &--primary {
+    background: var(--color-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  &--glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
   }
 }
 
-[data-theme="glass"] .najd-whatsapp-btn {
+[data-theme="glass"] .najd-whatsapp-btn--official {
   background: rgba(37, 211, 102, 0.85);
   border: 1px solid rgba(37, 211, 102, 0.3);
 }
@@ -38,25 +62,25 @@
   position: fixed;
   z-index: var(--z-overlay);
   bottom: 92px;
-  inset-inline-end: var(--space-lg);
   width: 44px;
   height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-lg);
   font-size: 22px;
   color: var(--text-secondary);
   background: var(--surface-card);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-md);
   opacity: 0;
+  visibility: hidden;
   transform: translateY(16px);
   pointer-events: none;
   transition: all var(--duration-base) var(--ease-out);
 
   &.is-visible {
     opacity: 1;
+    visibility: visible;
     transform: translateY(0);
     pointer-events: auto;
   }
@@ -64,7 +88,15 @@
   &:hover {
     color: var(--color-primary);
     border-color: var(--color-primary);
+    transform: translateY(-2px);
   }
+
+  /* Variations */
+  &--right { inset-inline-end: var(--space-lg); }
+  &--left  { inset-inline-start: var(--space-lg); }
+
+  &--circle { border-radius: 50%; }
+  &--rounded-square { border-radius: var(--radius-lg); }
 }
 
 [data-theme="glass"] .najd-back-to-top {

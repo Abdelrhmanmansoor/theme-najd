@@ -3,7 +3,7 @@
    Full-width video with overlay text + CTA
    ============================================================ #}
 <section class="najd-block najd-block--video py-12 lg:py-16">
-    <div class="container">
+    <div class="{{ component.full_width is defined and component.full_width ? '' : 'container' }}">
         <div class="najd-video-banner glass-surface rounded-2xl overflow-hidden">
             <div class="najd-video-banner__media">
                 {% if component.video_url %}
