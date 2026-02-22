@@ -2148,7 +2148,15 @@
                     "format": "dropdown-list",
                     "label": "المنتجات",
                     "source": "products",
-                    "note": "اختر المنتجات التي تريد عرضها في هذا القسم. إذا لم تختر شيئاً ستُعرض أحدث المنتجات تلقائياً"
+                    "note": "اختر المنتجات التي تريد عرضها في هذا القسم. إذا لم تختر شيئاً ستُعرض أحدث المنتجات تلقائياً",
+                    "multichoice": true,
+                    "searchable": true,
+                    "selected": [],
+                    "options": [],
+                    "value": [],
+                    "icon": "sicon-keyboard_arrow_down",
+                    "maxLength": 20,
+                    "minLength": 0
                 },
                 {
                     "id": "display_all_url",
@@ -3417,7 +3425,15 @@
                             "type": "items",
                             "format": "dropdown-list",
                             "label": "المنتجات",
-                            "source": "products"
+                            "source": "products",
+                            "multichoice": true,
+                            "searchable": true,
+                            "selected": [],
+                            "options": [],
+                            "value": [],
+                            "icon": "sicon-keyboard_arrow_down",
+                            "maxLength": 20,
+                            "minLength": 0
                         },
                         {
                             "id": "display_all_url",
