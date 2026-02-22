@@ -1,0 +1,24 @@
+{# Clients / Partners Testimonial #}
+<section class="najd-block najd-block--clients container">
+    {% if component.title %}
+        <div class="najd-block__header mb-8">
+            <h2 class="najd-block__title">{{ component.title }}</h2>
+        </div>
+    {% endif %}
+
+    <div class="najd-clients grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+        {% for client in component.clients %}
+            <div class="najd-clients__item">
+                <img src="{{ client.logo }}" alt="{{ client.name|default('') }}" loading="lazy" class="najd-clients__logo">
+                {% if client.testimonial %}
+                    <div class="najd-clients__tooltip">
+                        <p class="najd-clients__quote">{{ client.testimonial }}</p>
+                        {% if client.name %}
+                            <span class="najd-clients__name">— {{ client.name }}</span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</section>

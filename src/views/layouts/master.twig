@@ -106,8 +106,17 @@
             {% if theme.settings.get('announcement_text_color') %}
             --announcement-text: {{ theme.settings.get('announcement_text_color') }};
             {% endif %}
+
+            /* Accent color */
+            {% if theme.settings.get('accent_color') %}
+            --color-accent: {{ theme.settings.get('accent_color') }};
+            {% endif %}
         }
     </style>
+
+    {% if theme.settings.get('custom_favicon') %}
+        <link rel="icon" href="{{ theme.settings.get('custom_favicon') }}" type="image/png">
+    {% endif %}
     {% hook 'head:end' %}
 </head>
 
@@ -123,6 +132,13 @@
     data-radius="{{ theme.settings.get('border_radius_style', 'rounded') }}"
     data-card-style="{{ theme.settings.get('card_style', 'default') }}"
     data-hover="{{ theme.settings.get('hover_effect_style', 'lift') }}"
+    data-heading-style="{{ theme.settings.get('heading_style', 'simple') }}"
+    data-heading-align="{{ theme.settings.get('heading_align', 'center') }}"
+    data-heading-size="{{ theme.settings.get('heading_size', 'medium') }}"
+    data-product-card="{{ theme.settings.get('product_card_style', 'classic') }}"
+    data-btn-style="{{ theme.settings.get('button_style', 'rounded') }}"
+    data-shadow="{{ theme.settings.get('card_shadow_intensity', 'light') }}"
+    data-anim-speed="{{ theme.settings.get('animation_speed', 'normal') }}"
 >
 
 {# ===== Preloader ===== #}
@@ -130,7 +146,7 @@
     {% set preloader_style = theme.settings.get('preloader_style', 'spinner') %}
     <div class="najd-preloader najd-preloader--{{ preloader_style }}" id="najd-preloader">
         {% if preloader_style == 'logo' %}
-            <img src="{{ store.logo|cdn(175) }}" alt="{{ store.name }}" class="najd-preloader__logo">
+            <img src="{{ theme.settings.get('custom_preloader_image') ?: store.logo|cdn(175) }}" alt="{{ store.name }}" class="najd-preloader__logo">
         {% elseif preloader_style == 'progress' %}
             <div class="najd-preloader__bar"><div class="najd-preloader__bar-fill"></div></div>
         {% else %}

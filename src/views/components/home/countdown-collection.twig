@@ -1,0 +1,44 @@
+{# Countdown Collection — Products with individual timers #}
+<section class="najd-block najd-block--countdown-collection container">
+    {% if component.title %}
+        <div class="najd-block__header mb-8">
+            <h2 class="najd-block__title">{{ component.title }}</h2>
+        </div>
+    {% endif %}
+
+    <div class="najd-countdown-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-{{ component.items|length > 4 ? '4' : component.items|length }} gap-6">
+        {% for item in component.items %}
+            <div class="najd-countdown-card">
+                {% if item.discount_text %}
+                    <span class="najd-countdown-card__badge">{{ item.discount_text }}</span>
+                {% endif %}
+                <div class="najd-countdown-card__image">
+                    <a href="{{ item.product_url|default('#') }}">
+                        <img src="{{ item.image }}" alt="{{ item.product_title }}" loading="lazy">
+                    </a>
+                </div>
+                <div class="najd-countdown-card__content">
+                    <h3 class="najd-countdown-card__title">
+                        <a href="{{ item.product_url|default('#') }}">{{ item.product_title }}</a>
+                    </h3>
+                    {% if item.price %}
+                        <div class="najd-countdown-card__price">
+                            <span class="najd-countdown-card__current-price">{{ item.price }}</span>
+                            {% if item.old_price %}
+                                <span class="najd-countdown-card__old-price">{{ item.old_price }}</span>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    {% if item.end_date %}
+                        <div class="najd-countdown najd-countdown--sm" data-end-date="{{ item.end_date }}">
+                            <div class="najd-countdown__item"><span data-days>00</span><small>يوم</small></div>
+                            <div class="najd-countdown__item"><span data-hours>00</span><small>ساعة</small></div>
+                            <div class="najd-countdown__item"><span data-minutes>00</span><small>دقيقة</small></div>
+                            <div class="najd-countdown__item"><span data-seconds>00</span><small>ثانية</small></div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>

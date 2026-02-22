@@ -1,0 +1,31 @@
+{# Team / Staff Section #}
+<section class="najd-block najd-block--team container">
+    {% if component.title %}
+        <div class="najd-block__header mb-8">
+            <h2 class="najd-block__title">{{ component.title }}</h2>
+        </div>
+    {% endif %}
+
+    <div class="najd-team grid grid-cols-2 md:grid-cols-3 lg:grid-cols-{{ component.members|length > 4 ? '4' : component.members|length }} gap-6">
+        {% for member in component.members %}
+            <div class="najd-team__card">
+                <div class="najd-team__photo">
+                    <img src="{{ member.photo }}" alt="{{ member.name }}" loading="lazy">
+                </div>
+                <div class="najd-team__info">
+                    <h3 class="najd-team__name">{{ member.name }}</h3>
+                    {% if member.role %}
+                        <p class="najd-team__role">{{ member.role }}</p>
+                    {% endif %}
+                    {% if member.twitter or member.instagram or member.linkedin %}
+                        <div class="najd-team__social">
+                            {% if member.twitter %}<a href="{{ member.twitter }}" target="_blank" rel="noopener"><i class="sicon-twitter"></i></a>{% endif %}
+                            {% if member.instagram %}<a href="{{ member.instagram }}" target="_blank" rel="noopener"><i class="sicon-instagram"></i></a>{% endif %}
+                            {% if member.linkedin %}<a href="{{ member.linkedin }}" target="_blank" rel="noopener"><i class="sicon-linkedin"></i></a>{% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>

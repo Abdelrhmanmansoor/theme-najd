@@ -1,0 +1,38 @@
+{# Product Tabs — Tabbed product sliders #}
+<section class="najd-block najd-block--product-tabs container">
+    {% if component.title %}
+        <div class="najd-block__header mb-8">
+            <h2 class="najd-block__title">{{ component.title }}</h2>
+        </div>
+    {% endif %}
+
+    <div class="najd-product-tabs" id="najd-product-tabs-{{ position }}">
+        {# Tab buttons #}
+        <div class="najd-product-tabs__nav">
+            {% for tab in component.tabs %}
+                <button class="najd-product-tabs__btn {{ loop.first ? 'is-active' : '' }}"
+                        data-tab-index="{{ loop.index0 }}">
+                    {{ tab.tab_title }}
+                </button>
+            {% endfor %}
+        </div>
+
+        {# Tab panels #}
+        {% for tab in component.tabs %}
+            <div class="najd-product-tabs__panel {{ loop.first ? 'is-active' : '' }}" data-tab-panel="{{ loop.index0 }}">
+                <salla-products-slider
+                    {% if tab.products is defined and tab.products|length %}
+                        source="selected"
+                        source-value="[{{ tab.products|map((p) => p.id)|join(',') }}]"
+                    {% else %}
+                        source="latest"
+                    {% endif %}
+                    {% if tab.display_all_url %}
+                        display-all-url="{{ tab.display_all_url }}"
+                    {% endif %}
+                    slider-id="najd-tab-{{ position }}-{{ loop.index0 }}">
+                </salla-products-slider>
+            </div>
+        {% endfor %}
+    </div>
+</section>

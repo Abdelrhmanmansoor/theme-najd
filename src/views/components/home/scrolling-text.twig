@@ -1,0 +1,17 @@
+{# Scrolling Text Wall — Large parallax text #}
+{% set speed = component.speed|default('normal') %}
+<section class="najd-block najd-block--scrolling-text"
+    {% if component.bg_color %}style="background: {{ component.bg_color }}"{% endif %}>
+    {% for line in component.lines %}
+        <div class="najd-scrolling-text__line {{ loop.index is even ? 'najd-scrolling-text__line--reverse' : '' }} najd-scrolling-text__line--{{ speed }}"
+             {% if component.text_color %}style="color: {{ component.text_color }}"{% endif %}>
+            <div class="najd-scrolling-text__track">
+                {% for i in 0..3 %}
+                    <span class="najd-scrolling-text__item {{ line.outlined ? 'najd-scrolling-text__item--outlined' : '' }}">
+                        {{ line.text }}
+                    </span>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</section>

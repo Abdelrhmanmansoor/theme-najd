@@ -1,6 +1,7 @@
 /**
  * NAJD THEME — Home Page Scripts
- * Countdown timers, counter animations.
+ * Countdown timers, counter animations, image comparison,
+ * product tabs, scrolling text, progress bars.
  */
 
 import AppHelpers from './app-helpers';
@@ -12,6 +13,7 @@ class NajdHome extends AppHelpers {
     this.initCounterAnimations();
     this.initImageComparison();
     this.initProgressBars();
+    this.initProductTabs();
   }
 
   /** Countdown timers for special offers */
@@ -45,31 +47,77 @@ class NajdHome extends AppHelpers {
     });
   }
 
-  /** Image comparison — before/after drag slider */
+  /** Image comparison — advanced before/after with orientation, autoplay, start position */
   initImageComparison() {
     document.querySelectorAll('.najd-comparison').forEach(el => {
       const before = el.querySelector('.najd-comparison__before');
       const handle = el.querySelector('.najd-comparison__handle');
       if (!before || !handle) return;
 
-      let isDragging = false;
+      const isVertical = el.dataset.orientation === 'vertical';
+      const startPos = parseInt(el.dataset.start) || 50;
+      const autoplay = el.dataset.autoplay === 'true';
+      const speed = (parseInt(el.dataset.autoplaySpeed) || 3) * 1000;
 
-      const updatePosition = (x) => {
-        const rect = el.getBoundingClientRect();
-        let pct = ((x - rect.left) / rect.width) * 100;
+      let isDragging = false;
+      let currentPct = startPos;
+
+      const setPosition = (pct) => {
         pct = Math.max(2, Math.min(98, pct));
-        before.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
-        handle.style.left = pct + '%';
+        currentPct = pct;
+
+        if (isVertical) {
+          before.style.clipPath = `inset(0 0 ${100 - pct}% 0)`;
+          handle.style.top = pct + '%';
+          handle.style.left = '';
+        } else {
+          before.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+          handle.style.left = pct + '%';
+          handle.style.top = '';
+        }
       };
 
-      el.addEventListener('mousedown', (e) => { isDragging = true; updatePosition(e.clientX); });
-      el.addEventListener('touchstart', (e) => { isDragging = true; updatePosition(e.touches[0].clientX); }, { passive: true });
+      const getPositionFromEvent = (clientX, clientY) => {
+        const rect = el.getBoundingClientRect();
+        if (isVertical) {
+          return ((clientY - rect.top) / rect.height) * 100;
+        }
+        return ((clientX - rect.left) / rect.width) * 100;
+      };
 
-      document.addEventListener('mousemove', (e) => { if (isDragging) updatePosition(e.clientX); });
-      document.addEventListener('touchmove', (e) => { if (isDragging) updatePosition(e.touches[0].clientX); }, { passive: true });
+      // Set initial position
+      setPosition(startPos);
+
+      // Mouse/touch events
+      el.addEventListener('mousedown', (e) => { isDragging = true; setPosition(getPositionFromEvent(e.clientX, e.clientY)); });
+      el.addEventListener('touchstart', (e) => { isDragging = true; setPosition(getPositionFromEvent(e.touches[0].clientX, e.touches[0].clientY)); }, { passive: true });
+
+      document.addEventListener('mousemove', (e) => { if (isDragging) setPosition(getPositionFromEvent(e.clientX, e.clientY)); });
+      document.addEventListener('touchmove', (e) => { if (isDragging) setPosition(getPositionFromEvent(e.touches[0].clientX, e.touches[0].clientY)); }, { passive: true });
 
       document.addEventListener('mouseup', () => { isDragging = false; });
       document.addEventListener('touchend', () => { isDragging = false; });
+
+      // Autoplay: smooth back-and-forth oscillation
+      if (autoplay) {
+        let direction = 1;
+        let animPct = startPos;
+        const step = 0.5;
+        const minPct = 15;
+        const maxPct = 85;
+
+        const animate = () => {
+          if (isDragging) { requestAnimationFrame(animate); return; }
+          animPct += step * direction;
+          if (animPct >= maxPct) { direction = -1; animPct = maxPct; }
+          if (animPct <= minPct) { direction = 1; animPct = minPct; }
+          setPosition(animPct);
+          requestAnimationFrame(animate);
+        };
+
+        // Start autoplay after a delay
+        setTimeout(() => requestAnimationFrame(animate), speed);
+      }
     });
   }
 
@@ -91,6 +139,27 @@ class NajdHome extends AppHelpers {
     bars.forEach(bar => {
       bar.style.width = '0';
       observer.observe(bar);
+    });
+  }
+
+  /** Product tabs — switch between tabbed product sliders */
+  initProductTabs() {
+    document.querySelectorAll('.najd-product-tabs').forEach(container => {
+      const buttons = container.querySelectorAll('.najd-product-tabs__btn');
+      const panels = container.querySelectorAll('.najd-product-tabs__panel');
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = btn.dataset.tabIndex;
+
+          buttons.forEach(b => b.classList.remove('is-active'));
+          panels.forEach(p => p.classList.remove('is-active'));
+
+          btn.classList.add('is-active');
+          const panel = container.querySelector(`[data-tab-panel="${index}"]`);
+          if (panel) panel.classList.add('is-active');
+        });
+      });
     });
   }
 

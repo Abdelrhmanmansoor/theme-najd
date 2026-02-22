@@ -8,9 +8,11 @@
 
 <section class="najd-block najd-block--products container">
     <salla-products-slider
-        {% if component.products|length %}
+        {% if component.products is defined and component.products|length %}
             source="selected"
             source-value="[{{ component.products|map((p) => p.id)|join(',') }}]"
+        {% else %}
+            source="latest"
         {% endif %}
         {% if display_all != '' and display_all != '#' and show_all_btn %}
             display-all-url="{{ display_all }}"

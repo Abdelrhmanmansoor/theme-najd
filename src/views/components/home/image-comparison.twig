@@ -1,40 +1,68 @@
-{# ============================================================
-   Image Comparison — Before/After slider
-   Fields: component.title, .before_image, .after_image,
-           .before_label, .after_label
-   ============================================================ #}
+{# Image Comparison — Advanced Before/After #}
+{% set orientation = component.orientation|default('horizontal') %}
+{% set handle_style = component.handle_style|default('circle') %}
+{% set label_style = component.label_style|default('badge') %}
+{% set cursor_style = component.cursor_style|default('default') %}
+{% set start_pos = component.start_position|default(50) %}
 
-<section class="najd-block najd-block--comparison container">
+<section class="najd-block najd-block--comparison {{ component.full_width ? '' : 'container' }}">
     {% if component.title %}
-        <div class="najd-block__header text-center mb-8">
-            <h2 class="text-2xl font-bold">{{ component.title }}</h2>
+        <div class="najd-block__header text-center mb-4">
+            <h2 class="najd-block__title">{{ component.title }}</h2>
         </div>
     {% endif %}
+    {% if component.description %}
+        <p class="text-center text-sm opacity-70 mb-8 max-w-xl mx-auto">{{ component.description }}</p>
+    {% endif %}
 
-    <div class="najd-comparison" id="najd-comparison-{{ position }}">
+    <div class="najd-comparison najd-comparison--{{ orientation }} najd-comparison--handle-{{ handle_style }} najd-comparison--label-{{ label_style }}"
+         id="najd-comparison-{{ position }}"
+         data-orientation="{{ orientation }}"
+         data-start="{{ start_pos }}"
+         data-autoplay="{{ component.autoplay ? 'true' : 'false' }}"
+         data-autoplay-speed="{{ component.autoplay_speed|default(3) }}"
+         style="{% if component.border_radius is defined %}border-radius: {{ component.border_radius }}px;{% endif %}{% if component.border_color %}border: 2px solid {{ component.border_color }};{% endif %}{% if component.enable_shadow %}box-shadow: 0 8px 32px rgba(0,0,0,0.15);{% endif %}{% if cursor_style != 'default' %}cursor: {{ cursor_style == 'grab' ? 'grab' : (cursor_style == 'crosshair' ? 'crosshair' : 'none') }};{% endif %}">
+
+        {# Overlay tint #}
+        {% if component.overlay_color %}
+            <div class="najd-comparison__overlay" style="background: {{ component.overlay_color }}"></div>
+        {% endif %}
+
         {# After image (bottom layer) #}
         <div class="najd-comparison__after">
             <img src="{{ component.after_image }}" alt="{{ component.after_label|default('بعد') }}" loading="lazy">
-            <span class="najd-comparison__label najd-comparison__label--after">
-                {{ component.after_label|default('بعد') }}
-            </span>
         </div>
 
         {# Before image (top layer, clipped) #}
-        <div class="najd-comparison__before">
+        <div class="najd-comparison__before" style="clip-path: inset(0 {{ 100 - start_pos }}% 0 0)">
             <img src="{{ component.before_image }}" alt="{{ component.before_label|default('قبل') }}" loading="lazy">
-            <span class="najd-comparison__label najd-comparison__label--before">
-                {{ component.before_label|default('قبل') }}
-            </span>
         </div>
 
-        {# Drag handle #}
-        <div class="najd-comparison__handle">
+        {# Labels #}
+        {% if label_style != 'hidden' %}
+            <span class="najd-comparison__label najd-comparison__label--before">{{ component.before_label|default('قبل') }}</span>
+            <span class="najd-comparison__label najd-comparison__label--after">{{ component.after_label|default('بعد') }}</span>
+        {% endif %}
+
+        {# Handle #}
+        <div class="najd-comparison__handle" style="left: {{ start_pos }}%">
             <div class="najd-comparison__handle-line"></div>
-            <div class="najd-comparison__handle-grip">
-                <i class="sicon-keyboard-arrow-right"></i>
-                <i class="sicon-keyboard-arrow-left"></i>
-            </div>
+            {% if handle_style == 'circle' %}
+                <div class="najd-comparison__handle-grip">
+                    <i class="sicon-keyboard-arrow-right"></i>
+                    <i class="sicon-keyboard-arrow-left"></i>
+                </div>
+            {% elseif handle_style == 'arrows' %}
+                <div class="najd-comparison__handle-grip najd-comparison__handle-grip--arrows">
+                    <i class="sicon-arrow-right"></i>
+                    <i class="sicon-arrow-left"></i>
+                </div>
+            {% elseif handle_style == 'pill' %}
+                <div class="najd-comparison__handle-grip najd-comparison__handle-grip--pill">
+                    <i class="sicon-keyboard-arrow-right"></i>
+                    <i class="sicon-keyboard-arrow-left"></i>
+                </div>
+            {% endif %}
             <div class="najd-comparison__handle-line"></div>
         </div>
     </div>
