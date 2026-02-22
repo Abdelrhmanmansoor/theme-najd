@@ -1,57 +1,99 @@
 {# ============================================================
-   Special Offer — Countdown timer with CTA
-   Fields: component.title, .description, .image, .end_date,
-           .btn_text, .btn_url
+   Special Offer — 3 layout styles
+   Layouts: banner, split, inline
+   Fields: component.layout, .title, .description, .image,
+           .end_date, .btn_text, .btn_url
    ============================================================ #}
 
-<section class="najd-block najd-block--offer">
-    <div class="container">
-        <div class="najd-offer glass-surface rounded-glass overflow-hidden">
-            {# Background #}
+{% set offer_layout = component.layout|default('banner') %}
+
+{# Countdown macro #}
+{% macro countdown(component) %}
+    {% if component.end_date %}
+        <div class="najd-countdown" data-end-date="{{ component.end_date }}">
+            <div class="najd-countdown__item">
+                <span class="najd-countdown__num" data-days>00</span>
+                <span class="najd-countdown__label">{{ trans('common.elements.day') }}</span>
+            </div>
+            <div class="najd-countdown__item">
+                <span class="najd-countdown__num" data-hours>00</span>
+                <span class="najd-countdown__label">{{ trans('common.elements.hour') }}</span>
+            </div>
+            <div class="najd-countdown__item">
+                <span class="najd-countdown__num" data-minutes>00</span>
+                <span class="najd-countdown__label">{{ trans('common.elements.minute') }}</span>
+            </div>
+            <div class="najd-countdown__item">
+                <span class="najd-countdown__num" data-seconds>00</span>
+                <span class="najd-countdown__label">{{ trans('common.elements.second') }}</span>
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% if offer_layout == 'split' %}
+    {# === Split: image left, countdown + text right === #}
+    <section class="najd-block najd-block--offer container">
+        <div class="najd-offer-split">
             {% if component.image %}
-                <div class="najd-offer__bg"
-                     style="background-image: url({{ component.image }});">
+                <div class="najd-offer-split__image">
+                    <img src="{{ component.image }}" alt="{{ component.title }}" loading="lazy">
                 </div>
             {% endif %}
-
-            {# Content #}
-            <div class="najd-offer__content">
+            <div class="najd-offer-split__content">
                 {% if component.title %}
-                    <h2 class="text-2xl lg:text-4xl font-bold mb-3">{{ component.title }}</h2>
+                    <h2 class="text-2xl lg:text-3xl font-bold mb-3">{{ component.title }}</h2>
                 {% endif %}
-
                 {% if component.description %}
-                    <p class="text-sm opacity-70 mb-6 max-w-md">{{ component.description }}</p>
+                    <p class="text-sm opacity-70 mb-6">{{ component.description }}</p>
                 {% endif %}
-
-                {# Countdown #}
-                {% if component.end_date %}
-                    <div class="najd-countdown" data-end-date="{{ component.end_date }}">
-                        <div class="najd-countdown__item glass-surface rounded-lg">
-                            <span class="najd-countdown__num" data-days>00</span>
-                            <span class="najd-countdown__label">{{ trans('common.elements.day') }}</span>
-                        </div>
-                        <div class="najd-countdown__item glass-surface rounded-lg">
-                            <span class="najd-countdown__num" data-hours>00</span>
-                            <span class="najd-countdown__label">{{ trans('common.elements.hour') }}</span>
-                        </div>
-                        <div class="najd-countdown__item glass-surface rounded-lg">
-                            <span class="najd-countdown__num" data-minutes>00</span>
-                            <span class="najd-countdown__label">{{ trans('common.elements.minute') }}</span>
-                        </div>
-                        <div class="najd-countdown__item glass-surface rounded-lg">
-                            <span class="najd-countdown__num" data-seconds>00</span>
-                            <span class="najd-countdown__label">{{ trans('common.elements.second') }}</span>
-                        </div>
-                    </div>
-                {% endif %}
-
+                {{ _self.countdown(component) }}
                 {% if component.btn_text and component.btn_url %}
-                    <a href="{{ component.btn_url }}" class="najd-btn najd-btn--primary mt-6">
-                        {{ component.btn_text }}
-                    </a>
+                    <a href="{{ component.btn_url }}" class="najd-btn najd-btn--primary mt-6">{{ component.btn_text }}</a>
                 {% endif %}
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+{% elseif offer_layout == 'inline' %}
+    {# === Inline: thin horizontal bar === #}
+    <section class="najd-block najd-block--offer">
+        <div class="najd-offer-inline">
+            <div class="container">
+                <div class="najd-offer-inline__inner">
+                    {% if component.title %}
+                        <strong class="najd-offer-inline__title">{{ component.title }}</strong>
+                    {% endif %}
+                    {{ _self.countdown(component) }}
+                    {% if component.btn_text and component.btn_url %}
+                        <a href="{{ component.btn_url }}" class="najd-btn najd-btn--primary najd-btn--sm">{{ component.btn_text }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% else %}
+    {# === Banner (default): full-width with background image === #}
+    <section class="najd-block najd-block--offer">
+        <div class="container">
+            <div class="najd-offer rounded-lg overflow-hidden">
+                {% if component.image %}
+                    <div class="najd-offer__bg" style="background-image: url({{ component.image }});"></div>
+                {% endif %}
+                <div class="najd-offer__content">
+                    {% if component.title %}
+                        <h2 class="text-2xl lg:text-4xl font-bold mb-3">{{ component.title }}</h2>
+                    {% endif %}
+                    {% if component.description %}
+                        <p class="text-sm opacity-70 mb-6 max-w-md">{{ component.description }}</p>
+                    {% endif %}
+                    {{ _self.countdown(component) }}
+                    {% if component.btn_text and component.btn_url %}
+                        <a href="{{ component.btn_url }}" class="najd-btn najd-btn--primary mt-6">{{ component.btn_text }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}

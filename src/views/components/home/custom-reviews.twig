@@ -1,8 +1,11 @@
 {# ============================================================
-   Custom Reviews — Testimonials carousel
-   Fields: component.title, component.items[].name, .avatar,
-           .stars, .text
+   Custom Reviews — 4 layout styles
+   Layouts: carousel, grid, quote, horizontal
+   Fields: component.title, component.layout,
+           component.items[].name, .avatar, .stars, .text, .verified, .date
    ============================================================ #}
+
+{% set review_layout = component.layout|default('carousel') %}
 
 <section class="najd-block najd-block--reviews container">
     {% if component.title %}
@@ -11,42 +14,119 @@
         </div>
     {% endif %}
 
-    <salla-slider id="najd-reviews-{{ position }}"
-                  type="testimonials"
-                  centered
-                  slides-per-view="1"
-                  controls-outer
-                  auto-play>
-        <div slot="items">
+    {% if review_layout == 'grid' %}
+        {# === Grid: Masonry-style 2-3 column grid === #}
+        <div class="najd-reviews-grid">
             {% for item in component.items %}
-                <div class="swiper-slide" style="max-width: 700px;">
-                    <div class="najd-review glass-surface rounded-glass p-8">
-                        <div class="najd-review__inner">
-                            {# Avatar #}
-                            <div class="najd-review__avatar">
-                                {% if item.avatar %}
-                                    <img src="{{ item.avatar }}"
-                                         alt="{{ item.name }}"
-                                         loading="lazy"
-                                         width="56"
-                                         height="56">
-                                {% else %}
-                                    <span>{{ item.name|first }}</span>
-                                {% endif %}
-                            </div>
+                <div class="najd-review-card">
+                    <div class="najd-review-card__header">
+                        <div class="najd-review-card__avatar">
+                            {% if item.avatar %}
+                                <img src="{{ item.avatar }}" alt="{{ item.name }}" loading="lazy">
+                            {% else %}
+                                <span>{{ item.name|first }}</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <strong class="text-sm">{{ item.name }}</strong>
+                            {% if item.verified %}
+                                <span class="najd-review-card__verified">
+                                    <i class="sicon-check-circle"></i> {{ trans('common.elements.verified_buyer') }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <salla-rating-stars class="flex mb-3" size="small" value="{{ item.stars }}"></salla-rating-stars>
+                    <p class="najd-review-card__text">{{ item.text }}</p>
+                    {% if item.date %}
+                        <span class="najd-review-card__date">{{ item.date }}</span>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
 
-                            {# Content #}
-                            <div class="najd-review__body">
-                                <p class="najd-review__text">{{ item.text }}</p>
-                                <div class="najd-review__footer">
-                                    <strong class="text-sm">{{ item.name }}</strong>
-                                    <salla-rating-stars class="flex" size="small" value="{{ item.stars }}"></salla-rating-stars>
-                                </div>
-                            </div>
+    {% elseif review_layout == 'quote' %}
+        {# === Quote: Large centered single testimonial with auto-rotate === #}
+        <div class="najd-review-quote" id="najd-review-quote-{{ position }}">
+            {% for item in component.items %}
+                <div class="najd-review-quote__item {{ loop.first ? 'is-active' : '' }}">
+                    <div class="najd-review-quote__avatar">
+                        {% if item.avatar %}
+                            <img src="{{ item.avatar }}" alt="{{ item.name }}" loading="lazy">
+                        {% else %}
+                            <span>{{ item.name|first }}</span>
+                        {% endif %}
+                    </div>
+                    <blockquote class="najd-review-quote__text">"{{ item.text }}"</blockquote>
+                    <salla-rating-stars class="flex justify-center mb-3" size="small" value="{{ item.stars }}"></salla-rating-stars>
+                    <strong class="text-base">{{ item.name }}</strong>
+                    {% if item.verified %}
+                        <span class="najd-review-card__verified">
+                            <i class="sicon-check-circle"></i> {{ trans('common.elements.verified_buyer') }}
+                        </span>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+    {% elseif review_layout == 'horizontal' %}
+        {# === Horizontal: Scroll container with snap === #}
+        <div class="najd-reviews-horizontal">
+            {% for item in component.items %}
+                <div class="najd-review-hcard">
+                    <salla-rating-stars class="flex mb-3" size="small" value="{{ item.stars }}"></salla-rating-stars>
+                    <p class="najd-review-hcard__text">{{ item.text }}</p>
+                    <div class="najd-review-hcard__footer">
+                        <div class="najd-review-hcard__avatar">
+                            {% if item.avatar %}
+                                <img src="{{ item.avatar }}" alt="{{ item.name }}" loading="lazy">
+                            {% else %}
+                                <span>{{ item.name|first }}</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <strong class="text-sm">{{ item.name }}</strong>
+                            {% if item.date %}
+                                <span class="najd-review-card__date block">{{ item.date }}</span>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
-    </salla-slider>
+
+    {% else %}
+        {# === Carousel (default): Slider === #}
+        <salla-slider id="najd-reviews-{{ position }}"
+                      type="testimonials"
+                      centered
+                      slides-per-view="1"
+                      controls-outer
+                      auto-play>
+            <div slot="items">
+                {% for item in component.items %}
+                    <div class="swiper-slide" style="max-width: 700px;">
+                        <div class="najd-review p-8">
+                            <div class="najd-review__inner">
+                                <div class="najd-review__avatar">
+                                    {% if item.avatar %}
+                                        <img src="{{ item.avatar }}" alt="{{ item.name }}" loading="lazy" width="56" height="56">
+                                    {% else %}
+                                        <span>{{ item.name|first }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="najd-review__body">
+                                    <p class="najd-review__text">{{ item.text }}</p>
+                                    <div class="najd-review__footer">
+                                        <strong class="text-sm">{{ item.name }}</strong>
+                                        <salla-rating-stars class="flex" size="small" value="{{ item.stars }}"></salla-rating-stars>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </salla-slider>
+    {% endif %}
 </section>

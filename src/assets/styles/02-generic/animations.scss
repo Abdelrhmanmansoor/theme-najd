@@ -1,6 +1,6 @@
 /* ============================================================
    Animations — NAJD PREMIUM
-   Scroll reveal, entrance effects, micro-interactions
+   Scroll reveal, entrance effects
    ============================================================ */
 
 /* ---- Scroll-triggered entrance animations ---- */
@@ -70,37 +70,9 @@
   to   { transform: translateX(-50%); }
 }
 
-/* ---- Hover lift effect ---- */
-.najd-hover-lift {
-  transition: all var(--duration-base) var(--ease-out);
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-  }
-}
-
-/* ---- Pulse glow for primary buttons in glass mode ---- */
-@keyframes najd-pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-primary) 30%, transparent);
-  }
-  50% {
-    box-shadow: 0 0 0 8px color-mix(in srgb, var(--color-primary) 0%, transparent);
-  }
-}
-
 /* ---- Counter animation helper ---- */
 .najd-counter {
   font-variant-numeric: tabular-nums;
-}
-
-/* ---- Text gradient effect ---- */
-.najd-text-gradient {
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 /* ---- Image reveal on scroll ---- */

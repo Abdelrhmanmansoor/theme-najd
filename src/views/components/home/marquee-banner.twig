@@ -1,9 +1,7 @@
 {# ============================================================
-   Marquee Banner — Scrolling text/image banner
+   Marquee Banner — 5 layout styles
+   Styles: normal, ticker, large, double, cards
    Fields: component.text, .url, .bg_color, .style, .color_variant, .items[]
-   Supports: Normal, Rotated Ticker, Large text
-   Color variants: default, yellow, primary, dark
-   Items can include images (logos/badges) alongside text
    ============================================================ #}
 
 {% set marquee_style = component.style|default('normal') %}
@@ -11,50 +9,84 @@
 
 <section class="najd-block najd-block--marquee"
          {% if component.bg_color and color_variant == 'default' %}style="--marquee-bg: {{ component.bg_color }}"{% endif %}>
-    <div class="najd-marquee glass-surface
-        {{ marquee_style == 'ticker' ? ' najd-marquee--ticker' : '' }}
-        {{ marquee_style == 'large' ? ' najd-marquee--large' : '' }}
-        {{ color_variant == 'yellow' ? ' najd-marquee--yellow' : '' }}
-        {{ color_variant == 'primary' ? ' najd-marquee--primary' : '' }}
-        {{ color_variant == 'dark' ? ' najd-marquee--dark' : '' }}">
-        <div class="najd-marquee__track">
-            {# If items collection exists (images + text), use it #}
-            {% if component.items|length %}
-                {% for i in 0..3 %}
-                    {% for item in component.items %}
-                        {% if component.url %}
-                            <a href="{{ component.url }}" class="najd-marquee__text">
-                                {% if item.image %}
-                                    <img src="{{ item.image }}" alt="{{ item.text|default('') }}" class="najd-marquee__image" loading="lazy">
-                                {% endif %}
-                                {% if item.text %}
-                                    <span>{{ item.text }}</span>
-                                {% endif %}
-                            </a>
-                        {% else %}
-                            <span class="najd-marquee__text">
-                                {% if item.image %}
-                                    <img src="{{ item.image }}" alt="{{ item.text|default('') }}" class="najd-marquee__image" loading="lazy">
-                                {% endif %}
-                                {% if item.text %}
-                                    <span>{{ item.text }}</span>
-                                {% endif %}
-                            </span>
-                        {% endif %}
-                    {% endfor %}
-                {% endfor %}
-            {% else %}
-                {# Fallback: single text repeated #}
-                {% for i in 0..5 %}
+
+    {% set color_class = '' %}
+    {% if color_variant == 'yellow' %}{% set color_class = ' najd-marquee--yellow' %}{% endif %}
+    {% if color_variant == 'primary' %}{% set color_class = ' najd-marquee--primary' %}{% endif %}
+    {% if color_variant == 'dark' %}{% set color_class = ' najd-marquee--dark' %}{% endif %}
+
+    {# Macro for rendering marquee items #}
+    {% macro renderItems(component) %}
+        {% if component.items|length %}
+            {% for i in 0..3 %}
+                {% for item in component.items %}
                     {% if component.url %}
                         <a href="{{ component.url }}" class="najd-marquee__text">
-                            {{ component.text }}
+                            {% if item.image %}<img src="{{ item.image }}" alt="{{ item.text|default('') }}" class="najd-marquee__image" loading="lazy">{% endif %}
+                            {% if item.text %}<span>{{ item.text }}</span>{% endif %}
                         </a>
                     {% else %}
-                        <span class="najd-marquee__text">{{ component.text }}</span>
+                        <span class="najd-marquee__text">
+                            {% if item.image %}<img src="{{ item.image }}" alt="{{ item.text|default('') }}" class="najd-marquee__image" loading="lazy">{% endif %}
+                            {% if item.text %}<span>{{ item.text }}</span>{% endif %}
+                        </span>
                     {% endif %}
                 {% endfor %}
-            {% endif %}
+            {% endfor %}
+        {% else %}
+            {% for i in 0..5 %}
+                {% if component.url %}
+                    <a href="{{ component.url }}" class="najd-marquee__text">{{ component.text }}</a>
+                {% else %}
+                    <span class="najd-marquee__text">{{ component.text }}</span>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endmacro %}
+
+    {% if marquee_style == 'double' %}
+        {# === Double: two rows scrolling in opposite directions === #}
+        <div class="najd-marquee najd-marquee--double{{ color_class }}">
+            <div class="najd-marquee__track">
+                {{ _self.renderItems(component) }}
+            </div>
+            <div class="najd-marquee__track najd-marquee__track--reverse">
+                {{ _self.renderItems(component) }}
+            </div>
         </div>
-    </div>
+
+    {% elseif marquee_style == 'cards' %}
+        {# === Cards: items in pill-shaped cards scrolling === #}
+        <div class="najd-marquee najd-marquee--cards{{ color_class }}">
+            <div class="najd-marquee__track">
+                {% if component.items|length %}
+                    {% for i in 0..3 %}
+                        {% for item in component.items %}
+                            <span class="najd-marquee__card">
+                                {% if item.image %}<img src="{{ item.image }}" alt="{{ item.text|default('') }}" class="najd-marquee__card-img" loading="lazy">{% endif %}
+                                {% if item.text %}<span>{{ item.text }}</span>{% endif %}
+                            </span>
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    {% for i in 0..5 %}
+                        <span class="najd-marquee__card">
+                            <span>{{ component.text }}</span>
+                        </span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+    {% else %}
+        {# === Normal / Ticker / Large === #}
+        <div class="najd-marquee
+            {{ marquee_style == 'ticker' ? ' najd-marquee--ticker' : '' }}
+            {{ marquee_style == 'large' ? ' najd-marquee--large' : '' }}
+            {{ color_class }}">
+            <div class="najd-marquee__track">
+                {{ _self.renderItems(component) }}
+            </div>
+        </div>
+    {% endif %}
 </section>

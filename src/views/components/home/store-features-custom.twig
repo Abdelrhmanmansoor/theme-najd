@@ -1,32 +1,71 @@
 {# ============================================================
-   Store Features — Image or Icon + title + description grid
-   Fields: component.items[].image, .icon, .title, .text
-   Supports uploaded images (auto-arranged) or Salla icons
+   Store Features — 3 layout styles
+   Layouts: grid, horizontal, bar
+   Fields: component.layout, component.items[].image, .icon, .title, .text
    ============================================================ #}
+
+{% set features_layout = component.layout|default('grid') %}
 
 <section class="najd-block najd-block--features">
     <div class="container">
-        <div class="najd-features glass-surface rounded-glass">
-            <div class="grid grid-cols-2 md:grid-cols-{{ component.items|length > 4 ? '4' : component.items|length }} gap-0">
+        {% if features_layout == 'horizontal' %}
+            {# === Horizontal: single row, icon + text inline === #}
+            <div class="najd-features-horizontal">
                 {% for item in component.items %}
-                    <div class="najd-features__item">
-                        {# Image takes priority over icon #}
+                    <div class="najd-features-horizontal__item">
                         {% if item.image %}
-                            <div class="najd-features__image">
-                                <img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy">
-                            </div>
+                            <img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy" class="najd-features-horizontal__img">
                         {% elseif item.icon %}
-                            <i class="{{ item.icon }} najd-features__icon"></i>
+                            <i class="{{ item.icon }} najd-features-horizontal__icon"></i>
                         {% endif %}
-                        {% if item.title %}
-                            <h3 class="najd-features__title">{{ item.title }}</h3>
-                        {% endif %}
-                        {% if item.text %}
-                            <p class="najd-features__text">{{ item.text }}</p>
-                        {% endif %}
+                        <div>
+                            <h3 class="najd-features-horizontal__title">{{ item.title }}</h3>
+                            {% if item.text %}
+                                <p class="najd-features-horizontal__text">{{ item.text }}</p>
+                            {% endif %}
+                        </div>
                     </div>
                 {% endfor %}
             </div>
-        </div>
+
+        {% elseif features_layout == 'bar' %}
+            {# === Bar: compact strip with icon + title only === #}
+            <div class="najd-features-bar">
+                {% for item in component.items %}
+                    <div class="najd-features-bar__item">
+                        {% if item.image %}
+                            <img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy" class="najd-features-bar__img">
+                        {% elseif item.icon %}
+                            <i class="{{ item.icon }} najd-features-bar__icon"></i>
+                        {% endif %}
+                        <span class="najd-features-bar__title">{{ item.title }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+
+        {% else %}
+            {# === Grid (default): cards in rows === #}
+            <div class="najd-features">
+                <div class="grid grid-cols-2 md:grid-cols-{{ component.items|length > 4 ? '4' : component.items|length }} gap-0">
+                    {% for item in component.items %}
+                        <div class="najd-features__item">
+                            {% if item.image %}
+                                <div class="najd-features__image">
+                                    <img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy">
+                                </div>
+                            {% elseif item.icon %}
+                                <i class="{{ item.icon }} najd-features__icon"></i>
+                            {% endif %}
+                            {% if item.title %}
+                                <h3 class="najd-features__title">{{ item.title }}</h3>
+                            {% endif %}
+                            {% if item.text %}
+                                <p class="najd-features__text">{{ item.text }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
     </div>
 </section>

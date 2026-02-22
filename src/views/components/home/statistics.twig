@@ -1,18 +1,62 @@
 {# ============================================================
-   Statistics — Animated counter section
-   Fields: component.items[].number, .label, .icon
+   Statistics — 3 layout styles
+   Layouts: cards, inline, progress
+   Fields: component.layout, component.items[].number, .label, .icon, .suffix
    ============================================================ #}
 
-<section class="najd-block najd-block--stats container">
-    <div class="grid grid-cols-2 md:grid-cols-{{ component.items|length > 4 ? '4' : component.items|length }} gap-4">
-        {% for item in component.items %}
-            <div class="najd-stat glass-surface rounded-glass p-6 text-center">
-                {% if item.icon %}
-                    <i class="{{ item.icon }} najd-stat__icon"></i>
-                {% endif %}
-                <span class="najd-stat__number" data-count="{{ item.number }}">0</span>
-                <span class="najd-stat__label">{{ item.label }}</span>
-            </div>
-        {% endfor %}
-    </div>
-</section>
+{% set stats_layout = component.layout|default('cards') %}
+
+{% if stats_layout == 'inline' %}
+    {# === Inline: horizontal row, no cards === #}
+    <section class="najd-block najd-block--stats container">
+        <div class="najd-stats-inline">
+            {% for item in component.items %}
+                <div class="najd-stats-inline__item">
+                    <span class="najd-stats-inline__number" data-count="{{ item.number }}">0</span>
+                    <span class="najd-stats-inline__suffix">{{ item.suffix|default('') }}</span>
+                    <span class="najd-stats-inline__label">{{ item.label }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+{% elseif stats_layout == 'progress' %}
+    {# === Progress: animated progress bars === #}
+    <section class="najd-block najd-block--stats container">
+        <div class="najd-stats-progress max-w-2xl mx-auto">
+            {% for item in component.items %}
+                <div class="najd-stats-progress__item">
+                    <div class="najd-stats-progress__header">
+                        {% if item.icon %}
+                            <i class="{{ item.icon }} najd-stats-progress__icon"></i>
+                        {% endif %}
+                        <span class="najd-stats-progress__label">{{ item.label }}</span>
+                        <span class="najd-stats-progress__value">
+                            <span data-count="{{ item.number }}">0</span>{{ item.suffix|default('') }}
+                        </span>
+                    </div>
+                    <div class="najd-stats-progress__bar">
+                        <div class="najd-stats-progress__fill" data-width="{{ item.number }}" style="width: 0%"></div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+{% else %}
+    {# === Cards (default) === #}
+    <section class="najd-block najd-block--stats container">
+        <div class="grid grid-cols-2 md:grid-cols-{{ component.items|length > 4 ? '4' : component.items|length }} gap-4">
+            {% for item in component.items %}
+                <div class="najd-stat p-6 text-center">
+                    {% if item.icon %}
+                        <i class="{{ item.icon }} najd-stat__icon"></i>
+                    {% endif %}
+                    <span class="najd-stat__number" data-count="{{ item.number }}">0</span>
+                    <span class="najd-stat__suffix">{{ item.suffix|default('') }}</span>
+                    <span class="najd-stat__label">{{ item.label }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}

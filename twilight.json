@@ -34,16 +34,8 @@
             "type": "static",
             "format": "title",
             "id": "section-theme-mode",
-            "value": "<div><b>أوضاع العرض</b><br><small style='color:#888'>اختر وضع العرض الافتراضي: فاتح (أبيض نظيف) أو داكن أو الزجاجي المتقدم. العميل يقدر يبدّل بينهم لو فعّلت زر التنقل</small></div>",
+            "value": "<div><b>أوضاع العرض</b><br><small style='color:#888'>اختر وضع العرض الافتراضي للمتجر: فاتح (أبيض نظيف) أو داكن أو الزجاجي المتقدم</small></div>",
             "variant": "h5"
-        },
-        {
-            "id": "enable_theme_switcher",
-            "type": "boolean",
-            "format": "switch",
-            "label": "تفعيل زر التنقل بين الأوضاع",
-            "value": true,
-            "selected": true
         },
         {
             "id": "default_theme_mode",
@@ -964,6 +956,46 @@
             "value": ""
         },
         {
+            "type": "static",
+            "format": "title",
+            "id": "section-discount-popup",
+            "value": "<div><b>نافذة الخصم المنبثقة</b><br><small style='color:#888'>نافذة منبثقة تعرض كود خصم مع زر نسخ — تظهر مرة واحدة للزائر</small></div>",
+            "variant": "h5"
+        },
+        {
+            "id": "discount_popup_enabled",
+            "type": "boolean",
+            "format": "switch",
+            "label": "تفعيل نافذة الخصم",
+            "value": false,
+            "selected": false
+        },
+        {
+            "id": "discount_popup_title",
+            "type": "string",
+            "format": "text",
+            "label": "عنوان نافذة الخصم",
+            "multilanguage": true
+        },
+        {
+            "id": "discount_popup_code",
+            "type": "string",
+            "format": "text",
+            "label": "كود الخصم"
+        },
+        {
+            "id": "discount_popup_percentage",
+            "type": "string",
+            "format": "text",
+            "label": "نسبة الخصم (مثال: 15%)"
+        },
+        {
+            "id": "discount_popup_image",
+            "type": "string",
+            "format": "image",
+            "label": "صورة نافذة الخصم"
+        },
+        {
             "id": "quick_view_enabled",
             "type": "boolean",
             "format": "switch",
@@ -1210,11 +1242,30 @@
                     "maxLength": 10,
                     "fields": [
                         {
+                            "id": "slide_type",
+                            "type": "items",
+                            "format": "dropdown-list",
+                            "label": "نوع الشريحة",
+                            "selected": [{"label": "صورة", "value": "image"}],
+                            "options": [
+                                {"label": "صورة", "value": "image"},
+                                {"label": "فيديو (رابط مباشر MP4)", "value": "video"},
+                                {"label": "فيديو يوتيوب", "value": "youtube"}
+                            ],
+                            "source": "Manual"
+                        },
+                        {
                             "id": "image",
                             "type": "string",
                             "format": "image",
-                            "label": "الصورة",
+                            "label": "الصورة (أو صورة غلاف الفيديو)",
                             "required": true
+                        },
+                        {
+                            "id": "video_url",
+                            "type": "string",
+                            "format": "text",
+                            "label": "رابط الفيديو (MP4 مباشر أو رابط يوتيوب)"
                         },
                         {
                             "id": "title",
@@ -1264,6 +1315,19 @@
             "path": "home.about-store",
             "fields": [
                 {
+                    "id": "layout",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "تصميم القسم",
+                    "selected": [{"label": "جنب إلى جنب — صورة + نص", "value": "side"}],
+                    "options": [
+                        {"label": "جنب إلى جنب — صورة + نص", "value": "side"},
+                        {"label": "عرض كامل — صورة خلفية مع نص فوقها", "value": "fullwidth"},
+                        {"label": "مقسم — نصين متقابلين", "value": "split"}
+                    ],
+                    "source": "Manual"
+                },
+                {
                     "id": "image",
                     "type": "string",
                     "format": "image",
@@ -1307,6 +1371,19 @@
             "icon": "sicon-star-circle",
             "path": "home.store-features-custom",
             "fields": [
+                {
+                    "id": "layout",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "تصميم المميزات",
+                    "selected": [{"label": "شبكة — بطاقات في صفوف", "value": "grid"}],
+                    "options": [
+                        {"label": "شبكة — بطاقات في صفوف", "value": "grid"},
+                        {"label": "أفقي — كل شيء في سطر واحد", "value": "horizontal"},
+                        {"label": "شريط — أيقونة + عنوان فقط (مدمج)", "value": "bar"}
+                    ],
+                    "source": "Manual"
+                },
                 {
                     "id": "items",
                     "type": "collection",
@@ -1482,6 +1559,20 @@
             "path": "home.custom-reviews",
             "fields": [
                 {
+                    "id": "layout",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "تصميم التقييمات",
+                    "selected": [{"label": "كاروسيل — تمرير أفقي", "value": "carousel"}],
+                    "options": [
+                        {"label": "كاروسيل — تمرير أفقي", "value": "carousel"},
+                        {"label": "شبكة بطاقات — عرض متعدد", "value": "grid"},
+                        {"label": "اقتباس كبير — تقييم واحد مع صورة", "value": "quote"},
+                        {"label": "تمرير أفقي — بطاقات مع سحب", "value": "horizontal"}
+                    ],
+                    "source": "Manual"
+                },
+                {
                     "id": "title",
                     "type": "string",
                     "format": "text",
@@ -1524,6 +1615,19 @@
                             "format": "textarea",
                             "label": "نص التقييم",
                             "multilanguage": true
+                        },
+                        {
+                            "id": "verified",
+                            "type": "boolean",
+                            "format": "switch",
+                            "label": "عميل موثق",
+                            "value": false
+                        },
+                        {
+                            "id": "date",
+                            "type": "string",
+                            "format": "text",
+                            "label": "تاريخ التقييم"
                         }
                     ]
                 }
@@ -1538,6 +1642,19 @@
             "icon": "sicon-help-circle",
             "path": "home.faq",
             "fields": [
+                {
+                    "id": "layout",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "تصميم الأسئلة الشائعة",
+                    "selected": [{"label": "أكورديون — قائمة منسدلة", "value": "accordion"}],
+                    "options": [
+                        {"label": "أكورديون — قائمة منسدلة", "value": "accordion"},
+                        {"label": "بطاقات — كل سؤال في بطاقة", "value": "cards"},
+                        {"label": "جانبي — عنوان يسار وأسئلة يمين", "value": "side"}
+                    ],
+                    "source": "Manual"
+                },
                 {
                     "id": "title",
                     "type": "string",
@@ -1582,6 +1699,19 @@
             "icon": "sicon-timer",
             "path": "home.special-offer",
             "fields": [
+                {
+                    "id": "layout",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "تصميم العرض الخاص",
+                    "selected": [{"label": "بانر — صورة خلفية مع عد تنازلي", "value": "banner"}],
+                    "options": [
+                        {"label": "بانر — صورة خلفية مع عد تنازلي", "value": "banner"},
+                        {"label": "مقسم — صورة يسار وعد تنازلي يمين", "value": "split"},
+                        {"label": "شريط — عد تنازلي في شريط أفقي", "value": "inline"}
+                    ],
+                    "source": "Manual"
+                },
                 {
                     "id": "title",
                     "type": "string",
@@ -1660,6 +1790,19 @@
             "path": "home.statistics",
             "fields": [
                 {
+                    "id": "layout",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "تصميم الإحصائيات",
+                    "selected": [{"label": "بطاقات — أرقام في بطاقات", "value": "cards"}],
+                    "options": [
+                        {"label": "بطاقات — أرقام في بطاقات", "value": "cards"},
+                        {"label": "سطر واحد — أرقام كبيرة بدون بطاقات", "value": "inline"},
+                        {"label": "أشرطة تقدم — مع شريط متحرك", "value": "progress"}
+                    ],
+                    "source": "Manual"
+                },
+                {
                     "id": "items",
                     "type": "collection",
                     "format": "collection",
@@ -1687,6 +1830,12 @@
                             "type": "string",
                             "format": "icon",
                             "label": "الأيقونة"
+                        },
+                        {
+                            "id": "suffix",
+                            "type": "string",
+                            "format": "text",
+                            "label": "لاحقة (مثل: +، %، K، ألف)"
                         }
                     ]
                 }
@@ -1737,6 +1886,14 @@
                         {
                             "label": "كبير — نص كبير عريض",
                             "value": "large"
+                        },
+                        {
+                            "label": "مزدوج — شريطين متعاكسي الاتجاه",
+                            "value": "double"
+                        },
+                        {
+                            "label": "بطاقات — عناصر في كبسولات منفصلة",
+                            "value": "cards"
                         }
                     ],
                     "source": "Manual"
@@ -1992,6 +2149,52 @@
                             "label": "رابط المنشور"
                         }
                     ]
+                }
+            ]
+        },
+        {
+            "key": "c5d6e7f8-9a0b-1c2d-3e4f-567890abcdef",
+            "title": {
+                "ar": "مقارنة صور — قبل وبعد (نجد)",
+                "en": "Image Comparison - Before/After (Najd)"
+            },
+            "icon": "sicon-slider",
+            "path": "home.image-comparison",
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "string",
+                    "format": "text",
+                    "label": "العنوان",
+                    "multilanguage": true
+                },
+                {
+                    "id": "before_image",
+                    "type": "string",
+                    "format": "image",
+                    "label": "صورة قبل",
+                    "required": true
+                },
+                {
+                    "id": "after_image",
+                    "type": "string",
+                    "format": "image",
+                    "label": "صورة بعد",
+                    "required": true
+                },
+                {
+                    "id": "before_label",
+                    "type": "string",
+                    "format": "text",
+                    "label": "تسمية قبل (مثال: قبل)",
+                    "multilanguage": true
+                },
+                {
+                    "id": "after_label",
+                    "type": "string",
+                    "format": "text",
+                    "label": "تسمية بعد (مثال: بعد)",
+                    "multilanguage": true
                 }
             ]
         }

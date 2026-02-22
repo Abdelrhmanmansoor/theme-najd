@@ -17,7 +17,7 @@
     <script defer data-cfasync="false" crossorigin="anonymous" src="{{ 'product-card.js'|asset }}"></script>
     <script defer src="{{ 'main-menu.js'|asset }}"></script>
     <script defer src="{{ 'theme-mode.js'|asset }}"></script>
-    {% if theme.settings.get('default_theme_mode') == 'glass' or theme.settings.get('enable_theme_switcher') %}
+    {% if theme.settings.get('default_theme_mode') == 'glass' %}
         <script defer src="{{ 'liquid-glass.js'|asset }}"></script>
     {% endif %}
     {% block head_scripts %}{% endblock %}
@@ -26,7 +26,6 @@
     <script data-cfasync="false">
         window.najdConfig = {
             defaultMode:        "{{ theme.settings.get('default_theme_mode', 'light') }}",
-            enableSwitcher:     {{ theme.settings.get('enable_theme_switcher', true) ? 'true' : 'false' }},
             glassBlur:          "{{ theme.settings.get('glass_blur_intensity', 'medium') }}",
             headerIsSticky:     {{ theme.settings.get('header_is_sticky', true) ? 'true' : 'false' }},
             headerStyle:        "{{ theme.settings.get('header_style', 'classic') }}",
@@ -210,21 +209,6 @@
     {% component 'footer.footer' %}
 </div>
 
-{# ---- Theme Mode Switcher ---- #}
-{% if theme.settings.get('enable_theme_switcher', true) %}
-    <div class="najd-mode-switcher" id="najd-mode-switcher">
-        <button class="najd-mode-switcher__btn" data-mode="light" title="{{ trans('common.elements.light_mode') }}" aria-label="Light mode">
-            <i class="sicon-sun"></i>
-        </button>
-        <button class="najd-mode-switcher__btn" data-mode="dark" title="{{ trans('common.elements.dark_mode') }}" aria-label="Dark mode">
-            <i class="sicon-moon"></i>
-        </button>
-        <button class="najd-mode-switcher__btn" data-mode="glass" title="Liquid Glass" aria-label="Glass mode">
-            <i class="sicon-layers"></i>
-        </button>
-    </div>
-{% endif %}
-
 {# ---- WhatsApp Button ---- #}
 {% if theme.settings.get('show_whatsapp_btn', true) and store.contacts.whatsapp %}
     <a href="https://wa.me/{{ store.contacts.whatsapp }}"
@@ -297,6 +281,42 @@
                     <h3 class="text-xl lg:text-2xl font-bold mb-2">{{ trans('blocks.footer.newsletter') }}</h3>
                     <p class="text-sm opacity-70 mb-6">{{ trans('blocks.footer.newsletter_desc') }}</p>
                     <salla-newsletter></salla-newsletter>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{# ===== Discount Popup ===== #}
+{% if theme.settings.get('discount_popup_enabled', false) %}
+    <div class="najd-discount-popup" id="najd-discount-popup" style="display:none">
+        <div class="najd-discount-popup__overlay" onclick="document.getElementById('najd-discount-popup').style.display='none'; localStorage.setItem('najd-discount-dismissed', Date.now())"></div>
+        <div class="najd-discount-popup__content">
+            <button class="najd-discount-popup__close" onclick="document.getElementById('najd-discount-popup').style.display='none'; localStorage.setItem('najd-discount-dismissed', Date.now())">
+                <i class="sicon-cancel"></i>
+            </button>
+            <div class="najd-discount-popup__body">
+                {% if theme.settings.get('discount_popup_image') %}
+                    <div class="najd-discount-popup__image">
+                        <img src="{{ theme.settings.get('discount_popup_image') }}" alt="" loading="lazy">
+                    </div>
+                {% endif %}
+                <div class="najd-discount-popup__info">
+                    {% if theme.settings.get('discount_popup_percentage') %}
+                        <div class="najd-discount-popup__badge">
+                            {{ theme.settings.get('discount_popup_percentage') }}
+                        </div>
+                    {% endif %}
+                    {% if theme.settings.get('discount_popup_title') %}
+                        <h3 class="text-xl font-bold mb-4">{{ theme.settings.get('discount_popup_title') }}</h3>
+                    {% endif %}
+                    {% if theme.settings.get('discount_popup_code') %}
+                        <div class="najd-discount-popup__code" id="najd-discount-code" onclick="navigator.clipboard.writeText('{{ theme.settings.get('discount_popup_code') }}'); this.classList.add('is-copied');">
+                            <span>{{ theme.settings.get('discount_popup_code') }}</span>
+                            <i class="sicon-copy"></i>
+                        </div>
+                        <p class="text-xs opacity-50 mt-2">{{ trans('common.elements.click_to_copy') }}</p>
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -23,8 +23,6 @@
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
 }
 
 .najd-newsletter-popup__content {
@@ -101,9 +99,7 @@
 
 /* Glass mode */
 [data-theme="glass"] .najd-newsletter-popup__content {
-  background: rgba(5, 5, 17, 0.90);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(5, 5, 17, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 

@@ -1,111 +1,7 @@
 /* ============================================================
-   Glass Utility Classes — NAJD PREMIUM AI Edition
-   Mode switcher with AI glow, WhatsApp, Back to top
+   Glass Utility Classes — NAJD PREMIUM
+   WhatsApp, Back to top, Sticky cart, Parallax
    ============================================================ */
-
-/* ---- Mode Switcher with AI Glow ---- */
-.najd-mode-switcher {
-  position: fixed;
-  z-index: var(--z-modal);
-  display: flex;
-  gap: 4px;
-  padding: 5px;
-  background: var(--surface-card);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-full);
-  box-shadow: var(--shadow-lg);
-  transition: all var(--duration-base) var(--ease-out);
-
-  /* Desktop: left side */
-  bottom: var(--space-xl);
-  inset-inline-start: var(--space-lg);
-
-  /* Mobile: bottom center */
-  @media (max-width: 767px) {
-    bottom: var(--space-lg);
-    inset-inline-start: 50%;
-    transform: translateX(-50%);
-  }
-}
-
-[dir="rtl"] .najd-mode-switcher {
-  @media (max-width: 767px) {
-    transform: translateX(50%);
-  }
-}
-
-[data-theme="glass"] .najd-mode-switcher {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.10);
-  box-shadow:
-    0 8px 32px rgba(31, 38, 135, 0.25),
-    0 0 20px rgba(124, 92, 252, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-[data-theme="dark"] .najd-mode-switcher {
-  background: var(--surface-elevated);
-}
-
-.najd-mode-switcher__btn {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 17px;
-  color: var(--text-tertiary);
-  transition: all var(--duration-base) var(--ease-spring);
-  position: relative;
-
-  &:hover {
-    color: var(--text-primary);
-    background: var(--glass-bg);
-    transform: scale(1.05);
-  }
-
-  &.is-active {
-    color: #fff;
-    transform: scale(1.08);
-  }
-}
-
-/* Light mode button active — sun */
-.najd-mode-switcher__btn[data-mode="light"].is-active {
-  background: linear-gradient(135deg, #f59e0b, #f97316);
-  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
-}
-
-/* Dark mode button active — moon */
-.najd-mode-switcher__btn[data-mode="dark"].is-active {
-  background: linear-gradient(135deg, #3b82f6, #6366f1);
-  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
-}
-
-/* Glass mode button active — AI gradient glow */
-.najd-mode-switcher__btn[data-mode="glass"].is-active {
-  background: linear-gradient(135deg, #BC82F3, #5AC8FA);
-  box-shadow:
-    0 4px 16px rgba(188, 130, 243, 0.35),
-    0 0 24px rgba(90, 200, 250, 0.15);
-  animation: najd-ai-glow 3s ease-in-out infinite;
-}
-
-@keyframes najd-ai-glow {
-  0%, 100% {
-    box-shadow:
-      0 4px 16px rgba(188, 130, 243, 0.35),
-      0 0 24px rgba(90, 200, 250, 0.15);
-  }
-  50% {
-    box-shadow:
-      0 4px 20px rgba(188, 130, 243, 0.50),
-      0 0 36px rgba(90, 200, 250, 0.25);
-  }
-}
 
 /* ---- WhatsApp Button ---- */
 .najd-whatsapp-btn {
@@ -123,19 +19,17 @@
   color: #fff;
   background: #25d366;
   border: none;
-  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
-  transition: all var(--duration-base) var(--ease-spring);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  transition: all var(--duration-base) var(--ease-out);
 
   &:hover {
-    transform: scale(1.1) translateY(-2px);
-    box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45);
+    opacity: 0.9;
+    box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
   }
 }
 
 [data-theme="glass"] .najd-whatsapp-btn {
   background: rgba(37, 211, 102, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(37, 211, 102, 0.3);
 }
 
@@ -170,19 +64,16 @@
   &:hover {
     color: var(--color-primary);
     border-color: var(--color-primary);
-    transform: translateY(-2px);
   }
 }
 
 [data-theme="glass"] .najd-back-to-top {
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 20px rgba(31, 38, 135, 0.20);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* ---- Sticky Add-to-Cart Bar (Shopify-inspired) ---- */
+/* ---- Sticky Add-to-Cart Bar ---- */
 .najd-sticky-cart {
   position: fixed;
   bottom: 0;
@@ -192,11 +83,9 @@
   padding: var(--space-md) 0;
   background: var(--surface-bg);
   border-top: 1px solid var(--border-color);
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
   transform: translateY(100%);
   transition: transform var(--duration-slow) var(--ease-out);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 
   &.is-visible {
     transform: translateY(0);
@@ -204,9 +93,9 @@
 }
 
 [data-theme="glass"] .najd-sticky-cart {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(5, 5, 17, 0.92);
   border-top-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 -4px 30px rgba(31, 38, 135, 0.20);
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* ---- Parallax section helper ---- */
@@ -221,41 +110,4 @@
     background-position: center;
     will-change: transform;
   }
-}
-
-/* ---- AI Gradient border effect ---- */
-.najd-ai-border {
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    background: linear-gradient(135deg, #BC82F3, #5AC8FA, #F5B9EA, #BC82F3);
-    background-size: 300% 300%;
-    animation: najd-gradient-flow 6s linear infinite;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity var(--duration-base) var(--ease-out);
-  }
-
-  &:hover::before {
-    opacity: 1;
-  }
-}
-
-@keyframes najd-gradient-flow {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Glass mode: always show AI border on featured elements */
-[data-theme="glass"] .najd-ai-border::before {
-  opacity: 0.4;
-}
-
-[data-theme="glass"] .najd-ai-border:hover::before {
-  opacity: 0.8;
 }

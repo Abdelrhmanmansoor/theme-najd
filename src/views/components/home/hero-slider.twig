@@ -1,7 +1,7 @@
 {# ============================================================
-   Hero Slider — Advanced full-width slider with glass overlay
-   Fields: component.slides[].image, .title, .subtitle,
-           .btn_text, .btn_url, .overlay
+   Hero Slider — Full-width slider with image + video support
+   Fields: component.slides[].slide_type, .image, .video_url,
+           .title, .subtitle, .btn_text, .btn_url, .overlay
    ============================================================ #}
 
 {% set merge = theme.settings.get('merge_header_with_first', false) %}
@@ -15,15 +15,39 @@
                   slider-config='{"lazy":"false"}'>
         <div slot="items">
             {% for slide in component.slides %}
+                {% set slide_type = slide.slide_type|default('image') %}
                 <div class="swiper-slide najd-hero-slide">
-                    {# Background image #}
-                    <div class="najd-hero-slide__bg {{ slide.overlay ? 'najd-hero-slide__bg--overlay' : '' }}"
-                         style="background-image: url({{ slide.image }});">
-                    </div>
 
-                    {# Content #}
+                    {# === Background: Image / Video / YouTube === #}
+                    {% if slide_type == 'video' and slide.video_url %}
+                        <div class="najd-hero-slide__bg najd-hero-slide__bg--video {{ slide.overlay ? 'najd-hero-slide__bg--overlay' : '' }}">
+                            <video class="najd-hero-slide__video"
+                                   autoplay muted loop playsinline
+                                   poster="{{ slide.image }}">
+                                <source src="{{ slide.video_url }}" type="video/mp4">
+                            </video>
+                        </div>
+                    {% elseif slide_type == 'youtube' and slide.video_url %}
+                        {% set yt_id = slide.video_url|split('v=')|last|split('&')|first|split('/')|last %}
+                        <div class="najd-hero-slide__bg najd-hero-slide__bg--youtube {{ slide.overlay ? 'najd-hero-slide__bg--overlay' : '' }}">
+                            <iframe class="najd-hero-slide__youtube"
+                                    src="https://www.youtube.com/embed/{{ yt_id }}?autoplay=1&mute=1&loop=1&playlist={{ yt_id }}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+                                    frameborder="0"
+                                    allow="autoplay; encrypted-media"
+                                    allowfullscreen
+                                    loading="lazy"
+                                    style="background-image: url({{ slide.image }});">
+                            </iframe>
+                        </div>
+                    {% else %}
+                        <div class="najd-hero-slide__bg {{ slide.overlay ? 'najd-hero-slide__bg--overlay' : '' }}"
+                             style="background-image: url({{ slide.image }});">
+                        </div>
+                    {% endif %}
+
+                    {# === Content Overlay === #}
                     <div class="najd-hero-slide__content container">
-                        <div class="najd-hero-slide__inner glass-surface rounded-glass">
+                        <div class="najd-hero-slide__inner">
                             {% if slide.title %}
                                 <h2 class="najd-hero-slide__title" data-swiper-parallax="-400">
                                     {{ slide.title }}

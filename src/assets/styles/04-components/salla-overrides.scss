@@ -18,8 +18,7 @@ custom-salla-product-card {
                 box-shadow var(--duration-base) var(--ease-out) !important;
 
     &:hover {
-      transform: translateY(-4px) !important;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10) !important;
     }
   }
 
@@ -100,16 +99,14 @@ custom-salla-product-card {
 [data-theme="glass"] {
   salla-product-card .s-product-card-entry,
   custom-salla-product-card .s-product-card-entry {
-    background: var(--glass-bg) !important;
-    backdrop-filter: blur(var(--glass-blur)) !important;
-    -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
-    border: 1px solid var(--glass-border) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: none !important;
 
     &:hover {
-      background: var(--glass-bg-hover) !important;
-      border-color: var(--glass-border-hover) !important;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: rgba(255, 255, 255, 0.12) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
     }
   }
 }
@@ -156,10 +153,8 @@ salla-products-list {
 
 [data-theme="glass"] salla-products-list {
   .s-products-list-filters-container {
-    background: var(--glass-bg) !important;
-    backdrop-filter: blur(var(--glass-blur)) !important;
-    -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
-    border-color: var(--glass-border) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
   }
 }
 
@@ -214,10 +209,8 @@ salla-cart-summary-enhanced {
 
 [data-theme="glass"] salla-cart-summary-enhanced {
   .s-cart-enhanced {
-    background: var(--glass-bg) !important;
-    backdrop-filter: blur(var(--glass-blur)) !important;
-    -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
-    border-color: var(--glass-border) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
   }
 }
 
@@ -249,7 +242,7 @@ salla-search {
     &:focus-within {
       background: #fff !important;
       border-color: var(--color-primary) !important;
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 10%, transparent) !important;
+      box-shadow: none !important;
     }
   }
 }
@@ -263,7 +256,7 @@ salla-search {
     &:focus-within {
       background: rgba(255, 255, 255, 0.1) !important;
       border-color: rgba(255, 255, 255, 0.25) !important;
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06) !important;
+      box-shadow: none !important;
     }
   }
 }
@@ -276,7 +269,7 @@ salla-search {
     &:focus-within {
       background: rgba(255, 255, 255, 0.08) !important;
       border-color: var(--color-primary) !important;
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 10%, transparent) !important;
+      box-shadow: none !important;
     }
   }
 }
@@ -318,10 +311,8 @@ salla-add-product-toast {
 
 [data-theme="glass"] salla-add-product-toast {
   .s-add-product-toast {
-    background: var(--glass-bg-strong) !important;
-    backdrop-filter: blur(24px) !important;
-    -webkit-backdrop-filter: blur(24px) !important;
-    border-color: var(--glass-border) !important;
+    background: rgba(10, 10, 20, 0.95) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
   }
 }
 
@@ -370,8 +361,7 @@ salla-blog-posts {
                 box-shadow var(--duration-base) var(--ease-out) !important;
 
     &:hover {
-      transform: translateY(-3px) !important;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10) !important;
     }
   }
 }
@@ -531,9 +521,7 @@ custom-main-menu {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.6);
   padding: 16px;
 }
 
@@ -577,7 +565,7 @@ custom-main-menu {
 }
 
 [data-theme="glass"] .najd-size-chart-modal__content {
-  background: rgba(5, 5, 17, 0.90);
+  background: #0a0a14;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -585,10 +573,5 @@ custom-main-menu {
 /* ---- Back-in-Stock ---- */
 
 .najd-back-in-stock {
-  animation: najd-pulse-border 2s ease-in-out infinite;
-}
-
-@keyframes najd-pulse-border {
-  0%, 100% { border-color: var(--border-color); }
-  50% { border-color: color-mix(in srgb, var(--color-primary) 40%, var(--border-color)); }
+  border-color: var(--color-primary);
 }

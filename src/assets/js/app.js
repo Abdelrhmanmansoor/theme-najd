@@ -16,6 +16,7 @@ class NajdApp extends AppHelpers {
     this.initScrollAnimations();
     this.initContentProtection();
     this.initNewsletterPopup();
+    this.initDiscountPopup();
     this.initShippingBar();
     this.initTransparentHeader();
   }
@@ -122,6 +123,19 @@ class NajdApp extends AppHelpers {
     setTimeout(() => {
       popup.style.display = 'flex';
     }, delay);
+  }
+
+  /** Discount popup — show after delay, respect localStorage dismissal */
+  initDiscountPopup() {
+    const popup = document.getElementById('najd-discount-popup');
+    if (!popup) return;
+
+    const dismissed = localStorage.getItem('najd-discount-dismissed');
+    if (dismissed && Date.now() - parseInt(dismissed) < 3 * 24 * 60 * 60 * 1000) return;
+
+    setTimeout(() => {
+      popup.style.display = 'flex';
+    }, 4000);
   }
 
   /** Free shipping progress bar */

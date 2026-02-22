@@ -27,8 +27,6 @@
 
 [data-theme="glass"] .najd-input {
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border-color: var(--glass-border);
 
   &:focus {
@@ -42,20 +40,19 @@
 salla-add-product-button {
   .s-add-product-btn,
   .s-button-element {
-    background: var(--gradient-primary) !important;
+    background: var(--color-primary) !important;
     color: var(--color-primary-reverse, #fff) !important;
     border-radius: var(--radius-full) !important;
     font-weight: 700 !important;
     font-size: var(--text-base) !important;
     padding: 14px 32px !important;
     border: none !important;
-    box-shadow: var(--shadow-primary) !important;
+    box-shadow: var(--shadow-sm) !important;
     transition: all var(--duration-base) var(--ease-out) !important;
 
     &:hover {
       filter: brightness(1.05) !important;
-      transform: translateY(-2px) !important;
-      box-shadow: var(--shadow-lg), var(--shadow-primary) !important;
+      box-shadow: var(--shadow-md) !important;
     }
   }
 }
@@ -80,9 +77,7 @@ salla-quantity-input {
 
 [data-theme="glass"] salla-quantity-input {
   .s-quantity-input {
-    background: var(--glass-bg) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
     border-color: var(--glass-border) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
   }
 }

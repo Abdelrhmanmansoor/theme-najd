@@ -1,0 +1,41 @@
+{# ============================================================
+   Image Comparison — Before/After slider
+   Fields: component.title, .before_image, .after_image,
+           .before_label, .after_label
+   ============================================================ #}
+
+<section class="najd-block najd-block--comparison container">
+    {% if component.title %}
+        <div class="najd-block__header text-center mb-8">
+            <h2 class="text-2xl font-bold">{{ component.title }}</h2>
+        </div>
+    {% endif %}
+
+    <div class="najd-comparison" id="najd-comparison-{{ position }}">
+        {# After image (bottom layer) #}
+        <div class="najd-comparison__after">
+            <img src="{{ component.after_image }}" alt="{{ component.after_label|default('بعد') }}" loading="lazy">
+            <span class="najd-comparison__label najd-comparison__label--after">
+                {{ component.after_label|default('بعد') }}
+            </span>
+        </div>
+
+        {# Before image (top layer, clipped) #}
+        <div class="najd-comparison__before">
+            <img src="{{ component.before_image }}" alt="{{ component.before_label|default('قبل') }}" loading="lazy">
+            <span class="najd-comparison__label najd-comparison__label--before">
+                {{ component.before_label|default('قبل') }}
+            </span>
+        </div>
+
+        {# Drag handle #}
+        <div class="najd-comparison__handle">
+            <div class="najd-comparison__handle-line"></div>
+            <div class="najd-comparison__handle-grip">
+                <i class="sicon-keyboard-arrow-right"></i>
+                <i class="sicon-keyboard-arrow-left"></i>
+            </div>
+            <div class="najd-comparison__handle-line"></div>
+        </div>
+    </div>
+</section>

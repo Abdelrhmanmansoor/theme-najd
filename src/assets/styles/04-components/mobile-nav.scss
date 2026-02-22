@@ -13,8 +13,6 @@
   background: var(--surface-bg);
   border-top: 1px solid var(--border-color);
   padding: 6px 0 env(safe-area-inset-bottom, 6px);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 }
 
 /* Show only on mobile when enabled */
@@ -54,7 +52,7 @@
 
   i {
     font-size: 22px;
-    transition: transform var(--duration-fast) var(--ease-spring);
+    transition: transform var(--duration-fast) var(--ease-out);
   }
 
   &.is-active,
@@ -96,5 +94,5 @@
 [data-theme="glass"] .najd-mobile-nav {
   background: rgba(5, 5, 17, 0.85);
   border-top-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 -4px 30px rgba(31, 38, 135, 0.15);
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.3);
 }

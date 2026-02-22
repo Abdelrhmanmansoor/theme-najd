@@ -126,7 +126,5 @@ a {
 }
 
 [data-theme="glass"] .prose blockquote {
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
+  background: rgba(255, 255, 255, 0.05);
 }

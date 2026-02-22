@@ -22,21 +22,19 @@
   overflow: hidden;
 }
 
-/* Primary — gradient with glow */
+/* Primary — solid with subtle shadow */
 .najd-btn--primary {
-  background: var(--gradient-primary);
+  background: var(--color-primary);
   color: var(--color-primary-reverse, #fff);
   border-color: transparent;
-  box-shadow: var(--shadow-primary);
+  box-shadow: var(--shadow-sm);
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg), var(--shadow-primary);
     filter: brightness(1.05);
+    box-shadow: var(--shadow-md);
   }
 
   &:active {
-    transform: translateY(0);
     filter: brightness(0.98);
   }
 }
@@ -48,25 +46,21 @@
   border-color: var(--border-color);
 
   &:hover {
-    background: var(--glass-bg);
+    background: var(--surface-secondary);
     border-color: var(--color-primary);
     color: var(--color-primary);
-    transform: translateY(-1px);
   }
 }
 
-/* Ghost (glass-aware) */
+/* Ghost */
 .najd-btn--ghost {
-  background: var(--glass-bg);
+  background: var(--surface-secondary);
   color: var(--text-primary);
-  border-color: var(--glass-border);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  border-color: var(--border-color);
 
   &:hover {
-    background: var(--glass-bg-hover);
-    border-color: var(--glass-border-hover);
-    transform: translateY(-1px);
+    background: var(--surface-card);
+    border-color: var(--border-hover);
   }
 }
 

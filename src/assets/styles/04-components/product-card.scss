@@ -9,21 +9,21 @@ custom-salla-product-card {
 
   .product-entry {
     background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid #e8e8e8;
     border-radius: var(--card-radius, 12px);
     overflow: hidden;
     transition: box-shadow var(--duration-base, 0.3s) var(--ease-out, ease-out);
     position: relative;
 
     &:hover {
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
     }
 
     /* Product image container */
     .product-entry__image {
       position: relative;
       overflow: hidden;
-      background: #fafafa;
+      background: #f5f5f5;
 
       img {
         transition: transform var(--duration-slower, 0.6s) var(--ease-out, ease-out);
@@ -71,8 +71,8 @@ custom-salla-product-card {
       align-items: center;
       justify-content: center;
       background: #fff;
-      border: 1px solid rgba(0, 0, 0, 0.06);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e5e5e5;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
       transition: all var(--duration-fast, 0.15s) ease;
       color: #4b5563;
       font-size: 16px;
@@ -82,7 +82,6 @@ custom-salla-product-card {
         background: var(--color-primary);
         color: var(--color-primary-reverse, #fff);
         border-color: var(--color-primary);
-        transform: scale(1.1);
       }
     }
 
@@ -166,8 +165,8 @@ custom-salla-product-card {
       align-items: center !important;
       justify-content: center !important;
       background: #fff !important;
-      border: 1px solid rgba(0, 0, 0, 0.08) !important;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+      border: 1px solid #e5e5e5 !important;
+      box-shadow: none !important;
       transition: all var(--duration-fast, 0.15s) ease !important;
       color: #6b7280 !important;
 
@@ -261,17 +260,15 @@ salla-product-card,
 
 /* ---- Glass mode product card ---- */
 [data-theme="glass"] custom-salla-product-card .product-entry {
-  background: var(--glass-bg, rgba(255, 255, 255, 0.06));
-  backdrop-filter: blur(var(--glass-blur, 16px));
-  -webkit-backdrop-filter: blur(var(--glass-blur, 16px));
-  border-color: var(--glass-border, rgba(255, 255, 255, 0.08));
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
 
   .product-entry__image {
     background: rgba(255, 255, 255, 0.03);
   }
 
   .product-entry__title {
-    color: #f5f5f5;
+    color: #f0f0f2;
   }
 
   .product-entry__brand {
@@ -279,21 +276,19 @@ salla-product-card,
   }
 
   .product-entry__price {
-    color: #f5f5f5;
+    color: #f0f0f2;
   }
 
   &:hover {
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
     border-color: rgba(255, 255, 255, 0.12);
   }
 
   .product-entry__action-btn {
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     border-color: rgba(255, 255, 255, 0.12);
     color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 
     &:hover {
       background: var(--color-primary);
@@ -329,4 +324,116 @@ salla-products-list {
 /* ---- Product quick-view on product cards ---- */
 .s-product-card-content {
   padding: var(--space-md, 16px) !important;
+}
+
+/* ================================================================
+   ENHANCED PRODUCT CARD — Premium Features
+   ================================================================ */
+
+/* ---- Image swap on hover ---- */
+.najd-hover-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  z-index: 1;
+}
+
+.s-product-card-entry:hover .najd-hover-img,
+.product-entry:hover .najd-hover-img {
+  opacity: 1;
+}
+
+/* ---- "New" badge ---- */
+.najd-badge--new {
+  position: absolute;
+  top: 10px;
+  inset-inline-start: 10px;
+  z-index: 4;
+  background: #10b981;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 4px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+/* ---- Sale percentage badge ---- */
+.najd-badge--sale {
+  position: absolute;
+  top: 10px;
+  inset-inline-end: 10px;
+  z-index: 4;
+  background: #ef4444;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 4px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+/* Stack badges vertically when both present */
+.najd-badge--new + .najd-badge--sale {
+  top: 38px;
+}
+
+/* ---- Color swatches on card ---- */
+.najd-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.najd-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #e5e5e5;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+  flex-shrink: 0;
+
+  &:hover,
+  &.is-active {
+    border-color: var(--color-primary);
+    transform: scale(1.15);
+  }
+}
+
+/* ---- Dark mode for new elements ---- */
+[data-theme="dark"] .najd-swatch {
+  border-color: rgba(255, 255, 255, 0.15);
+
+  &:hover,
+  &.is-active {
+    border-color: var(--color-primary);
+  }
+}
+
+/* ---- Glass mode for new elements ---- */
+[data-theme="glass"] .najd-swatch {
+  border-color: rgba(255, 255, 255, 0.12);
+
+  &:hover,
+  &.is-active {
+    border-color: var(--color-primary);
+  }
+}
+
+/* ---- Salla native card badge override ---- */
+salla-product-card .s-product-card-sale-badge {
+  background: #ef4444 !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  padding: 3px 10px !important;
 }
