@@ -19,7 +19,16 @@
       "new": "جديد",
       "sale": "خصم",
       "sold_out": "نفذت الكمية",
-      "best_seller": "الأكثر مبيعاً"
+      "best_seller": "الأكثر مبيعاً",
+      "verified_buyer": "مشتري موثق",
+      "faq_desc": "إجابات على أسئلتك الشائعة",
+      "free_shipping_goal": "أضف {amount} ر.س للحصول على شحن مجاني",
+      "free_shipping_reached": "تهانينا! حصلت على شحن مجاني",
+      "size_guide": "دليل المقاسات",
+      "popular_size": "الأكثر طلباً",
+      "start_quiz": "ابدأ الاختبار",
+      "restart_quiz": "أعد الاختبار",
+      "view_product": "عرض المنتج"
     }
   },
   "blocks": {

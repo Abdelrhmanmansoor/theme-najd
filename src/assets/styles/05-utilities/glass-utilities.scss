@@ -1,108 +1,331 @@
 /* ============================================================
    Glass Utility Classes — NAJD PREMIUM
-   WhatsApp, Back to top, Sticky cart, Parallax
+   WhatsApp Chat Widget, Back to Top, Sticky Cart, Parallax
    ============================================================ */
 
-/* ---- WhatsApp Button ---- */
-.najd-whatsapp-btn {
+/* ============================================================
+   ⭐ WhatsApp Chat Widget — Professional floating chat
+   ============================================================ */
+.najd-wa {
   position: fixed;
   z-index: var(--z-overlay);
   bottom: var(--space-xl);
-  width: 54px;
-  height: 54px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  color: #fff;
-  border: none;
-  transition: all var(--duration-base) var(--ease-out);
-  
-  i {
-    display: block;
-    line-height: 1;
-  }
 
-  &:hover {
-    transform: translateY(-4px);
-    opacity: 0.95;
-  }
-
-  /* Variations */
   &--right { inset-inline-end: var(--space-lg); }
   &--left  { inset-inline-start: var(--space-lg); }
-
-  &--circle { border-radius: 50%; }
-  &--square { border-radius: var(--radius-lg); }
-  &--pill   { border-radius: var(--radius-full); width: auto; padding: 0 16px; }
-
-  &--official {
-    background: #25d366;
-    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-  }
-  &--primary {
-    background: var(--color-primary);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  &--glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: var(--text-primary);
-  }
 }
 
-[data-theme="glass"] .najd-whatsapp-btn--official {
-  background: rgba(37, 211, 102, 0.85);
-  border: 1px solid rgba(37, 211, 102, 0.3);
-}
-
-/* ---- Back to Top ---- */
-.najd-back-to-top {
-  position: fixed;
-  z-index: var(--z-overlay);
-  bottom: 92px;
-  width: 44px;
-  height: 44px;
+/* ---- Floating button ---- */
+.najd-wa__btn {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #25d366;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45), 0 2px 8px rgba(0,0,0,0.1);
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #fff;
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(37, 211, 102, 0.55);
+  }
+
+  &:active { transform: scale(0.95); }
+}
+
+/* Pulse animation on button */
+.najd-wa__btn-ping {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(37, 211, 102, 0.4);
+  animation: najd-wa-pulse 2s ease-out infinite;
+}
+
+@keyframes najd-wa-pulse {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  100% { transform: scale(1.65); opacity: 0;   }
+}
+
+/* ---- Chat popup panel ---- */
+.najd-wa__panel {
+  position: absolute;
+  bottom: 70px;
+  inset-inline-end: 0;
+  width: 320px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  animation: najd-wa-enter 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &[hidden] { display: none; }
+}
+
+@keyframes najd-wa-enter {
+  from { opacity: 0; transform: translateY(20px) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Header */
+.najd-wa__head {
+  background: linear-gradient(135deg, #128c7e, #25d366);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+}
+
+.najd-wa__agent { display: flex; align-items: center; gap: 12px; }
+
+.najd-wa__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
   font-size: 22px;
-  color: var(--text-secondary);
-  background: var(--surface-card);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-md);
+  flex-shrink: 0;
+  overflow: hidden;
+
+  img { width: 100%; height: 100%; object-fit: cover; }
+}
+
+.najd-wa__status-dot {
+  position: absolute;
+  bottom: 2px;
+  inset-inline-end: 2px;
+  width: 10px;
+  height: 10px;
+  background: #6fcf97;
+  border: 2px solid #128c7e;
+  border-radius: 50%;
+}
+
+.najd-wa__name {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.najd-wa__status {
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+.najd-wa__close {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+  flex-shrink: 0;
+
+  &:hover { background: rgba(255,255,255,0.25); }
+}
+
+/* Chat area */
+.najd-wa__chat {
+  padding: 16px;
+  min-height: 80px;
+  background: #e5ddd5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' opacity='0.04'%3E%3Ccircle cx='20' cy='20' r='1.5' fill='%23000'/%3E%3C/svg%3E");
+}
+
+.najd-wa__bubble {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  position: relative;
+
+  &--agent {
+    background: #fff;
+    border-end-start-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      inset-inline-start: -8px;
+      border: 8px solid transparent;
+      border-top-color: #fff;
+      border-inline-start-color: transparent;
+    }
+  }
+}
+
+/* Message input + send */
+.najd-wa__footer {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+  background: #f0f2f5;
+  border-top: 1px solid #e0e0e0;
+  align-items: center;
+}
+
+.najd-wa__input {
+  flex: 1;
+  height: 40px;
+  border: none;
+  border-radius: 20px;
+  padding: 0 14px;
+  font-size: 13px;
+  background: #fff;
+  outline: none;
+  direction: rtl;
+
+  &:focus { box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.3); }
+}
+
+.najd-wa__send {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 18px;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+
+  &:hover { background: #1fbe5b; transform: scale(1.06); }
+}
+
+/* Dark mode */
+[data-theme="dark"] .najd-wa__panel {
+  background: #1a1a2e;
+
+  .najd-wa__chat { background: #12121f; }
+  .najd-wa__bubble--agent { background: #252538; }
+  .najd-wa__footer { background: #131320; border-top-color: #2a2a40; }
+  .najd-wa__input  { background: #252538; color: #e0e0f0; }
+}
+
+/* ============================================================
+   ⭐ Back to Top — Professional with scroll progress ring
+   ============================================================ */
+.najd-btt {
+  position: fixed;
+  z-index: var(--z-overlay);
+  bottom: 100px;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(16px);
+  transform: translateY(20px) scale(0.8);
   pointer-events: none;
-  transition: all var(--duration-base) var(--ease-out);
+  transition: opacity 0.3s, visibility 0.3s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &--right { inset-inline-end: var(--space-lg); }
+  &--left  { inset-inline-start: var(--space-lg); }
 
   &.is-visible {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     pointer-events: auto;
   }
 
-  &:hover {
+  svg:first-child {
+    position: relative;
+    z-index: 2;
     color: var(--color-primary);
-    border-color: var(--color-primary);
-    transform: translateY(-2px);
+    transition: transform 0.2s;
   }
 
-  /* Variations */
-  &--right { inset-inline-end: var(--space-lg); }
-  &--left  { inset-inline-start: var(--space-lg); }
+  &:hover svg:first-child { transform: translateY(-2px); }
 
-  &--circle { border-radius: 50%; }
-  &--rounded-square { border-radius: var(--radius-lg); }
+  /* Tooltip */
+  &::after {
+    content: 'أعلى';
+    position: absolute;
+    top: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+
+  &:hover::after { opacity: 1; }
 }
 
-[data-theme="glass"] .najd-back-to-top {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+/* Progress ring wrapper */
+.najd-btt__progress {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg { overflow: visible; }
+
+  /* Track circle (background) */
+  circle:first-child {
+    color: var(--border-color);
+  }
+
+  /* Progress arc */
+  #najd-btt-ring {
+    color: var(--color-primary);
+    transition: stroke-dashoffset 0.1s;
+  }
+}
+
+/* Light mode: white background center */
+.najd-btt {
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    background: var(--surface-card, #fff);
+    border-radius: 50%;
+    box-shadow: var(--shadow-sm);
+    z-index: 0;
+  }
+}
+
+/* Dark mode */
+[data-theme="dark"] .najd-btt::before {
+  background: var(--surface-card, #1a1a1e);
+}
+
+/* On mobile, back-to-top moves up when mobile nav is visible */
+@media (max-width: 768px) {
+  .najd-btt { bottom: 80px; }
 }
 
 /* ---- Sticky Add-to-Cart Bar ---- */

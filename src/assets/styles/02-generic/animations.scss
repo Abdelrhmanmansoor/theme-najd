@@ -95,13 +95,13 @@
   75%       { transform: translateY(-2px); }
 }
 
-/* Wave: horizontal wave oscillation */
+/* Wave: horizontal wave oscillation — no skew to avoid diagonal text */
 @keyframes najd-ann-wave {
-  0%   { transform: translateX(0) skewX(0deg); }
-  25%  { transform: translateX(4px) skewX(1deg); }
-  50%  { transform: translateX(0) skewX(0deg); }
-  75%  { transform: translateX(-4px) skewX(-1deg); }
-  100% { transform: translateX(0) skewX(0deg); }
+  0%   { transform: translateX(0); }
+  25%  { transform: translateX(4px); }
+  50%  { transform: translateX(0); }
+  75%  { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
 }
 
 /* Fade: gentle opacity pulse for multi-message mode */

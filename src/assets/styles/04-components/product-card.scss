@@ -551,15 +551,15 @@ salla-product-card .s-product-card-sale-badge {
 /* Dark mode for card variants */
 [data-theme="dark"][data-product-card="modern"] {
   custom-salla-product-card .product-entry {
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-    &:hover { box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4); }
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    &:hover { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22); }
   }
 }
 
 [data-theme="glass"][data-product-card="modern"] {
   custom-salla-product-card .product-entry {
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-    &:hover { box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3); }
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    &:hover { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.20); }
   }
 }
 

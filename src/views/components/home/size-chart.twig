@@ -174,9 +174,9 @@
     {% if component.guide_title or component.guide_text %}
         <details class="najd-sizechart__guide">
             <summary class="najd-sizechart__guide-toggle">
-                <i class="sicon-help-circle"></i>
-                {{ component.guide_title ? component.guide_title : trans('common.elements.help') }}
-                <i class="sicon-chevron-down najd-sizechart__guide-arrow"></i>
+                <i class="sicon-help"></i>
+                {{ component.guide_title ? component.guide_title : 'كيفية أخذ القياسات؟' }}
+                <i class="sicon-keyboard-arrow-down najd-sizechart__guide-arrow"></i>
             </summary>
             <div class="najd-sizechart__guide-body">
                 {% if component.guide_text %}
@@ -190,7 +190,7 @@
     {% if finder_enabled %}
         <div class="najd-sizechart__finder" data-size-finder>
             <h4 class="najd-sizechart__finder-title">
-                <i class="sicon-magic-wand"></i>
+                <i class="sicon-magic"></i>
                 {{ component.finder_title ? component.finder_title : 'احسب مقاسك المثالي' }}
             </h4>
             <div class="najd-sizechart__finder-inputs">
@@ -213,7 +213,7 @@
                 {% endif %}
             </div>
             <button class="najd-btn najd-btn--primary najd-sizechart__finder-btn" data-find-size>
-                <i class="sicon-search"></i>
+                <i class="sicon-magnify"></i>
                 <span>احسب مقاسي</span>
             </button>
             <div class="najd-sizechart__finder-result" data-finder-result hidden>

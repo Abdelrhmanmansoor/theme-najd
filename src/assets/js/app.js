@@ -6,6 +6,7 @@
  */
 
 import AppHelpers from './app-helpers';
+import NajdColorStudio from './partials/color-studio';
 
 class NajdApp extends AppHelpers {
   constructor() {
@@ -20,6 +21,7 @@ class NajdApp extends AppHelpers {
     this.initDiscountPopup();
     this.initShippingBar();
     this.initTransparentHeader();
+    this.initWhatsAppWidget();
   }
 
   /** Hide preloader after page load */
@@ -67,18 +69,74 @@ class NajdApp extends AppHelpers {
     }, { passive: true });
   }
 
-  /** Back-to-top button */
+  /** Back-to-top button with scroll progress ring */
   initBackToTop() {
-    const btn = document.getElementById('najd-back-to-top');
+    const btn  = document.getElementById('najd-back-to-top');
+    const ring = document.getElementById('najd-btt-ring');
     if (!btn) return;
 
-    window.addEventListener('scroll', () => {
-      btn.classList.toggle('is-visible', window.scrollY > 500);
-    }, { passive: true });
+    const circumference = 2 * Math.PI * 16; // r=16 → ~100.5
+
+    const onScroll = () => {
+      const scrolled  = window.scrollY;
+      const total     = document.documentElement.scrollHeight - window.innerHeight;
+      const progress  = total > 0 ? scrolled / total : 0;
+
+      btn.classList.toggle('is-visible', scrolled > 300);
+
+      if (ring) {
+        const offset = circumference - progress * circumference;
+        ring.style.strokeDashoffset = offset;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // init
 
     btn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+  }
+
+  /** WhatsApp chat widget */
+  initWhatsAppWidget() {
+    const widget   = document.getElementById('najd-wa-widget');
+    if (!widget) return;
+
+    const panel    = document.getElementById('najd-wa-panel');
+    const openBtn  = document.getElementById('najd-wa-btn');
+    const closeBtn = document.getElementById('najd-wa-close');
+    const sendBtn  = document.getElementById('najd-wa-send');
+    const msgInput = document.getElementById('najd-wa-msg');
+
+    if (openBtn && panel) {
+      openBtn.addEventListener('click', () => {
+        const isOpen = !panel.hidden;
+        panel.hidden = isOpen;
+        panel.setAttribute('aria-hidden', isOpen);
+        if (!isOpen && msgInput) msgInput.focus();
+      });
+    }
+
+    if (closeBtn && panel) {
+      closeBtn.addEventListener('click', () => {
+        panel.hidden = true;
+        panel.setAttribute('aria-hidden', 'true');
+      });
+    }
+
+    // Update WhatsApp link with custom message
+    if (sendBtn && msgInput) {
+      const baseHref = sendBtn.getAttribute('href') || '';
+      msgInput.addEventListener('input', () => {
+        const msg = encodeURIComponent(msgInput.value.trim());
+        sendBtn.href = msg ? `${baseHref}?text=${msg}` : baseHref;
+      });
+
+      sendBtn.addEventListener('click', () => {
+        panel.hidden = true;
+      });
+    }
   }
 
   /** Scroll-triggered reveal animations */
@@ -221,4 +279,8 @@ class NajdApp extends AppHelpers {
 }
 
 // Initialize when Salla SDK is ready
-salla.onReady(() => new NajdApp());
+salla.onReady(() => {
+  new NajdApp();
+  // Color Studio — only activates in Salla customizer preview iframe
+  new NajdColorStudio();
+});

@@ -1,0 +1,344 @@
+/* ============================================================
+   NAJD COLOR STUDIO — Advanced Color Picker Widget
+   Only visible in Salla customizer preview (iframe) mode.
+   ============================================================ */
+
+#najd-color-studio {
+  position: fixed;
+  bottom: 24px;
+  inset-inline-start: 24px;
+  z-index: 99999;
+  direction: rtl;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* ---- Floating trigger button ---- */
+.najd-cs-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: conic-gradient(hsl(0,85%,60%), hsl(60,85%,60%), hsl(120,75%,50%), hsl(180,85%,50%), hsl(240,85%,60%), hsl(300,85%,60%), hsl(360,85%,60%));
+  border: 3px solid #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  color: #fff;
+
+  &:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+  }
+
+  svg { filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)); }
+}
+
+/* ---- Panel ---- */
+.najd-cs-panel {
+  position: absolute;
+  bottom: 58px;
+  inset-inline-start: 0;
+  width: 288px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.14), 0 0 0 1px rgba(0,0,0,0.07);
+  overflow: hidden;
+  border: none;
+  animation: njcs-enter 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes njcs-enter {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---- Panel header ---- */
+.najd-cs-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px 10px;
+  background: linear-gradient(135deg, #6c63ff 0%, #ff6b6b 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+}
+
+.najd-cs-x {
+  opacity: 0.7;
+  font-size: 14px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: opacity 0.15s, background 0.15s;
+  color: #fff;
+  &:hover { opacity: 1; background: rgba(255,255,255,0.2); }
+}
+
+/* ---- Preview row: swatch + value inputs ---- */
+.najd-cs-preview-row {
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+  align-items: flex-start;
+}
+
+.najd-cs-swatch {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.14), inset 0 0 0 1px rgba(0,0,0,0.08);
+  transition: background 0.12s;
+}
+
+.najd-cs-vals {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.najd-cs-val-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.najd-cs-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #888;
+  width: 26px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.najd-cs-input {
+  flex: 1;
+  height: 26px;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  padding: 0 6px;
+  font-size: 11px;
+  font-family: 'Courier New', monospace;
+  color: #222;
+  background: #fafafa;
+  min-width: 0;
+  transition: border-color 0.15s;
+  direction: ltr;
+
+  &:focus {
+    outline: none;
+    border-color: #6c63ff;
+    background: #fff;
+  }
+}
+
+.najd-cs-copy {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  transition: all 0.15s;
+  flex-shrink: 0;
+  cursor: pointer;
+
+  &:hover { border-color: #6c63ff; color: #6c63ff; background: #f0efff; }
+}
+
+/* ---- HSL sliders ---- */
+.najd-cs-sliders {
+  padding: 4px 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.najd-cs-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #888;
+    width: 12px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+  }
+
+  output {
+    font-size: 10px;
+    color: #666;
+    width: 32px;
+    text-align: start;
+    font-family: 'Courier New', monospace;
+  }
+}
+
+.najd-cs-track {
+  flex: 1;
+  height: 12px;
+  border-radius: 6px;
+  position: relative;
+  overflow: visible;
+
+  &--hue {
+    background: linear-gradient(to right,
+      hsl(0,100%,50%), hsl(30,100%,50%), hsl(60,100%,50%),
+      hsl(90,100%,50%), hsl(120,100%,50%), hsl(150,100%,50%),
+      hsl(180,100%,50%), hsl(210,100%,50%), hsl(240,100%,50%),
+      hsl(270,100%,50%), hsl(300,100%,50%), hsl(330,100%,50%),
+      hsl(360,100%,50%));
+  }
+
+  input[type="range"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    z-index: 2;
+  }
+
+  /* Custom thumb rendered via pseudo on the track wrapper */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: var(--thumb-pos, 50%);
+    transform: translate(-50%, -50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.22);
+    background: var(--thumb-color, #888);
+    pointer-events: none;
+    z-index: 1;
+    transition: background 0.08s;
+  }
+}
+
+/* ---- Recent colors ---- */
+.najd-cs-recent {
+  padding: 8px 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  border-top: 1px solid #f0f0f0;
+  min-height: 36px;
+  align-items: center;
+}
+
+.najd-cs-rs {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+  &:hover {
+    transform: scale(1.2);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    border-color: rgba(0,0,0,0.15);
+  }
+}
+
+.najd-cs-no-recent {
+  color: #bbb;
+  font-size: 11px;
+}
+
+/* ---- Apply row ---- */
+.najd-cs-apply-row {
+  display: flex;
+  gap: 6px;
+  padding: 8px 14px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.najd-cs-select {
+  flex: 1;
+  height: 32px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 0 8px;
+  font-size: 11px;
+  background: #fafafa;
+  color: #333;
+  cursor: pointer;
+  direction: rtl;
+
+  &:focus { outline: none; border-color: #6c63ff; }
+}
+
+.najd-cs-apply {
+  height: 32px;
+  padding: 0 14px;
+  background: linear-gradient(135deg, #6c63ff, #7b6ffd);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  flex-shrink: 0;
+
+  &:hover { opacity: 0.9; transform: scale(1.02); }
+  &:active { transform: scale(0.98); }
+}
+
+/* ---- EyeDropper ---- */
+.najd-cs-eye {
+  display: block;
+  width: calc(100% - 28px);
+  margin: 0 14px 12px;
+  padding: 8px 12px;
+  background: #f5f5ff;
+  border: 1px dashed #c0bcff;
+  border-radius: 8px;
+  color: #6c63ff;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover { background: #edeaff; }
+}
+
+/* ---- Dark mode support ---- */
+[data-theme="dark"] .najd-cs-panel {
+  background: #1a1a1e;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.07);
+
+  .najd-cs-input { background: #242428; border-color: #333; color: #e0e0e0; }
+  .najd-cs-label { color: #666; }
+  .najd-cs-copy  { border-color: #333; color: #888; background: #242428;
+    &:hover { border-color: #7b6ffd; color: #7b6ffd; background: #2a2040; }
+  }
+  .najd-cs-recent, .najd-cs-apply-row { border-top-color: #2a2a2e; }
+  .najd-cs-select { background: #242428; border-color: #333; color: #e0e0e0; }
+  .najd-cs-eye   { background: #1e1c33; border-color: #4a4580; color: #9b94ff; }
+  .najd-cs-no-recent { color: #444; }
+}

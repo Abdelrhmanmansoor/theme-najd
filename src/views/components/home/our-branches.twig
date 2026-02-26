@@ -1,0 +1,275 @@
+{# ============================================================
+   Our Branches — Interactive branches map + cards
+   Layouts: map (Google Maps embed + sidebar), cards, list
+   Fields: title, subtitle, layout, map_api_key, branches[]
+           branch: name, address, phone, hours, lat, lng, image, color
+   ============================================================ #}
+
+{% set branch_layout = component.layout|default('map') %}
+{% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
+{% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
+{% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
+
+<section class="najd-block najd-block--branches {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
+
+    {# Header #}
+    {% if component.title %}
+        <div class="najd-block__header text-center mb-10">
+            <div class="najd-branches__eyebrow">
+                <span class="najd-branches__dot"></span>
+                <span>{{ component.eyebrow is defined and component.eyebrow ? component.eyebrow : 'فروعنا' }}</span>
+                <span class="najd-branches__dot"></span>
+            </div>
+            <h2 class="najd-block__title">{{ component.title }}</h2>
+            {% if component.subtitle is defined and component.subtitle %}
+                <p class="najd-block__subtitle">{{ component.subtitle }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if branch_layout == 'map' %}
+    {# ===== Map Layout: Sidebar + Embedded Map ===== #}
+    <div class="najd-branches-map" id="najd-branches-map-wrap">
+
+        {# Sidebar: list of branches #}
+        <div class="najd-branches-sidebar">
+            {% if component.branches is defined and component.branches %}
+                {% for branch in component.branches %}
+                    <div class="najd-branch-card {{ loop.first ? 'is-active' : '' }}"
+                         id="branch-card-{{ loop.index0 }}"
+                         data-branch="{{ loop.index0 }}"
+                         data-lat="{{ branch.lat is defined ? branch.lat : '' }}"
+                         data-lng="{{ branch.lng is defined ? branch.lng : '' }}"
+                         data-name="{{ branch.name }}"
+                         data-address="{{ branch.address is defined ? branch.address : '' }}">
+
+                        <div class="najd-branch-card__header">
+                            {% if branch.image is defined and branch.image %}
+                                <div class="najd-branch-card__img">
+                                    <img src="{{ branch.image }}" alt="{{ branch.name }}" loading="lazy">
+                                </div>
+                            {% else %}
+                                <div class="najd-branch-card__icon" style="{{ branch.color is defined and branch.color ? '--bc:' ~ branch.color : '' }}">
+                                    <i class="sicon-location"></i>
+                                </div>
+                            {% endif %}
+                            <div class="najd-branch-card__meta">
+                                <h3 class="najd-branch-card__name">{{ branch.name }}</h3>
+                                {% if branch.badge is defined and branch.badge %}
+                                    <span class="najd-branch-card__badge">{{ branch.badge }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="najd-branch-card__body">
+                            {% if branch.address is defined and branch.address %}
+                                <div class="najd-branch-info">
+                                    <i class="sicon-location-pin"></i>
+                                    <span>{{ branch.address }}</span>
+                                </div>
+                            {% endif %}
+                            {% if branch.phone is defined and branch.phone %}
+                                <div class="najd-branch-info">
+                                    <i class="sicon-phone"></i>
+                                    <a href="tel:{{ branch.phone }}">{{ branch.phone }}</a>
+                                </div>
+                            {% endif %}
+                            {% if branch.hours is defined and branch.hours %}
+                                <div class="najd-branch-info">
+                                    <i class="sicon-clock"></i>
+                                    <span>{{ branch.hours }}</span>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="najd-branch-card__footer">
+                            {% if branch.lat is defined and branch.lat and branch.lng is defined and branch.lng %}
+                                <a class="najd-branch-card__directions"
+                                   href="https://www.google.com/maps/dir/?api=1&destination={{ branch.lat }},{{ branch.lng }}"
+                                   target="_blank" rel="noopener noreferrer">
+                                    <i class="sicon-map"></i>
+                                    احصل على الاتجاهات
+                                </a>
+                            {% elseif branch.map_url is defined and branch.map_url %}
+                                <a class="najd-branch-card__directions"
+                                   href="{{ branch.map_url }}"
+                                   target="_blank" rel="noopener noreferrer">
+                                    <i class="sicon-map"></i>
+                                    احصل على الاتجاهات
+                                </a>
+                            {% endif %}
+                            {% if branch.phone is defined and branch.phone %}
+                                <a class="najd-branch-card__call" href="tel:{{ branch.phone }}">
+                                    <i class="sicon-phone"></i>
+                                    اتصل الآن
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-center opacity-50 py-8">لم تتم إضافة فروع بعد</p>
+            {% endif %}
+        </div>
+
+        {# Map Frame #}
+        <div class="najd-branches-map__frame" id="najd-map-frame">
+            {# Map embed — uses first branch lat/lng if available, else shows Google Maps #}
+            {% if component.branches is defined and component.branches|length %}
+                {% set first = component.branches|first %}
+                {% if first.embed_url is defined and first.embed_url %}
+                    <iframe id="najd-map-iframe"
+                            src="{{ first.embed_url }}"
+                            width="100%" height="100%"
+                            style="border:0;" allowfullscreen loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                {% elseif first.lat is defined and first.lat and first.lng is defined and first.lng %}
+                    <iframe id="najd-map-iframe"
+                            src="https://maps.google.com/maps?q={{ first.lat }},{{ first.lng }}&z=15&output=embed"
+                            width="100%" height="100%"
+                            style="border:0;" allowfullscreen loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                {% else %}
+                    <div class="najd-branches-map__placeholder">
+                        <i class="sicon-map" style="font-size:48px;opacity:.3;display:block;margin-bottom:12px;"></i>
+                        <p>أضف إحداثيات الخريطة (Lat/Lng) أو رابط تضمين Google Maps لكل فرع</p>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            {# Floating branch count badge #}
+            {% if component.branches is defined and component.branches|length > 1 %}
+                <div class="najd-branches-map__badge">
+                    <i class="sicon-location"></i>
+                    {{ component.branches|length }} فروع
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% elseif branch_layout == 'cards' %}
+    {# ===== Cards Layout: Visual grid ===== #}
+    <div class="najd-branches-cards">
+        {% if component.branches is defined and component.branches %}
+            {% for branch in component.branches %}
+                <div class="najd-branch-full-card">
+                    {% if branch.image is defined and branch.image %}
+                        <div class="najd-branch-full-card__image">
+                            <img src="{{ branch.image }}" alt="{{ branch.name }}" loading="lazy">
+                            {% if branch.badge is defined and branch.badge %}
+                                <span class="najd-branch-full-card__badge">{{ branch.badge }}</span>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="najd-branch-full-card__cover" style="{{ branch.color is defined and branch.color ? 'background: linear-gradient(135deg,' ~ branch.color ~ '22,' ~ branch.color ~ '44)' : '' }}">
+                            <i class="sicon-location-pin" style="{{ branch.color is defined and branch.color ? 'color:' ~ branch.color : '' }}"></i>
+                        </div>
+                    {% endif %}
+                    <div class="najd-branch-full-card__body">
+                        <h3 class="najd-branch-full-card__name">{{ branch.name }}</h3>
+                        {% if branch.address is defined and branch.address %}
+                            <p class="najd-branch-full-card__address">
+                                <i class="sicon-location"></i> {{ branch.address }}
+                            </p>
+                        {% endif %}
+                        {% if branch.phone is defined and branch.phone %}
+                            <p class="najd-branch-full-card__phone">
+                                <i class="sicon-phone"></i>
+                                <a href="tel:{{ branch.phone }}">{{ branch.phone }}</a>
+                            </p>
+                        {% endif %}
+                        {% if branch.hours is defined and branch.hours %}
+                            <p class="najd-branch-full-card__hours">
+                                <i class="sicon-clock"></i> {{ branch.hours }}
+                            </p>
+                        {% endif %}
+                        <div class="najd-branch-full-card__actions">
+                            {% if (branch.lat is defined and branch.lat) or (branch.map_url is defined and branch.map_url) %}
+                                <a class="najd-btn najd-btn--primary najd-btn--sm"
+                                   href="{{ branch.map_url is defined and branch.map_url ? branch.map_url : 'https://www.google.com/maps/dir/?api=1&destination=' ~ branch.lat ~ ',' ~ branch.lng }}"
+                                   target="_blank" rel="noopener noreferrer">
+                                    <i class="sicon-map"></i>
+                                    الاتجاهات
+                                </a>
+                            {% endif %}
+                            {% if branch.phone is defined and branch.phone %}
+                                <a class="najd-btn najd-btn--outline najd-btn--sm" href="tel:{{ branch.phone }}">
+                                    <i class="sicon-phone"></i>
+                                    اتصل
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    {% else %}
+    {# ===== List Layout: Compact timeline-style ===== #}
+    <div class="najd-branches-list">
+        {% if component.branches is defined and component.branches %}
+            {% for branch in component.branches %}
+                <div class="najd-branch-list-item">
+                    <div class="najd-branch-list-item__marker" style="{{ branch.color is defined and branch.color ? '--bc:' ~ branch.color : '' }}">
+                        <i class="sicon-location"></i>
+                        <span class="najd-branch-list-item__num">{{ loop.index }}</span>
+                    </div>
+                    <div class="najd-branch-list-item__content">
+                        <div class="najd-branch-list-item__top">
+                            <h3 class="najd-branch-list-item__name">{{ branch.name }}</h3>
+                            {% if branch.badge is defined and branch.badge %}
+                                <span class="najd-branch-card__badge">{{ branch.badge }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="najd-branch-list-item__details">
+                            {% if branch.address is defined and branch.address %}<span><i class="sicon-location-pin"></i> {{ branch.address }}</span>{% endif %}
+                            {% if branch.phone is defined and branch.phone %}<a href="tel:{{ branch.phone }}"><i class="sicon-phone"></i> {{ branch.phone }}</a>{% endif %}
+                            {% if branch.hours is defined and branch.hours %}<span><i class="sicon-clock"></i> {{ branch.hours }}</span>{% endif %}
+                        </div>
+                    </div>
+                    {% if (branch.lat is defined and branch.lat) or (branch.map_url is defined and branch.map_url) %}
+                        <a class="najd-branch-list-item__link"
+                           href="{{ branch.map_url is defined and branch.map_url ? branch.map_url : 'https://www.google.com/maps/dir/?api=1&destination=' ~ branch.lat ~ ',' ~ branch.lng }}"
+                           target="_blank" rel="noopener noreferrer"
+                           aria-label="اعرض على الخريطة">
+                            <i class="sicon-map"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% endif %}
+
+</section>
+
+{# JS for interactive map switching between branches #}
+{% if branch_layout == 'map' %}
+<script>
+(function() {
+  var cards = document.querySelectorAll('.najd-branch-card');
+  var iframe = document.getElementById('najd-map-iframe');
+  if (!cards.length || !iframe) return;
+
+  cards.forEach(function(card) {
+    card.addEventListener('click', function() {
+      // Deactivate all
+      cards.forEach(function(c) { c.classList.remove('is-active'); });
+      card.classList.add('is-active');
+
+      var lat  = card.dataset.lat;
+      var lng  = card.dataset.lng;
+      var name = card.dataset.name;
+
+      // Scroll card into view on mobile
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+
+      if (lat && lng) {
+        iframe.src = 'https://maps.google.com/maps?q=' + lat + ',' + lng + '&z=16&output=embed';
+      }
+    });
+  });
+})();
+</script>
+{% endif %}

@@ -3,17 +3,31 @@
    Fields: component.title, .subtitle, .products, .display_all_url
    ============================================================ #}
 
-{% set display_all = component.display_all_url %}
+{% set display_all = component.display_all_url is defined ? component.display_all_url : '' %}
 {% set show_all_btn = theme.settings.get('is_more_button_enabled') %}
 {% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
 {% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
 {% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
 
+{# Build product IDs list safely without arrow function syntax #}
+{% set _product_ids = [] %}
+{% if component.products is defined and component.products is iterable %}
+    {% for p in component.products %}
+        {% if p.id is defined and p.id %}
+            {% set _product_ids = _product_ids|merge([p.id]) %}
+        {% elseif p.value is defined and p.value %}
+            {% set _product_ids = _product_ids|merge([p.value]) %}
+        {% elseif p is not iterable %}
+            {% set _product_ids = _product_ids|merge([p]) %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
 <section class="najd-block najd-block--products {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
     <salla-products-slider
-        {% if component.products is defined and component.products is iterable and component.products|length %}
+        {% if _product_ids|length %}
             source="selected"
-            source-value="{{ component.products|map((p) => p.id ?? p.value ?? p)|join(',') }}"
+            source-value="{{ _product_ids|join(',') }}"
         {% else %}
             source="latest"
         {% endif %}
@@ -21,7 +35,7 @@
             display-all-url="{{ display_all }}"
         {% endif %}
         block-title="{{ component.title }}"
-        {% if component.subtitle %}
+        {% if component.subtitle is defined and component.subtitle %}
             block-subTitle="{{ component.subtitle }}"
         {% endif %}
         slider-id="najd-products-{{ position }}">

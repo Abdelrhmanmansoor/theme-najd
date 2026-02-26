@@ -1289,6 +1289,48 @@
       "note": "اختر لون زر الواتساب: الأخضر الافتراضي أو أبيض أو داكن ليتناسب مع تصميم متجرك"
     },
     {
+      "id": "whatsapp_agent_name",
+      "type": "string",
+      "format": "text",
+      "label": "اسم المتجر / الوكيل في واتساب",
+      "note": "يظهر في أعلى نافذة الدردشة"
+    },
+    {
+      "id": "whatsapp_agent_avatar",
+      "type": "string",
+      "format": "image",
+      "label": "صورة المتجر في واتساب",
+      "note": "تظهر في نافذة الدردشة"
+    },
+    {
+      "id": "whatsapp_status",
+      "type": "string",
+      "format": "text",
+      "label": "حالة التوفر",
+      "value": "متاح الآن"
+    },
+    {
+      "id": "whatsapp_greeting",
+      "type": "string",
+      "format": "textarea",
+      "label": "رسالة الترحيب",
+      "value": "مرحباً! كيف يمكنني مساعدتك؟"
+    },
+    {
+      "id": "whatsapp_hint",
+      "type": "string",
+      "format": "text",
+      "label": "نص placeholder حقل الرسالة",
+      "value": "اكتب رسالتك.."
+    },
+    {
+      "id": "whatsapp_custom_number",
+      "type": "string",
+      "format": "text",
+      "label": "رقم واتساب مخصص (اختياري)",
+      "note": "اتركه فارغاً لاستخدام رقم المتجر"
+    },
+    {
       "id": "show_back_to_top",
       "type": "boolean",
       "format": "switch",
@@ -5804,6 +5846,157 @@
           "type": "boolean",
           "format": "switch",
           "label": "عرض كامل"
+        }
+      ]
+    },
+    {
+      "key": "br001-our-branches-najd-v4",
+      "path": "home.our-branches",
+      "title": {
+        "ar": "فروعنا (نجد)",
+        "en": "Our Branches (Najd)"
+      },
+      "icon": "sicon-location",
+      "description": {
+        "ar": "عرض فروع متجرك على خريطة تفاعلية مع معلومات كاملة",
+        "en": "Show your store branches on an interactive map"
+      },
+      "fields": [
+        {
+          "id": "title",
+          "type": "string",
+          "format": "text",
+          "label": "عنوان القسم",
+          "value": "فروعنا"
+        },
+        {
+          "id": "eyebrow",
+          "type": "string",
+          "format": "text",
+          "label": "نص صغير فوق العنوان",
+          "value": "فروعنا"
+        },
+        {
+          "id": "subtitle",
+          "type": "string",
+          "format": "text",
+          "label": "العنوان الفرعي",
+          "note": "نص توضيحي أسفل العنوان"
+        },
+        {
+          "id": "layout",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "تصميم القسم",
+          "source": "Manual",
+          "options": [
+            "map|خريطة تفاعلية (افتراضي)",
+            "cards|بطاقات",
+            "list|قائمة"
+          ]
+        },
+        {
+          "id": "branches",
+          "type": "collection",
+          "format": "collection",
+          "label": "الفروع",
+          "maxLength": 20,
+          "fields": [
+            {
+              "id": "name",
+              "type": "string",
+              "format": "text",
+              "label": "اسم الفرع",
+              "required": true
+            },
+            {
+              "id": "address",
+              "type": "string",
+              "format": "text",
+              "label": "العنوان التفصيلي"
+            },
+            {
+              "id": "phone",
+              "type": "string",
+              "format": "text",
+              "label": "رقم الهاتف"
+            },
+            {
+              "id": "hours",
+              "type": "string",
+              "format": "text",
+              "label": "أوقات العمل",
+              "note": "مثال: 9 ص - 11 م"
+            },
+            {
+              "id": "lat",
+              "type": "string",
+              "format": "text",
+              "label": "خط العرض (Latitude)",
+              "note": "مثال: 24.6877"
+            },
+            {
+              "id": "lng",
+              "type": "string",
+              "format": "text",
+              "label": "خط الطول (Longitude)",
+              "note": "مثال: 46.7219"
+            },
+            {
+              "id": "embed_url",
+              "type": "string",
+              "format": "url",
+              "label": "رابط تضمين Google Maps (embed URL)",
+              "note": "بديل عن lat/lng — انسخ رابط التضمين من Google Maps مباشرةً"
+            },
+            {
+              "id": "map_url",
+              "type": "string",
+              "format": "url",
+              "label": "رابط الخريطة (للزر)",
+              "note": "رابط Google Maps لزر الاتجاهات"
+            },
+            {
+              "id": "image",
+              "type": "string",
+              "format": "image",
+              "label": "صورة الفرع (اختياري)"
+            },
+            {
+              "id": "badge",
+              "type": "string",
+              "format": "text",
+              "label": "شارة مميزة (مثال: الرئيسي)"
+            },
+            {
+              "id": "color",
+              "type": "string",
+              "format": "color",
+              "label": "لون أيقونة الفرع"
+            }
+          ]
+        },
+        {
+          "id": "full_width",
+          "type": "boolean",
+          "format": "switch",
+          "label": "عرض كامل العرض"
+        },
+        {
+          "id": "section_padding_top",
+          "type": "number",
+          "format": "integer",
+          "label": "تباعد علوي للقسم (px)",
+          "min": 0,
+          "max": 200
+        },
+        {
+          "id": "section_padding_bottom",
+          "type": "number",
+          "format": "integer",
+          "label": "تباعد سفلي للقسم (px)",
+          "min": 0,
+          "max": 200
         }
       ]
     }

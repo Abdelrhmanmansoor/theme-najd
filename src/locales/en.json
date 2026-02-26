@@ -19,7 +19,16 @@
       "new": "New",
       "sale": "Sale",
       "sold_out": "Sold Out",
-      "best_seller": "Best Seller"
+      "best_seller": "Best Seller",
+      "verified_buyer": "Verified Buyer",
+      "faq_desc": "Answers to your common questions",
+      "free_shipping_goal": "Add {amount} SAR for free shipping",
+      "free_shipping_reached": "Congratulations! You got free shipping",
+      "size_guide": "Size Guide",
+      "popular_size": "Most Popular",
+      "start_quiz": "Start Quiz",
+      "restart_quiz": "Restart Quiz",
+      "view_product": "View Product"
     }
   },
   "blocks": {
