@@ -10,7 +10,8 @@
     <div class="{{ component.full_width is defined and component.full_width ? '' : 'container' }}">
         {% if component.title %}
             <div class="najd-block__header text-center mb-10">
-                <h2 class="najd-block__title text-xl lg:text-2xl font-bold">{{ component.title }}</h2>
+                <div class="najd-block__eyebrow">{{ component.eyebrow is defined and component.eyebrow ? component.eyebrow : 'شركاؤنا' }}</div>
+                <h2 class="najd-block__title">{{ component.title }}</h2>
             </div>
         {% endif %}
 

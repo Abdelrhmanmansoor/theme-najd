@@ -15,10 +15,8 @@
     {# Header #}
     {% if component.title %}
         <div class="najd-block__header text-center mb-10">
-            <div class="najd-branches__eyebrow">
-                <span class="najd-branches__dot"></span>
-                <span>{{ component.eyebrow is defined and component.eyebrow ? component.eyebrow : 'فروعنا' }}</span>
-                <span class="najd-branches__dot"></span>
+            <div class="najd-block__eyebrow">
+                {{ component.eyebrow is defined and component.eyebrow ? component.eyebrow : 'فروعنا' }}
             </div>
             <h2 class="najd-block__title">{{ component.title }}</h2>
             {% if component.subtitle is defined and component.subtitle %}

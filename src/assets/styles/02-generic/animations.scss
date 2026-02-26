@@ -138,3 +138,56 @@
   0%, 100% { transform: scale(1); }
   50%       { transform: scale(1.04); }
 }
+
+/* ============================================================
+   ⭐ Section Header Entrance Animations
+   Applied via JS IntersectionObserver (.is-header-visible)
+   ============================================================ */
+
+/* Children of .najd-block__header animate in sequence */
+.najd-block__header .najd-block__eyebrow,
+.najd-block__header .najd-block__title,
+.najd-block__header .najd-block__subtitle,
+.najd-block__header .najd-block__link {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.55s var(--ease-out),
+    transform 0.55s var(--ease-out);
+}
+
+.najd-block__header.is-header-visible .najd-block__eyebrow {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.05s;
+}
+
+.najd-block__header.is-header-visible .najd-block__title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+
+.najd-block__header.is-header-visible .najd-block__subtitle {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.25s;
+}
+
+.najd-block__header.is-header-visible .najd-block__link {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.30s;
+}
+
+/* Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .najd-block__header .najd-block__eyebrow,
+  .najd-block__header .najd-block__title,
+  .najd-block__header .najd-block__subtitle,
+  .najd-block__header .najd-block__link {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

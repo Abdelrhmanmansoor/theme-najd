@@ -141,21 +141,38 @@ class NajdApp extends AppHelpers {
 
   /** Scroll-triggered reveal animations */
   initScrollAnimations() {
-    if (!window.najdConfig?.enableAnimations) return;
+    const opts = { threshold: 0.15, rootMargin: '0px 0px -40px 0px' };
 
-    const elements = document.querySelectorAll('.najd-animate');
-    if (!elements.length) return;
+    // ① General .najd-animate elements (requires enableAnimations flag)
+    if (window.najdConfig?.enableAnimations) {
+      const elements = document.querySelectorAll('.najd-animate');
+      if (elements.length) {
+        const animObs = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              animObs.unobserve(entry.target);
+            }
+          });
+        }, opts);
+        elements.forEach(el => animObs.observe(el));
+      }
+    }
 
-    const observer = new IntersectionObserver((entries) => {
+    // ② Section headers — always animate (eyebrow → title → subtitle)
+    const headers = document.querySelectorAll('.najd-block__header');
+    if (!headers.length) return;
+
+    const headerObs = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
+          entry.target.classList.add('is-header-visible');
+          headerObs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.2, rootMargin: '0px 0px -30px 0px' });
 
-    elements.forEach(el => observer.observe(el));
+    headers.forEach(el => headerObs.observe(el));
   }
 
   /** Content protection (disable copy/right-click) */

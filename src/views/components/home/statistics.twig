@@ -49,15 +49,22 @@
 {% else %}
     {# === Cards (default) === #}
     <section class="najd-block najd-block--stats {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
-        <div class="grid grid-cols-2 md:grid-cols-{{ component.items|length > 4 ? '4' : component.items|length }} gap-4">
+        {% if component.title is defined and component.title %}
+            <div class="najd-block__header text-center mb-10">
+                <div class="najd-block__eyebrow">{{ component.eyebrow is defined and component.eyebrow ? component.eyebrow : 'بالأرقام' }}</div>
+                <h2 class="najd-block__title">{{ component.title }}</h2>
+                {% if component.subtitle is defined and component.subtitle %}<p class="najd-block__subtitle">{{ component.subtitle }}</p>{% endif %}
+            </div>
+        {% endif %}
+        <div class="grid grid-cols-2 md:grid-cols-{{ component.items|length > 4 ? '4' : component.items|length }} gap-5">
             {% for item in component.items %}
-                <div class="najd-stat p-6 text-center">
+                <div class="najd-stat text-center">
                     {% if item.icon %}
                         <i class="{{ item.icon }} najd-stat__icon"></i>
                     {% endif %}
                     <span class="najd-stat__number" data-count="{{ item.number }}">0</span>
                     <span class="najd-stat__suffix">{{ item.suffix|default('') }}</span>
-                    <span class="najd-stat__label">{{ item.label }}</span>
+                    <span class="najd-stat__label block mt-1">{{ item.label }}</span>
                 </div>
             {% endfor %}
         </div>
