@@ -6,12 +6,12 @@
 /* ---- Hero Slider ---- */
 .najd-hero-slide {
   position: relative;
-  min-height: 380px;
+  min-height: var(--slider-height-mobile, 380px);
   display: flex;
   align-items: center;
 
-  @media (min-width: 768px)  { min-height: 480px; }
-  @media (min-width: 1024px) { min-height: 600px; }
+  @media (min-width: 768px)  { min-height: calc(var(--slider-height-desktop, 600px) * 0.75); }
+  @media (min-width: 1024px) { min-height: var(--slider-height-desktop, 600px); }
 }
 
 .najd-hero-slide__bg {
@@ -1104,13 +1104,76 @@
   color: var(--text-primary) !important;
 }
 
-/* ---- Shape: Badge (floating) ---- */
+/* ---- Shape: Badge (floating pill) ---- */
 .najd-announcement--badge {
-  margin: var(--space-sm) var(--space-lg);
+  margin: var(--space-sm) auto;
   border-radius: 100px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  max-width: 700px;
-  margin-inline: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+  max-width: 720px;
+  padding-inline: var(--space-xl);
+  font-weight: 600;
+}
+
+/* ---- Shape: Diagonal strip ---- */
+.najd-announcement--diagonal {
+  position: relative;
+  clip-path: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.08);
+    clip-path: polygon(0 0, 60% 0, 45% 100%, 0 100%);
+    pointer-events: none;
+  }
+
+  /* Diagonal bottom edge */
+  .najd-announcement__inner {
+    padding-block: 14px;
+    background: linear-gradient(100deg,
+      rgba(0,0,0,0.12) 0%,
+      transparent 40%
+    );
+  }
+}
+
+/* ---- Shape: Split (two-color bar) ---- */
+.najd-announcement--split {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    width: 40%;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+  }
+
+  .najd-announcement__inner {
+    padding-block: 14px;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* ---- Shape: Neon ---- */
+.najd-announcement--neon {
+  background: #0a0a0f !important;
+  color: var(--announcement-text, var(--color-primary-light, #fff)) !important;
+  border-bottom: 1px solid var(--announcement-text, var(--color-primary));
+  font-weight: 700;
+  letter-spacing: 0.04em;
+
+  .najd-announcement__item {
+    text-shadow: 0 0 8px currentColor;
+  }
 }
 
 /* ---- Animation: Bounce ---- */

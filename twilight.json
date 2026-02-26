@@ -8,7 +8,7 @@
     "en": "Najd — The first Salla theme with three display modes: Light, Dark, and Liquid Glass. Professional design with 60+ components and 200+ customizable settings."
   },
   "repository": "https://github.com/Abdelrhmanmansoor/theme-najd",
-  "author_email": "support@najd-theme.sa",
+  "author_email": "MANSOORSOLIMAN77@GMAIL.COM",
   "support_url": "https://najd-theme.sa",
   "features": [
     "mega-menu",
@@ -345,6 +345,18 @@
         {
           "label": "شارة عائمة (Badge)",
           "value": "badge"
+        },
+        {
+          "label": "⭐ قطري (Diagonal Strip)",
+          "value": "diagonal"
+        },
+        {
+          "label": "⭐ مقسوم (Split Bar)",
+          "value": "split"
+        },
+        {
+          "label": "⭐ نيون (Neon)",
+          "value": "neon"
         }
       ],
       "source": "Manual"
@@ -2284,6 +2296,469 @@
       "value": 0,
       "min": 0,
       "max": 80
+    },
+    {
+      "type": "static",
+      "id": "line-coupon-sys",
+      "format": "line"
+    },
+    {
+      "type": "static",
+      "format": "title",
+      "id": "section-coupon-system",
+      "variant": "h5",
+      "value": "<div><b>⭐ نظام الكوبونات والعروض</b><br><small style='color:#888'>تحكم في طريقة عرض الكوبونات والعروض الترويجية في متجرك</small></div>"
+    },
+    {
+      "id": "coupon_show_in_cart",
+      "type": "boolean",
+      "format": "switch",
+      "label": "⭐ عرض كوبون في صفحة السلة",
+      "value": true,
+      "note": "يعرض أفضل كوبون متاح تلقائياً في صفحة السلة"
+    },
+    {
+      "id": "coupon_show_in_product",
+      "type": "boolean",
+      "format": "switch",
+      "label": "⭐ عرض كوبون في صفحة المنتج",
+      "value": true,
+      "note": "يعرض كوبون الخصم المتعلق بالمنتج"
+    },
+    {
+      "id": "coupon_animation",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "⭐ أسلوب ظهور الكوبون",
+      "selected": [
+        {
+          "label": "انزلاق من الأسفل",
+          "value": "slide-up"
+        }
+      ],
+      "options": [
+        {
+          "label": "انزلاق من الأسفل",
+          "value": "slide-up"
+        },
+        {
+          "label": "تلاشي",
+          "value": "fade"
+        },
+        {
+          "label": "ارتداد",
+          "value": "bounce"
+        },
+        {
+          "label": "بدون تأثير",
+          "value": "none"
+        }
+      ],
+      "source": "Manual"
+    },
+    {
+      "type": "static",
+      "id": "line-product-grid",
+      "format": "line"
+    },
+    {
+      "type": "static",
+      "format": "title",
+      "id": "section-product-grid-engine",
+      "variant": "h5",
+      "value": "<div><b>⭐ محرك شبكة المنتجات</b><br><small style='color:#888'>تحكم احترافي في تخطيط بطاقات المنتجات والتأثيرات</small></div>"
+    },
+    {
+      "id": "grid_cols_desktop",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "⭐ عدد أعمدة الديسكتوب",
+      "selected": [
+        {
+          "label": "4 أعمدة",
+          "value": "4"
+        }
+      ],
+      "options": [
+        {
+          "label": "2 عمودين",
+          "value": "2"
+        },
+        {
+          "label": "3 أعمدة",
+          "value": "3"
+        },
+        {
+          "label": "4 أعمدة",
+          "value": "4"
+        },
+        {
+          "label": "5 أعمدة",
+          "value": "5"
+        },
+        {
+          "label": "6 أعمدة",
+          "value": "6"
+        }
+      ],
+      "source": "Manual",
+      "note": "عدد بطاقات المنتجات في كل صف على الديسكتوب"
+    },
+    {
+      "id": "grid_cols_tablet",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "⭐ عدد أعمدة الجهاز اللوحي",
+      "selected": [
+        {
+          "label": "3 أعمدة",
+          "value": "3"
+        }
+      ],
+      "options": [
+        {
+          "label": "2 عمودين",
+          "value": "2"
+        },
+        {
+          "label": "3 أعمدة",
+          "value": "3"
+        },
+        {
+          "label": "4 أعمدة",
+          "value": "4"
+        }
+      ],
+      "source": "Manual",
+      "note": "عدد البطاقات على الأجهزة اللوحية"
+    },
+    {
+      "id": "grid_cols_mobile",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "⭐ عدد أعمدة الجوال",
+      "selected": [
+        {
+          "label": "2 عمودين",
+          "value": "2"
+        }
+      ],
+      "options": [
+        {
+          "label": "عمود واحد",
+          "value": "1"
+        },
+        {
+          "label": "2 عمودين",
+          "value": "2"
+        }
+      ],
+      "source": "Manual",
+      "note": "عدد البطاقات على الجوال"
+    },
+    {
+      "id": "card_hover_effect",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "⭐ تأثير hover البطاقة",
+      "selected": [
+        {
+          "label": "ارتفاع + ظل",
+          "value": "lift"
+        }
+      ],
+      "options": [
+        {
+          "label": "ارتفاع + ظل",
+          "value": "lift"
+        },
+        {
+          "label": "تبديل الصورة",
+          "value": "swap"
+        },
+        {
+          "label": "تكبير الصورة",
+          "value": "zoom"
+        },
+        {
+          "label": "تلاشي الصورة",
+          "value": "fade"
+        },
+        {
+          "label": "بدون تأثير",
+          "value": "none"
+        }
+      ],
+      "source": "Manual",
+      "note": "ما يحدث عند تحريك المؤشر فوق بطاقة المنتج"
+    },
+    {
+      "id": "card_quick_add_style",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "⭐ تصميم زر الإضافة السريعة",
+      "selected": [
+        {
+          "label": "زر ممتد (Full)",
+          "value": "full"
+        }
+      ],
+      "options": [
+        {
+          "label": "زر ممتد (Full)",
+          "value": "full"
+        },
+        {
+          "label": "أيقونة دائرة",
+          "value": "circle"
+        },
+        {
+          "label": "شريط سفلي",
+          "value": "bar"
+        },
+        {
+          "label": "بدون زر",
+          "value": "none"
+        }
+      ],
+      "source": "Manual"
+    },
+    {
+      "id": "card_badge_style",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "⭐ تصميم الشارات (New/Sale)",
+      "selected": [
+        {
+          "label": "مستطيل صغير",
+          "value": "rect"
+        }
+      ],
+      "options": [
+        {
+          "label": "مستطيل صغير",
+          "value": "rect"
+        },
+        {
+          "label": "دائرة",
+          "value": "circle"
+        },
+        {
+          "label": "شريط قطري",
+          "value": "diagonal"
+        },
+        {
+          "label": "علامة تبويب",
+          "value": "tab"
+        }
+      ],
+      "source": "Manual"
+    },
+    {
+      "id": "card_show_rating",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض تقييم النجوم",
+      "value": true,
+      "note": "يظهر تقييم المنتج على البطاقة"
+    },
+    {
+      "id": "card_show_wishlist",
+      "type": "boolean",
+      "format": "switch",
+      "label": "⭐ عرض زر المفضلة",
+      "value": true
+    },
+    {
+      "id": "card_show_compare",
+      "type": "boolean",
+      "format": "switch",
+      "label": "⭐ عرض زر المقارنة",
+      "value": false
+    },
+    {
+      "id": "card_aspect_ratio",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "⭐ نسبة صورة البطاقة",
+      "selected": [
+        {
+          "label": "مربع (1:1)",
+          "value": "square"
+        }
+      ],
+      "options": [
+        {
+          "label": "مربع (1:1)",
+          "value": "square"
+        },
+        {
+          "label": "طولي (3:4)",
+          "value": "portrait"
+        },
+        {
+          "label": "عريض (4:3)",
+          "value": "landscape"
+        },
+        {
+          "label": "بانورامي (16:9)",
+          "value": "wide"
+        },
+        {
+          "label": "طبيعي (Auto)",
+          "value": "auto"
+        }
+      ],
+      "source": "Manual",
+      "note": "نسبة ارتفاع صورة المنتج في البطاقة"
+    },
+    {
+      "id": "card_gap",
+      "type": "number",
+      "format": "integer",
+      "label": "⭐ المسافة بين البطاقات (px)",
+      "value": 20,
+      "min": 0,
+      "max": 60,
+      "note": "المسافة بين بطاقات المنتجات"
+    },
+    {
+      "type": "static",
+      "id": "line-slider-adv",
+      "format": "line"
+    },
+    {
+      "type": "static",
+      "format": "title",
+      "id": "section-slider-advanced",
+      "variant": "h5",
+      "value": "<div><b>⭐ تقديرات السلايدر والبطل المتقدمة</b><br><small style='color:#888'>تحكم دقيق في السلايدر الرئيسي وتأثيراته المتقدمة</small></div>"
+    },
+    {
+      "id": "slider_autoplay_speed",
+      "type": "number",
+      "format": "integer",
+      "label": "⭐ سرعة التشغيل التلقائي (ثانية)",
+      "value": 5,
+      "min": 2,
+      "max": 20,
+      "note": "الفترة الزمنية بين الانتقال من سلايد لآخر"
+    },
+    {
+      "id": "slider_transition_effect",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "⭐ تأثير الانتقال",
+      "selected": [
+        {
+          "label": "انزلاق أفقي",
+          "value": "slide"
+        }
+      ],
+      "options": [
+        {
+          "label": "انزلاق أفقي",
+          "value": "slide"
+        },
+        {
+          "label": "تلاشي",
+          "value": "fade"
+        },
+        {
+          "label": "تكبير Ken Burns",
+          "value": "kenburns"
+        },
+        {
+          "label": "تقليب ثلاثي الأبعاد",
+          "value": "flip3d"
+        }
+      ],
+      "source": "Manual",
+      "note": "أسلوب الانتقال بين سلايدات السلايدر"
+    },
+    {
+      "id": "slider_height_desktop",
+      "type": "number",
+      "format": "integer",
+      "label": "⭐ ارتفاع السلايدر ديسكتوب (px)",
+      "value": 600,
+      "min": 300,
+      "max": 1000,
+      "note": "ارتفاع السلايدر على الشاشات الكبيرة"
+    },
+    {
+      "id": "slider_height_mobile",
+      "type": "number",
+      "format": "integer",
+      "label": "⭐ ارتفاع السلايدر جوال (px)",
+      "value": 380,
+      "min": 200,
+      "max": 700
+    },
+    {
+      "id": "slider_parallax",
+      "type": "boolean",
+      "format": "switch",
+      "label": "⭐ تأثير Parallax على الخلفية",
+      "value": false,
+      "note": "⚠️ قد يؤثر على الأداء — يعطي عمقاً بصرياً ثلاثي الأبعاد"
+    },
+    {
+      "id": "slider_show_arrows",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض أسهم التنقل",
+      "value": true
+    },
+    {
+      "id": "slider_show_dots",
+      "type": "boolean",
+      "format": "switch",
+      "label": "عرض نقاط التنقل (Dots)",
+      "value": true
+    },
+    {
+      "id": "slider_arrows_style",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "⭐ تصميم أسهم السلايدر",
+      "selected": [
+        {
+          "label": "دائرة ناعمة",
+          "value": "circle"
+        }
+      ],
+      "options": [
+        {
+          "label": "دائرة ناعمة",
+          "value": "circle"
+        },
+        {
+          "label": "مستطيل",
+          "value": "rect"
+        },
+        {
+          "label": "شفاف",
+          "value": "ghost"
+        },
+        {
+          "label": "نيون ملوّن",
+          "value": "neon"
+        }
+      ],
+      "source": "Manual"
+    },
+    {
+      "type": "static",
+      "id": "line-dev-sig",
+      "format": "line"
+    },
+    {
+      "type": "static",
+      "format": "title",
+      "id": "section-dev-signature",
+      "variant": "h5",
+      "value": "<div style='padding:20px;background:rgba(255,255,255,0.06);border-radius:16px;border:1px solid rgba(255,255,255,0.12);margin:4px 0;'><div style='display:flex;align-items:center;gap:12px;margin-bottom:14px;'><div style='width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#1a1a2e,#16213e);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;'>🛡️</div><div><div style='font-size:16px;font-weight:800;color:var(--text-primary,#111);letter-spacing:-0.01em;'>مؤسسة سليمان</div><div style='font-size:11px;color:var(--text-secondary,#666);margin-top:2px;'>Premium Theme Developer</div></div></div><div style='font-size:12px;color:var(--text-secondary,#666);line-height:1.7;margin-bottom:14px;'>لطلب تصميمات الثيمات أو لأي مشكلة تقنية نحن في خدمتكم على مدار الساعة</div><div style='display:flex;flex-direction:column;gap:8px;'><div style='display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(37,211,102,0.08);border-radius:8px;border:1px solid rgba(37,211,102,0.2);'><span style='font-size:16px;'>💬</span><div><div style='font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#22c55e;'>واتساب</div><div style='font-size:13px;font-weight:600;color:var(--text-primary,#111);direction:ltr;text-align:start;'>+201007835547</div></div></div><div style='display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(59,130,246,0.08);border-radius:8px;border:1px solid rgba(59,130,246,0.2);'><span style='font-size:16px;'>✉️</span><div><div style='font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#3b82f6;'>البريد الإلكتروني</div><div style='font-size:13px;font-weight:600;color:var(--text-primary,#111);direction:ltr;text-align:start;'>MANSOORSOLIMAN77@GMAIL.COM</div></div></div></div><div style='margin-top:12px;padding-top:10px;border-top:1px solid var(--border-color,#e5e5e5);font-size:10px;color:var(--text-tertiary,#999);text-align:center;'>هذه المعلومات تظهر فقط في لوحة الإعدادات ولا تظهر في متجرك</div></div>"
     }
   ],
   "components": [
@@ -5997,6 +6472,149 @@
           "label": "تباعد سفلي للقسم (px)",
           "min": 0,
           "max": 200
+        }
+      ]
+    },
+    {
+      "key": "be8a1458-3aff-4b77-94f1-e198867b0eba",
+      "path": "home.coupon-display",
+      "title": {
+        "ar": "⭐ عروض الكوبونات (نجد)",
+        "en": "Coupon Display (Najd)"
+      },
+      "icon": "sicon-discount",
+      "category": "premium",
+      "fields": [
+        {
+          "id": "title",
+          "type": "string",
+          "format": "text",
+          "label": "عنوان القسم",
+          "value": "عروض وخصومات حصرية",
+          "note": "مثال: احصل على خصم يصل إلى 50%"
+        },
+        {
+          "id": "eyebrow",
+          "type": "string",
+          "format": "text",
+          "label": "نص صغير فوق العنوان",
+          "value": "⭐ عروض حصرية"
+        },
+        {
+          "id": "subtitle",
+          "type": "string",
+          "format": "text",
+          "label": "العنوان الفرعي"
+        },
+        {
+          "id": "layout",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "⭐ تصميم الكوبون",
+          "note": "اختر أسلوب عرض الكوبونات",
+          "selected": [
+            {
+              "label": "تذكرة كلاسيك",
+              "value": "ticket"
+            }
+          ],
+          "options": [
+            {
+              "label": "تذكرة كلاسيك",
+              "value": "ticket"
+            },
+            {
+              "label": "زجاجي أنيق",
+              "value": "glass"
+            },
+            {
+              "label": "حدود متقطعة",
+              "value": "dashed"
+            },
+            {
+              "label": "شريط ركني",
+              "value": "ribbon"
+            }
+          ],
+          "source": "Manual"
+        },
+        {
+          "id": "coupons",
+          "type": "collection",
+          "format": "collection",
+          "label": "الكوبونات",
+          "note": "أضف كوبونات الخصم — انقر على الكود لنسخه تلقائياً",
+          "maxLength": 12,
+          "fields": [
+            {
+              "id": "code",
+              "type": "string",
+              "format": "text",
+              "label": "كود الخصم",
+              "required": true,
+              "note": "مثال: NAJD50"
+            },
+            {
+              "id": "discount",
+              "type": "string",
+              "format": "text",
+              "label": "قيمة الخصم المعروضة",
+              "note": "مثال: 50% أو 100 ر.س"
+            },
+            {
+              "id": "description",
+              "type": "string",
+              "format": "text",
+              "label": "وصف الكوبون",
+              "note": "مثال: خصم 50% على جميع المنتجات"
+            },
+            {
+              "id": "expires",
+              "type": "string",
+              "format": "text",
+              "label": "تاريخ الانتهاء",
+              "note": "مثال: 31 مارس 2025"
+            },
+            {
+              "id": "icon",
+              "type": "string",
+              "format": "text",
+              "label": "إيموجي/أيقونة",
+              "note": "مثال: 🎁 أو 🛍️"
+            },
+            {
+              "id": "color",
+              "type": "string",
+              "format": "text",
+              "label": "لون الكوبون (HEX)",
+              "note": "مثال: #e11d48 — إن تُرك فارغاً يستخدم اللون الرئيسي"
+            }
+          ]
+        },
+        {
+          "id": "section_padding_top",
+          "type": "number",
+          "format": "integer",
+          "label": "⭐ تباعد علوي (px)",
+          "note": "تباعد مخصص أعلى هذا القسم",
+          "min": 0,
+          "max": 200
+        },
+        {
+          "id": "section_padding_bottom",
+          "type": "number",
+          "format": "integer",
+          "label": "⭐ تباعد سفلي (px)",
+          "note": "تباعد مخصص أسفل هذا القسم",
+          "min": 0,
+          "max": 200
+        },
+        {
+          "id": "full_width",
+          "type": "boolean",
+          "format": "switch",
+          "label": "عرض كامل",
+          "value": false
         }
       ]
     }

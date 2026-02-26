@@ -1,0 +1,484 @@
+/* ============================================================
+   Coupon Display System — NAJD PREMIUM
+   Layouts: ticket, glass, dashed, ribbon
+   ============================================================ */
+
+/* ---- Shared grid ---- */
+.najd-coupons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+
+  &--wide {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* ---- Shared coupon code button ---- */
+.najd-coupon-code {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-bg, #fff);
+  border: 2px dashed color-mix(in srgb, var(--cc, var(--color-primary)) 40%, transparent);
+  border-radius: var(--radius-lg);
+  padding: 10px 16px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--cc, var(--color-primary));
+  transition: all 0.2s var(--ease-out);
+  position: relative;
+  user-select: none;
+  width: 100%;
+  justify-content: space-between;
+
+  &:hover {
+    background: color-mix(in srgb, var(--cc, var(--color-primary)) 6%, var(--surface-bg, #fff));
+    border-color: var(--cc, var(--color-primary));
+    transform: scale(1.01);
+  }
+
+  &__icon {
+    font-size: 16px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+
+  &__copied {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--cc, var(--color-primary)) 12%, var(--surface-bg));
+    border-radius: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--cc, var(--color-primary));
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+
+  &.is-copied .najd-coupon-code__copied {
+    opacity: 1;
+  }
+
+  &.is-copied .najd-coupon-code__text,
+  &.is-copied .najd-coupon-code__icon {
+    opacity: 0;
+  }
+
+  /* Glass variant */
+  &--glass {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .najd-coupon-code__copied {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+  }
+}
+
+/* ============================================================
+   ⭐ TICKET Layout — Classic event ticket style
+   ============================================================ */
+.najd-coupon-ticket {
+  display: flex;
+  background: var(--surface-card, #fff);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+  }
+
+  /* Left colored panel */
+  &__left {
+    background: var(--cc, var(--color-primary));
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 18px;
+    min-width: 110px;
+    flex-shrink: 0;
+    text-align: center;
+    position: relative;
+  }
+
+  &__icon {
+    font-size: 28px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  &__discount {
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  &__label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+
+  /* Serrated edge */
+  &__edge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 20px;
+    flex-shrink: 0;
+    background: var(--surface-card, #fff);
+    position: relative;
+  }
+
+  &__dashes {
+    flex: 1;
+    border-inline-start: 2px dashed var(--border-color);
+    margin: 0 9px;
+  }
+
+  &__notch {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--surface-secondary, #f5f5f5);
+    flex-shrink: 0;
+    position: relative;
+
+    &--top  { transform: translateY(-50%); margin-top: -10px; }
+    &--bottom { transform: translateY(50%); margin-bottom: -10px; }
+  }
+
+  /* Right content panel */
+  &__right {
+    flex: 1;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  &__desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  &__code-wrap {}
+
+  &__code-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 5px;
+  }
+
+  &__expires {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--text-tertiary);
+
+    i { color: var(--cc, var(--color-primary)); }
+  }
+}
+
+[data-theme="dark"] .najd-coupon-ticket {
+  background: var(--surface-card);
+  border-color: #2a2a2e;
+
+  .najd-coupon-ticket__notch { background: #111114; }
+}
+
+[data-theme="glass"] .najd-coupon-ticket {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+
+  .najd-coupon-ticket__edge { background: transparent; }
+  .najd-coupon-ticket__notch { background: var(--surface-bg); }
+}
+
+/* ============================================================
+   ⭐ GLASS Layout — White glass coupon
+   ============================================================ */
+.najd-coupon-glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-2xl);
+  padding: 28px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s;
+
+  /* Gradient glow behind */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -40%;
+    background: radial-gradient(ellipse at center,
+      color-mix(in srgb, var(--cc, var(--color-primary)) 15%, transparent) 0%,
+      transparent 70%);
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px color-mix(in srgb, var(--cc, var(--color-primary)) 20%, transparent);
+  }
+
+  /* In light mode, use card background */
+  [data-theme="light"] &,
+  :root & {
+    background: var(--surface-card);
+    border-color: var(--border-color);
+    backdrop-filter: none;
+
+    &::before {
+      background: radial-gradient(ellipse at top,
+        color-mix(in srgb, var(--cc, var(--color-primary)) 6%, transparent) 0%,
+        transparent 70%);
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  &__icon {
+    font-size: 32px;
+    line-height: 1;
+  }
+
+  &__discount {
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--cc, var(--color-primary));
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  &__desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0 0 16px;
+    line-height: 1.6;
+    position: relative;
+  }
+
+  &__expires {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 12px;
+    position: relative;
+
+    i { color: var(--cc, var(--color-primary)); }
+  }
+}
+
+/* ============================================================
+   ⭐ DASHED Layout — Classic dashed border
+   ============================================================ */
+.najd-coupon-dashed {
+  border: 2px dashed color-mix(in srgb, var(--cc, var(--color-primary)) 40%, var(--border-color));
+  border-radius: var(--radius-xl);
+  background: var(--surface-card);
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+
+  &:hover {
+    border-color: var(--cc, var(--color-primary));
+    box-shadow: 0 6px 24px color-mix(in srgb, var(--cc, var(--color-primary)) 12%, transparent);
+    transform: translateY(-3px);
+  }
+
+  &__inner {
+    display: flex;
+    gap: 0;
+  }
+
+  &__left {
+    background: color-mix(in srgb, var(--cc, var(--color-primary)) 8%, var(--surface-card));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    min-width: 100px;
+    flex-shrink: 0;
+    text-align: center;
+    border-inline-end: 2px dashed color-mix(in srgb, var(--cc, var(--color-primary)) 30%, transparent);
+  }
+
+  &__discount {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--cc, var(--color-primary));
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  &__icon { font-size: 22px; margin-top: 6px; }
+
+  &__right {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  &__desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  &__expires {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--text-tertiary);
+
+    i { color: var(--cc, var(--color-primary)); }
+  }
+}
+
+[data-theme="dark"] .najd-coupon-dashed {
+  background: var(--surface-card);
+  border-color: color-mix(in srgb, var(--cc, var(--color-primary)) 30%, #2a2a2e);
+
+  .najd-coupon-dashed__left { background: color-mix(in srgb, var(--cc, var(--color-primary)) 6%, #1a1a1e); }
+}
+
+/* ============================================================
+   ⭐ RIBBON Layout — Corner ribbon badge
+   ============================================================ */
+.najd-coupon-ribbon {
+  background: var(--surface-card);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow 0.25s var(--ease-out), transform 0.25s;
+  box-shadow: var(--shadow-sm);
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+  }
+
+  /* Corner ribbon */
+  &__corner {
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    pointer-events: none;
+
+    span {
+      position: absolute;
+      top: 22px;
+      inset-inline-start: -28px;
+      width: 100px;
+      background: var(--cc, var(--color-primary));
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      text-align: center;
+      padding: 5px 0;
+      transform: rotate(-45deg);
+      transform-origin: center;
+      display: block;
+
+      [dir="rtl"] & {
+        inset-inline-start: auto;
+        inset-inline-end: -28px;
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  &__body {
+    padding: 28px 20px 20px;
+    padding-inline-start: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__icon {
+    font-size: 36px;
+    line-height: 1;
+    display: block;
+  }
+
+  &__desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.6;
+  }
+}
+
+[data-theme="dark"] .najd-coupon-ribbon {
+  background: var(--surface-card);
+  border-color: #2a2a2e;
+}
+
+/* ---- Animation on copy ---- */
+@keyframes najd-coupon-pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.najd-coupon-code.is-copied {
+  animation: najd-coupon-pop 0.3s var(--ease-out);
+}

@@ -632,3 +632,142 @@ salla-product-card .s-product-card-sale-badge {
     &:hover { transform: translateY(-6px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); }
   }
 }
+
+/* ============================================================
+   ⭐ Product Grid Engine — Dynamic column system
+   Driven by CSS vars set from twilight.json settings
+   ============================================================ */
+
+/* Grid columns responsive system */
+salla-products-slider,
+.s-products-list,
+.products-list {
+  --_cols: var(--grid-cols-desktop, 4);
+
+  @media (max-width: 1024px) { --_cols: var(--grid-cols-tablet, 3); }
+  @media (max-width: 640px)  { --_cols: var(--grid-cols-mobile, 2); }
+}
+
+/* Card gap control */
+.s-products-list .product-grid,
+.products-grid {
+  gap: var(--card-gap, 20px);
+}
+
+/* ---- Hover: Swap image (show second image on hover) ---- */
+[data-card-hover="swap"] {
+  custom-salla-product-card .product-entry__image {
+    img + img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.35s var(--ease-out);
+    }
+  }
+
+  custom-salla-product-card .product-entry:hover .product-entry__image {
+    img + img { opacity: 1; }
+    img:first-child { opacity: 0; }
+  }
+}
+
+/* ---- Hover: Fade (dim image) ---- */
+[data-card-hover="fade"] {
+  custom-salla-product-card .product-entry {
+    &:hover .product-entry__image img {
+      opacity: 0.7;
+    }
+  }
+}
+
+/* ---- Hover: Lift (default premium) ---- */
+[data-card-hover="lift"] {
+  custom-salla-product-card .product-entry {
+    transition:
+      box-shadow var(--duration-base) var(--ease-out),
+      transform var(--duration-base) var(--ease-out);
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
+    }
+  }
+}
+
+/* ---- Badge Styles ---- */
+/* Circle badge */
+[data-card-badge="circle"] {
+  .s-product-card-badges .badge,
+  .product-entry__badges .badge {
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    text-align: center;
+    line-height: 1.2;
+    padding: 0;
+  }
+}
+
+/* Diagonal/ribbon badge */
+[data-card-badge="diagonal"] {
+  .product-entry { overflow: hidden; }
+  .s-product-card-badges .badge:first-child,
+  .product-entry__badges .badge:first-child {
+    position: absolute;
+    top: 16px;
+    inset-inline-start: -30px;
+    width: 100px;
+    text-align: center;
+    transform: rotate(-45deg);
+    border-radius: 0;
+    padding: 4px 0;
+    font-size: 10px;
+  }
+}
+
+/* ---- Card Aspect Ratio System ---- */
+[data-card-ratio="square"] custom-salla-product-card .product-entry__image,
+[data-img-ratio="square"] custom-salla-product-card .product-entry__image {
+  aspect-ratio: 1 / 1;
+  height: auto;
+
+  img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+}
+
+[data-card-ratio="portrait"] custom-salla-product-card .product-entry__image,
+[data-img-ratio="portrait"] custom-salla-product-card .product-entry__image {
+  aspect-ratio: 3 / 4;
+  height: auto;
+
+  img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+}
+
+[data-card-ratio="landscape"] custom-salla-product-card .product-entry__image,
+[data-img-ratio="landscape"] custom-salla-product-card .product-entry__image {
+  aspect-ratio: 4 / 3;
+  height: auto;
+
+  img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+}
+
+[data-card-ratio="wide"] custom-salla-product-card .product-entry__image,
+[data-img-ratio="wide"] custom-salla-product-card .product-entry__image {
+  aspect-ratio: 16 / 9;
+  height: auto;
+
+  img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+}
+
+/* Ensure container is relative for absolute images */
+[data-card-ratio]:not([data-card-ratio="auto"]) custom-salla-product-card .product-entry__image,
+[data-img-ratio]:not([data-img-ratio="auto"]) custom-salla-product-card .product-entry__image {
+  position: relative;
+  overflow: hidden;
+}

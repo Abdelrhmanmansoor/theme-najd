@@ -1,0 +1,193 @@
+{# ============================================================
+   Coupon Display — Premium coupon section builder
+   Layouts: ticket, glass, dashed, ribbon, grid
+   Fields: title, subtitle, layout, coupons[]
+   Coupon: code, discount, description, expires, color, icon
+   ============================================================ #}
+
+{% set coupon_layout = component.layout|default('ticket') %}
+{% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
+{% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
+{% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
+
+<section class="najd-block najd-block--coupons {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
+
+    {# Header #}
+    {% if component.title is defined and component.title %}
+        <div class="najd-block__header text-center mb-10">
+            <div class="najd-block__eyebrow">{{ component.eyebrow is defined and component.eyebrow ? component.eyebrow : '⭐ عروض حصرية' }}</div>
+            <h2 class="najd-block__title">{{ component.title }}</h2>
+            {% if component.subtitle is defined and component.subtitle %}
+                <p class="najd-block__subtitle">{{ component.subtitle }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if component.coupons is defined and component.coupons %}
+
+        {# ===== TICKET Layout ===== #}
+        {% if coupon_layout == 'ticket' %}
+            <div class="najd-coupons-grid">
+                {% for coupon in component.coupons %}
+                    <div class="najd-coupon-ticket" style="{{ coupon.color is defined and coupon.color ? '--cc:' ~ coupon.color : '' }}">
+                        {# Left panel: discount info #}
+                        <div class="najd-coupon-ticket__left">
+                            {% if coupon.icon is defined and coupon.icon %}
+                                <div class="najd-coupon-ticket__icon">{{ coupon.icon }}</div>
+                            {% endif %}
+                            <div class="najd-coupon-ticket__discount">{{ coupon.discount }}</div>
+                            <div class="najd-coupon-ticket__label">خصم</div>
+                        </div>
+
+                        {# Serrated edge #}
+                        <div class="najd-coupon-ticket__edge">
+                            <div class="najd-coupon-ticket__notch najd-coupon-ticket__notch--top"></div>
+                            <div class="najd-coupon-ticket__dashes"></div>
+                            <div class="najd-coupon-ticket__notch najd-coupon-ticket__notch--bottom"></div>
+                        </div>
+
+                        {# Right panel: code + description #}
+                        <div class="najd-coupon-ticket__right">
+                            {% if coupon.description is defined and coupon.description %}
+                                <p class="najd-coupon-ticket__desc">{{ coupon.description }}</p>
+                            {% endif %}
+                            <div class="najd-coupon-ticket__code-wrap">
+                                <span class="najd-coupon-ticket__code-label">كود الخصم</span>
+                                <button class="najd-coupon-code najd-coupon-copy"
+                                        data-code="{{ coupon.code }}"
+                                        aria-label="نسخ الكود {{ coupon.code }}">
+                                    <span class="najd-coupon-code__text">{{ coupon.code }}</span>
+                                    <span class="najd-coupon-code__icon"><i class="sicon-copy"></i></span>
+                                    <span class="najd-coupon-code__copied" aria-live="polite">تم النسخ ✓</span>
+                                </button>
+                            </div>
+                            {% if coupon.expires is defined and coupon.expires %}
+                                <div class="najd-coupon-ticket__expires">
+                                    <i class="sicon-clock"></i>
+                                    ينتهي: {{ coupon.expires }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        {# ===== GLASS Layout ===== #}
+        {% elseif coupon_layout == 'glass' %}
+            <div class="najd-coupons-grid">
+                {% for coupon in component.coupons %}
+                    <div class="najd-coupon-glass" style="{{ coupon.color is defined and coupon.color ? '--cc:' ~ coupon.color : '' }}">
+                        <div class="najd-coupon-glass__header">
+                            {% if coupon.icon is defined and coupon.icon %}
+                                <span class="najd-coupon-glass__icon">{{ coupon.icon }}</span>
+                            {% endif %}
+                            <div class="najd-coupon-glass__discount">{{ coupon.discount }}</div>
+                        </div>
+                        {% if coupon.description is defined and coupon.description %}
+                            <p class="najd-coupon-glass__desc">{{ coupon.description }}</p>
+                        {% endif %}
+                        <button class="najd-coupon-code najd-coupon-copy najd-coupon-code--glass"
+                                data-code="{{ coupon.code }}">
+                            <span class="najd-coupon-code__text">{{ coupon.code }}</span>
+                            <span class="najd-coupon-code__icon"><i class="sicon-copy"></i></span>
+                            <span class="najd-coupon-code__copied" aria-live="polite">✓</span>
+                        </button>
+                        {% if coupon.expires is defined and coupon.expires %}
+                            <p class="najd-coupon-glass__expires"><i class="sicon-clock"></i> {{ coupon.expires }}</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+        {# ===== DASHED Layout ===== #}
+        {% elseif coupon_layout == 'dashed' %}
+            <div class="najd-coupons-grid">
+                {% for coupon in component.coupons %}
+                    <div class="najd-coupon-dashed" style="{{ coupon.color is defined and coupon.color ? '--cc:' ~ coupon.color : '' }}">
+                        <div class="najd-coupon-dashed__inner">
+                            <div class="najd-coupon-dashed__left">
+                                <div class="najd-coupon-dashed__discount">{{ coupon.discount }}</div>
+                                {% if coupon.icon is defined and coupon.icon %}<div class="najd-coupon-dashed__icon">{{ coupon.icon }}</div>{% endif %}
+                            </div>
+                            <div class="najd-coupon-dashed__right">
+                                {% if coupon.description is defined and coupon.description %}
+                                    <p class="najd-coupon-dashed__desc">{{ coupon.description }}</p>
+                                {% endif %}
+                                <button class="najd-coupon-code najd-coupon-copy"
+                                        data-code="{{ coupon.code }}">
+                                    <span class="najd-coupon-code__text">{{ coupon.code }}</span>
+                                    <span class="najd-coupon-code__icon"><i class="sicon-copy"></i></span>
+                                    <span class="najd-coupon-code__copied" aria-live="polite">✓</span>
+                                </button>
+                                {% if coupon.expires is defined and coupon.expires %}
+                                    <p class="najd-coupon-dashed__expires"><i class="sicon-clock"></i> {{ coupon.expires }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        {# ===== RIBBON Layout ===== #}
+        {% elseif coupon_layout == 'ribbon' %}
+            <div class="najd-coupons-grid najd-coupons-grid--wide">
+                {% for coupon in component.coupons %}
+                    <div class="najd-coupon-ribbon" style="{{ coupon.color is defined and coupon.color ? '--cc:' ~ coupon.color : '' }}">
+                        <div class="najd-coupon-ribbon__corner">
+                            <span>{{ coupon.discount }}</span>
+                        </div>
+                        <div class="najd-coupon-ribbon__body">
+                            {% if coupon.icon is defined and coupon.icon %}
+                                <span class="najd-coupon-ribbon__icon">{{ coupon.icon }}</span>
+                            {% endif %}
+                            {% if coupon.description is defined and coupon.description %}
+                                <p class="najd-coupon-ribbon__desc">{{ coupon.description }}</p>
+                            {% endif %}
+                            <button class="najd-coupon-code najd-coupon-copy"
+                                    data-code="{{ coupon.code }}">
+                                <span class="najd-coupon-code__text">{{ coupon.code }}</span>
+                                <span class="najd-coupon-code__icon"><i class="sicon-copy"></i></span>
+                                <span class="najd-coupon-code__copied" aria-live="polite">✓</span>
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        {% endif %}
+
+    {% else %}
+        <div class="text-center py-12" style="color:var(--text-tertiary);">
+            <p style="font-size:48px;margin-bottom:12px;">🎫</p>
+            <p>أضف أكواد الخصم من إعدادات القسم</p>
+        </div>
+    {% endif %}
+
+</section>
+
+{# Copy to clipboard JS #}
+<script>
+(function() {
+  document.querySelectorAll('.najd-coupon-copy').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var code = btn.dataset.code;
+      if (!code) return;
+      navigator.clipboard.writeText(code).then(function() {
+        btn.classList.add('is-copied');
+        setTimeout(function() { btn.classList.remove('is-copied'); }, 2200);
+      }).catch(function() {
+        // Fallback
+        var ta = document.createElement('textarea');
+        ta.value = code;
+        ta.style.cssText = 'position:fixed;top:-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        btn.classList.add('is-copied');
+        setTimeout(function() { btn.classList.remove('is-copied'); }, 2200);
+      });
+    });
+  });
+})();
+</script>
