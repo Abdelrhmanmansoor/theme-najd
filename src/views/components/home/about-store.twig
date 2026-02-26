@@ -6,11 +6,14 @@
    ============================================================ #}
 
 {% set about_layout = component.layout|default('side') %}
+{% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
+{% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
+{% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
 
 {% if about_layout == 'fullwidth' %}
     {# === Fullwidth: background image with text overlay === #}
     <section class="najd-block najd-block--about najd-about--fullwidth"
-             {% if component.image %}style="background-image: url({{ component.image }})"{% endif %}>
+             {% if component.image %}style="background-image: url({{ component.image }})"{% endif %} {{ _spacing_style }}>
         <div class="najd-about--fullwidth__overlay"></div>
         <div class="container relative z-10">
             <div class="najd-about--fullwidth__content">
@@ -33,7 +36,7 @@
 
 {% elseif about_layout == 'split' %}
     {# === Split: two equal halves === #}
-    <section class="najd-block najd-block--about">
+    <section class="najd-block najd-block--about" {{ _spacing_style }}>
         <div class="najd-about--split">
             <div class="najd-about--split__image">
                 {% if component.image %}
@@ -60,7 +63,7 @@
 
 {% else %}
     {# === Side (default): image + text side by side === #}
-    <section class="najd-block najd-block--about {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
+    <section class="najd-block najd-block--about {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {% if component.image %}
                 <div class="najd-about__image overflow-hidden rounded-lg">

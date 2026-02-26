@@ -93,3 +93,91 @@ salla-slider {
     }
   }
 }
+
+
+/* =====================================================
+   Phase 6: Enhanced Hero Slider — v3 Premium
+   Styles: classic, fade, zoom, cinematic
+   Nav: arrows, dots, both, numbers, none
+   Nav positions: middle, bottom, top-corner
+===================================================== */
+
+/* ---- Fade style ---- */
+.najd-hero--fade {
+  .swiper-slide {
+    opacity: 0 !important;
+    transition: opacity 0.8s ease !important;
+  }
+  .swiper-slide-active {
+    opacity: 1 !important;
+  }
+}
+
+/* ---- Zoom style (subtle scale breathe) ---- */
+.najd-hero--zoom {
+  .najd-hero-slide__bg {
+    animation: najd-zoom-breathe 8s ease-in-out infinite;
+  }
+  .swiper-slide-active .najd-hero-slide__bg {
+    animation-play-state: running;
+  }
+  .swiper-slide:not(.swiper-slide-active) .najd-hero-slide__bg {
+    animation-play-state: paused;
+  }
+}
+
+/* ---- Cinematic style (vignette dark edges) ---- */
+.najd-hero--cinematic {
+  .najd-hero-slide {
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.5) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+  .najd-hero-slide__content { z-index: 2; }
+}
+
+/* ---- Nav position: bottom ---- */
+.najd-hero--nav-bottom {
+  .swiper-button-prev,
+  .swiper-button-next {
+    top: auto;
+    bottom: 60px;
+  }
+  .swiper-button-prev { inset-inline-start: 50%; margin-inline-start: -60px; }
+  .swiper-button-next { inset-inline-end: 50%; margin-inline-end: -60px; }
+}
+
+/* ---- Nav position: top-corner ---- */
+.najd-hero--nav-top-corner {
+  .swiper-button-prev,
+  .swiper-button-next {
+    top: 20px;
+    bottom: auto;
+    transform: none;
+  }
+  .swiper-button-prev { inset-inline-start: auto; inset-inline-end: 60px; }
+  .swiper-button-next { inset-inline-end: 20px; }
+}
+
+/* ---- Nav style: dots only ---- */
+.najd-hero-wrap[data-nav-style='dots'] {
+  .swiper-button-prev,
+  .swiper-button-next { display: none; }
+}
+
+/* ---- Nav style: arrows only ---- */
+.najd-hero-wrap[data-nav-style='arrows'] {
+  .swiper-pagination { display: none; }
+}
+
+/* ---- Nav style: none ---- */
+.najd-hero-wrap[data-nav-style='none'] {
+  .swiper-button-prev,
+  .swiper-button-next,
+  .swiper-pagination { display: none; }
+}

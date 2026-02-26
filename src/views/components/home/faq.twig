@@ -1,14 +1,25 @@
 {# ============================================================
-   FAQ — 3 layout styles
-   Layouts: accordion, cards, side
-   Fields: component.layout, .title, component.items[].question, .answer
+   FAQ — 7 layout styles
+   Layouts: accordion, cards, side, bubble, columns, numbered, minimal
+   Fields: component.layout, .title, component.items[].question, .answer, .icon, .category
    ============================================================ #}
 
 {% set faq_layout = component.layout|default('accordion') %}
+{% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
+{% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
+{% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
+
+{# Build unique categories list #}
+{% set categories = [] %}
+{% for item in component.items %}
+    {% if item.category and item.category not in categories %}
+        {% set categories = categories|merge([item.category]) %}
+    {% endif %}
+{% endfor %}
 
 {% if faq_layout == 'side' %}
     {# === Side: title left, questions right === #}
-    <section class="najd-block najd-block--faq {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
+    <section class="najd-block najd-block--faq {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
             <div class="lg:col-span-2">
                 {% if component.title %}
@@ -17,9 +28,16 @@
                 <p class="text-sm opacity-60 leading-relaxed">{{ trans('common.elements.faq_desc') }}</p>
             </div>
             <div class="lg:col-span-3">
+                {% if categories|length > 1 %}
+                    <div class="najd-faq__filter-tabs" data-faq-filter>
+                        <button class="najd-faq__filter-btn is-active" data-cat="all">الكل</button>
+                        {% for cat in categories %}<button class="najd-faq__filter-btn" data-cat="{{ cat }}">{{ cat }}</button>{% endfor %}
+                    </div>
+                {% endif %}
                 {% for item in component.items %}
-                    <details class="najd-faq__item mb-3">
+                    <details class="najd-faq__item mb-3" data-item-cat="{{ item.category }}">
                         <summary class="najd-faq__question">
+                            {% if item.icon %}<span class="najd-faq__icon-pre">{{ item.icon }}</span>{% endif %}
                             <span>{{ item.question }}</span>
                             <i class="sicon-keyboard-arrow-down najd-faq__icon"></i>
                         </summary>
@@ -32,15 +50,22 @@
 
 {% elseif faq_layout == 'cards' %}
     {# === Cards: each Q&A in a separate card === #}
-    <section class="najd-block najd-block--faq {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
+    <section class="najd-block najd-block--faq {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
         {% if component.title %}
             <div class="najd-block__header text-center mb-8">
                 <h2 class="text-2xl font-bold">{{ component.title }}</h2>
             </div>
         {% endif %}
+        {% if categories|length > 1 %}
+            <div class="najd-faq__filter-tabs mb-6" data-faq-filter>
+                <button class="najd-faq__filter-btn is-active" data-cat="all">الكل</button>
+                {% for cat in categories %}<button class="najd-faq__filter-btn" data-cat="{{ cat }}">{{ cat }}</button>{% endfor %}
+            </div>
+        {% endif %}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for item in component.items %}
-                <div class="najd-faq-card">
+                <div class="najd-faq-card" data-item-cat="{{ item.category }}">
+                    {% if item.icon %}<div class="najd-faq-card__icon">{{ item.icon }}</div>{% endif %}
                     <h3 class="font-bold text-base mb-3">{{ item.question }}</h3>
                     <p class="text-sm opacity-60 leading-relaxed">{{ item.answer|raw }}</p>
                 </div>
@@ -48,18 +73,121 @@
         </div>
     </section>
 
-{% else %}
-    {# === Accordion (default) === #}
-    <section class="najd-block najd-block--faq {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
+{% elseif faq_layout == 'bubble' %}
+    {# === Bubble: Chat-style Q&A bubbles === #}
+    <section class="najd-block najd-block--faq najd-faq--bubble {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
         {% if component.title %}
             <div class="najd-block__header text-center mb-8">
                 <h2 class="text-2xl font-bold">{{ component.title }}</h2>
             </div>
         {% endif %}
+        {% if categories|length > 1 %}
+            <div class="najd-faq__filter-tabs mb-6" data-faq-filter>
+                <button class="najd-faq__filter-btn is-active" data-cat="all">الكل</button>
+                {% for cat in categories %}<button class="najd-faq__filter-btn" data-cat="{{ cat }}">{{ cat }}</button>{% endfor %}
+            </div>
+        {% endif %}
+        <div class="najd-faq-bubbles max-w-3xl mx-auto" data-faq-filter>
+            {% for item in component.items %}
+                <div class="najd-faq-bubble-pair" data-item-cat="{{ item.category }}">
+                    <div class="najd-faq-bubble najd-faq-bubble--q">
+                        {% if item.icon %}<span>{{ item.icon }}</span>{% endif %}
+                        <span>{{ item.question }}</span>
+                    </div>
+                    <div class="najd-faq-bubble najd-faq-bubble--a">
+                        <span class="najd-faq-bubble__bot">🤖</span>
+                        <div class="najd-faq-bubble__text">{{ item.answer|raw }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+{% elseif faq_layout == 'columns' %}
+    {# === Columns: Two-column accordion grid === #}
+    <section class="najd-block najd-block--faq {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
+        {% if component.title %}
+            <div class="najd-block__header text-center mb-8">
+                <h2 class="text-2xl font-bold">{{ component.title }}</h2>
+            </div>
+        {% endif %}
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            {% for item in component.items %}
+                <details class="najd-faq__item" data-item-cat="{{ item.category }}">
+                    <summary class="najd-faq__question">
+                        {% if item.icon %}<span class="najd-faq__icon-pre">{{ item.icon }}</span>{% endif %}
+                        <span>{{ item.question }}</span>
+                        <i class="sicon-keyboard-arrow-down najd-faq__icon"></i>
+                    </summary>
+                    <div class="najd-faq__answer">{{ item.answer|raw }}</div>
+                </details>
+            {% endfor %}
+        </div>
+    </section>
+
+{% elseif faq_layout == 'numbered' %}
+    {# === Numbered: Sequential numbered list with colored left bar === #}
+    <section class="najd-block najd-block--faq {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
+        {% if component.title %}
+            <div class="najd-block__header text-center mb-8">
+                <h2 class="text-2xl font-bold">{{ component.title }}</h2>
+            </div>
+        {% endif %}
+        <div class="najd-faq-numbered max-w-3xl mx-auto">
+            {% for item in component.items %}
+                <div class="najd-faq-numbered__item" data-item-cat="{{ item.category }}">
+                    <div class="najd-faq-numbered__num">{{ loop.index }}</div>
+                    <div class="najd-faq-numbered__body">
+                        <h3 class="najd-faq-numbered__q">{{ item.question }}</h3>
+                        <div class="najd-faq-numbered__a">{{ item.answer|raw }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+{% elseif faq_layout == 'minimal' %}
+    {# === Minimal: Simple dot + text === #}
+    <section class="najd-block najd-block--faq {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
+        {% if component.title %}
+            <div class="najd-block__header text-center mb-8">
+                <h2 class="text-2xl font-bold">{{ component.title }}</h2>
+            </div>
+        {% endif %}
+        <div class="najd-faq-minimal max-w-2xl mx-auto">
+            {% for item in component.items %}
+                <div class="najd-faq-minimal__item" data-item-cat="{{ item.category }}">
+                    <span class="najd-faq-minimal__dot">
+                        {% if item.icon %}{{ item.icon }}{% else %}●{% endif %}
+                    </span>
+                    <div>
+                        <h3 class="najd-faq-minimal__q">{{ item.question }}</h3>
+                        <p class="najd-faq-minimal__a">{{ item.answer|raw }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+{% else %}
+    {# === Accordion (default) === #}
+    <section class="najd-block najd-block--faq {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
+        {% if component.title %}
+            <div class="najd-block__header text-center mb-8">
+                <h2 class="text-2xl font-bold">{{ component.title }}</h2>
+            </div>
+        {% endif %}
+        {% if categories|length > 1 %}
+            <div class="najd-faq__filter-tabs mb-6" data-faq-filter>
+                <button class="najd-faq__filter-btn is-active" data-cat="all">الكل</button>
+                {% for cat in categories %}<button class="najd-faq__filter-btn" data-cat="{{ cat }}">{{ cat }}</button>{% endfor %}
+            </div>
+        {% endif %}
         <div class="najd-faq max-w-3xl mx-auto">
             {% for item in component.items %}
-                <details class="najd-faq__item mb-3">
+                <details class="najd-faq__item mb-3" data-item-cat="{{ item.category }}">
                     <summary class="najd-faq__question">
+                        {% if item.icon %}<span class="najd-faq__icon-pre">{{ item.icon }}</span>{% endif %}
                         <span>{{ item.question }}</span>
                         <i class="sicon-keyboard-arrow-down najd-faq__icon"></i>
                     </summary>

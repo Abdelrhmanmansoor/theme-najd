@@ -1,0 +1,121 @@
+{# ============================================================
+   Product Finder — Interactive Quiz (منتجك المثالي)
+   Styles: cards | bubbles | minimal | picture
+   Owner configures questions + answer options with result products
+   JS handles all step navigation via data-finder attribute
+   ============================================================ #}
+
+{% set finder_style = component.style|default('cards') %}
+{% set show_progress = component.show_progress is not defined or component.show_progress %}
+{% set total_questions = component.questions|length %}
+{% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
+{% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
+{% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
+
+<section class="najd-block najd-block--finder {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
+
+    {# Section Header #}
+    {% if component.title %}
+        <div class="najd-block__header text-center mb-8">
+            <h2 class="najd-block__title">{{ component.title }}</h2>
+            {% if component.subtitle %}
+                <p class="najd-block__subtitle">{{ component.subtitle }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {# Quiz Container — JS reads data-finder JSON #}
+    <div class="najd-finder najd-finder--{{ finder_style }}"
+         id="najd-finder-{{ position }}"
+         data-finder-total="{{ total_questions }}"
+         data-finder-style="{{ finder_style }}">
+
+        {# === Screen 0: Intro === #}
+        <div class="najd-finder__screen najd-finder__intro" data-screen="intro">
+            <div class="najd-finder__intro-icon">✨</div>
+            {% if component.title %}
+                <h3 class="najd-finder__intro-title">{{ component.title }}</h3>
+            {% endif %}
+            {% if component.intro_text %}
+                <p class="najd-finder__intro-text">{{ component.intro_text }}</p>
+            {% endif %}
+            <button class="najd-btn najd-btn--primary najd-btn--lg najd-finder__start-btn" data-start>
+                {{ component.start_btn_text ? component.start_btn_text : 'ابدأ الاختبار' }}
+                <i class="sicon-keyboard-arrow-{{ theme.is_rtl ? 'left' : 'right' }}"></i>
+            </button>
+        </div>
+
+        {# Progress Bar #}
+        {% if show_progress and total_questions > 0 %}
+            <div class="najd-finder__progress" data-progress hidden>
+                <div class="najd-finder__progress-bar">
+                    <div class="najd-finder__progress-fill" data-progress-fill style="width:0%"></div>
+                </div>
+                <span class="najd-finder__progress-text" data-progress-text>
+                    {{ trans('common.elements.question') }} <strong data-current-q>1</strong> {{ trans('common.elements.of') }} {{ total_questions }}
+                </span>
+            </div>
+        {% endif %}
+
+        {# === Question Screens === #}
+        {% for qi, q in component.questions %}
+            <div class="najd-finder__screen najd-finder__step" data-step="{{ qi + 1 }}" hidden>
+                <div class="najd-finder__step-inner">
+                    {% if q.question_icon %}
+                        <div class="najd-finder__q-icon">{{ q.question_icon }}</div>
+                    {% endif %}
+                    <h3 class="najd-finder__q-text">{{ q.question_text }}</h3>
+
+                    <div class="najd-finder__options">
+                        {% for oi, opt in q.options %}
+                            <button class="najd-finder__option"
+                                    data-qi="{{ qi }}"
+                                    data-oi="{{ oi }}"
+                                    data-next="{{ opt.next_question is defined and opt.next_question > 0 ? opt.next_question : 0 }}"
+                                    data-result='{"title":{{ opt.result_product_title ? '"' ~ opt.result_product_title|e('html_attr') ~ '"' : 'null' }},"image":{{ opt.result_product_image ? '"' ~ opt.result_product_image ~ '"' : 'null' }},"price":{{ opt.result_product_price ? '"' ~ opt.result_product_price|e('html_attr') ~ '"' : 'null' }},"url":{{ opt.result_product_url ? '"' ~ opt.result_product_url ~ '"' : 'null' }},"description":{{ opt.result_description ? '"' ~ opt.result_description|e('html_attr') ~ '"' : 'null' }}}'>
+
+                                {% if finder_style == 'picture' and opt.option_image %}
+                                    <div class="najd-finder__option-img">
+                                        <img src="{{ opt.option_image }}" alt="{{ opt.option_label }}" loading="lazy">
+                                    </div>
+                                {% endif %}
+                                {% if opt.option_emoji %}
+                                    <span class="najd-finder__option-emoji">{{ opt.option_emoji }}</span>
+                                {% endif %}
+                                <span class="najd-finder__option-label">{{ opt.option_label }}</span>
+                            </button>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        {# === Result Screen === #}
+        <div class="najd-finder__screen najd-finder__result" data-screen="result" hidden>
+            <div class="najd-finder__result-inner">
+                <div class="najd-finder__result-celebration" data-celebration></div>
+                <p class="najd-finder__result-label">🎯 {{ trans('common.elements.your_choice') ?: 'منتجك المثالي' }}</p>
+                <div class="najd-finder__result-product" data-result-product>
+                    <div class="najd-finder__result-img-wrap" data-result-img-wrap>
+                        <img class="najd-finder__result-img" data-result-img src="" alt="" loading="lazy">
+                    </div>
+                    <div class="najd-finder__result-info">
+                        <h4 class="najd-finder__result-title" data-result-title></h4>
+                        <p class="najd-finder__result-desc" data-result-desc></p>
+                        <div class="najd-finder__result-price" data-result-price></div>
+                        <a class="najd-btn najd-btn--primary najd-btn--lg najd-finder__result-cta"
+                           data-result-url href="#" target="_blank">
+                            <i class="sicon-shopping-bag"></i>
+                            {{ trans('common.elements.buy_now') ?: 'اشتري الآن' }}
+                        </a>
+                    </div>
+                </div>
+                <button class="najd-finder__restart-btn" data-restart>
+                    <i class="sicon-refresh"></i>
+                    {{ component.restart_btn_text ? component.restart_btn_text : 'أعد الاختبار' }}
+                </button>
+            </div>
+        </div>
+
+    </div>
+</section>

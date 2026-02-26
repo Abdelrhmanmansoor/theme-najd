@@ -5,14 +5,23 @@
    ============================================================ #}
 
 {% set merge = theme.settings.get('merge_header_with_first', false) %}
+{% set slider_style = component.slider_style|default('classic') %}
+{% set nav_style = component.nav_style|default('both') %}
+{% set nav_position = component.nav_position|default('middle') %}
+{% set autoplay = component.slider_autoplay is not defined or component.slider_autoplay %}
+{% set slide_ms = (component.slider_speed|default(5)) * 1000 %}
+{% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
+{% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
+{% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
 
-<section class="najd-block najd-block--hero {{ merge ? 'najd-block--merged' : '' }}">
+<section class="najd-block najd-block--hero najd-hero--{{ slider_style }} najd-hero--nav-{{ nav_position }} {{ merge ? 'najd-block--merged' : '' }}" {{ _spacing_style }}>
     <salla-slider id="najd-hero-{{ position }}"
-                  auto-play
+                  {{ autoplay ? 'auto-play' : '' }}
                   static-when-single
-                  {{ component.slides|length > 1 ? '' : 'show-controls="false"' }}
+                  {{ component.slides|length > 1 and nav_style != 'none' ? '' : 'show-controls="false"' }}
                   type="fullwidth"
-                  slider-config='{"lazy":"false"}'>
+                  slider-config='{"lazy":"false","autoplayDelay":{{ slide_ms }}}'
+                  data-nav-style="{{ nav_style }}">
         <div slot="items">
             {% for slide in component.slides %}
                 {% set slide_type = slide.slide_type|default('image') %}

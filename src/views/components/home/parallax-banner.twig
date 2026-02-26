@@ -2,8 +2,11 @@
 {% set height = component.height|default('medium') %}
 {% set overlay = component.overlay_opacity|default(40) %}
 {% set align = component.text_align|default('center') %}
+{% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
+{% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
+{% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
 
-<section class="najd-block najd-block--parallax">
+<section class="najd-block najd-block--parallax" {{ _spacing_style }}>
     <div class="najd-parallax-banner najd-parallax-banner--{{ height }}"
          style="background-image: url('{{ component.image }}')">
 

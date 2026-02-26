@@ -11,6 +11,7 @@ class NajdApp extends AppHelpers {
   constructor() {
     super();
     this.initPreloader();
+    this.initAnnouncementBar();
     this.initHeader();
     this.initBackToTop();
     this.initScrollAnimations();
@@ -136,6 +137,62 @@ class NajdApp extends AppHelpers {
     setTimeout(() => {
       popup.style.display = 'flex';
     }, 4000);
+  }
+
+  /** ⭐ Advanced Announcement Bar — multi-message + pause-on-hover */
+  initAnnouncementBar() {
+    const ann = document.getElementById('najd-announcement');
+    if (!ann) return;
+
+    // Respect localStorage dismissal
+    if (localStorage.getItem('najd-ann-closed') === '1') {
+      ann.remove();
+      return;
+    }
+
+    // Close button
+    const closeBtn = document.getElementById('najd-ann-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        ann.classList.add('is-closing');
+        setTimeout(() => ann.remove(), 350);
+        localStorage.setItem('najd-ann-closed', '1');
+      });
+    }
+
+    // Pause on hover (ticker)
+    const pauseEnabled = ann.dataset.annPause === 'true';
+    if (pauseEnabled) {
+      const track = ann.querySelector('.najd-announcement__track');
+      if (track) {
+        ann.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
+        ann.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
+      }
+    }
+
+    // Multi-message rotation
+    const msgWrap = ann.querySelector('.najd-announcement__msg-wrap');
+    if (!msgWrap) return;
+
+    const rawMessages = msgWrap.dataset.messages || '';
+    const emoji = msgWrap.dataset.emoji || '';
+    const messages = rawMessages.split('\n').map(m => m.trim()).filter(Boolean);
+    if (messages.length <= 1) return;
+
+    const msgText = msgWrap.querySelector('.najd-announcement__msg-text');
+    if (!msgText) return;
+
+    let currentIdx = 0;
+    const rotate = () => {
+      currentIdx = (currentIdx + 1) % messages.length;
+      msgText.style.animation = 'najd-ann-fade-out 0.4s ease forwards';
+      setTimeout(() => {
+        msgText.textContent = (emoji ? emoji + ' ' : '') + messages[currentIdx];
+        msgText.style.animation = 'najd-ann-fade-in 0.4s ease forwards';
+      }, 400);
+    };
+
+    setInterval(rotate, 4000);
   }
 
   /** Free shipping progress bar */

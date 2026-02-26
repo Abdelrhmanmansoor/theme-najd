@@ -2,8 +2,11 @@
    Blog Section — Latest blog posts
    Fields: component.title, component.count
    ============================================================ #}
+{% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
+{% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
+{% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
 
-<section class="najd-block najd-block--blog {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
+<section class="najd-block najd-block--blog {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
     {% if component.title %}
         <div class="najd-block__header mb-8">
             <h2 class="text-2xl font-bold">{{ component.title }}</h2>

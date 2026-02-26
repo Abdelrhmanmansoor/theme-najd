@@ -1,7 +1,10 @@
 {# Scrolling Text Wall — Large parallax text #}
 {% set speed = component.speed|default('normal') %}
+{% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
+{% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
+{% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
 <section class="najd-block najd-block--scrolling-text"
-    {% if component.bg_color %}style="background: {{ component.bg_color }}"{% endif %}>
+    {% if component.bg_color %}style="background: {{ component.bg_color }}"{% endif %} {{ _spacing_style }}>
     {% for line in component.lines %}
         <div class="najd-scrolling-text__line {{ loop.index is even ? 'najd-scrolling-text__line--reverse' : '' }} najd-scrolling-text__line--{{ speed }}"
              {% if component.text_color %}style="color: {{ component.text_color }}"{% endif %}>

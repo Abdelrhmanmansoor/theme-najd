@@ -5,8 +5,11 @@
 
 {% set display_all = component.display_all_url %}
 {% set show_all_btn = theme.settings.get('is_more_button_enabled') %}
+{% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
+{% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
+{% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
 
-<section class="najd-block najd-block--products {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
+<section class="najd-block najd-block--products {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
     <salla-products-slider
         {% if component.products is defined and component.products is iterable and component.products|length %}
             source="selected"

@@ -5,8 +5,11 @@
    ============================================================ #}
 
 {% set features_layout = component.layout|default('grid') %}
+{% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
+{% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
+{% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
 
-<section class="najd-block najd-block--features">
+<section class="najd-block najd-block--features" {{ _spacing_style }}>
     <div class="container">
         {% if features_layout == 'horizontal' %}
             {# === Horizontal: single row, icon + text inline === #}

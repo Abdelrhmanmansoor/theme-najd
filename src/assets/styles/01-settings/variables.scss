@@ -78,6 +78,64 @@
 [data-card-style="bordered"] { --card-shadow: none; --card-border: 2px solid var(--border-color); }
 [data-card-style="flat"]     { --card-shadow: none; --card-border: none; }
 
+/* ====================================================
+   ⭐ Color Presets — 7 Professional Palettes
+   Applied via data-color-preset on body element
+   Each overrides --color-primary and --color-accent
+==================================================== */
+[data-color-preset="royal"] {
+  --color-primary:       #7c3aed;
+  --color-primary-dark:  #6d28d9;
+  --color-primary-light: #a78bfa;
+  --color-accent:        #a78bfa;
+}
+[data-color-preset="ocean"] {
+  --color-primary:       #0ea5e9;
+  --color-primary-dark:  #0284c7;
+  --color-primary-light: #38bdf8;
+  --color-accent:        #38bdf8;
+}
+[data-color-preset="forest"] {
+  --color-primary:       #16a34a;
+  --color-primary-dark:  #15803d;
+  --color-primary-light: #4ade80;
+  --color-accent:        #4ade80;
+}
+[data-color-preset="sunset"] {
+  --color-primary:       #ea580c;
+  --color-primary-dark:  #c2410c;
+  --color-primary-light: #fb923c;
+  --color-accent:        #fb923c;
+}
+[data-color-preset="midnight"] {
+  --color-primary:       #475569;
+  --color-primary-dark:  #334155;
+  --color-primary-light: #94a3b8;
+  --color-accent:        #94a3b8;
+}
+[data-color-preset="rose"] {
+  --color-primary:       #e11d48;
+  --color-primary-dark:  #be123c;
+  --color-primary-light: #fb7185;
+  --color-accent:        #fb7185;
+}
+[data-color-preset="sand"] {
+  --color-primary:       #92400e;
+  --color-primary-dark:  #78350f;
+  --color-primary-light: #d97706;
+  --color-accent:        #d97706;
+}
+
+/* ====================================================
+   ⭐ Gradient Builder — applies to buttons & headings
+   if gradient_primary_start/end are set
+==================================================== */
+body:has([style*="--gradient-start"]) .najd-btn--primary,
+body[style*="--gradient-start"] .najd-btn--primary {
+  background: linear-gradient(var(--gradient-direction, 135deg), var(--gradient-start), var(--gradient-end));
+  border-color: transparent;
+}
+
 /* ============================================================
    LIGHT MODE (default) — Clean, solid, production-ready
    ============================================================ */

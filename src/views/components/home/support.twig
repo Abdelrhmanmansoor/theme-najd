@@ -1,0 +1,105 @@
+{# ============================================================
+   Support Section — Contact methods with layouts
+   Layouts: modern, cards, minimal
+   Fields: title, subtitle, whatsapp, email, custom_text, layout
+   مؤسسة سليمان — للدعم والتصميم
+   ============================================================ #}
+
+{% set layout = component.layout|default('modern') %}
+{% set wa_num = component.whatsapp|default('') %}
+{% set email = component.email|default('') %}
+{% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
+{% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
+{% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
+
+<section class="najd-block najd-block--support najd-support--{{ layout }} {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
+
+    {% if component.title %}
+        <div class="najd-block__header text-center mb-8">
+            <h2 class="najd-block__title">{{ component.title }}</h2>
+            {% if component.subtitle %}
+                <p class="najd-block__subtitle">{{ component.subtitle }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if layout == 'cards' %}
+        {# === Cards Layout: separate card per channel === #}
+        <div class="najd-support__cards">
+            {% if wa_num %}
+                <a href="https://wa.me/{{ wa_num }}" class="najd-support__card" target="_blank" rel="noopener noreferrer">
+                    <div class="najd-support__card-icon najd-support__card-icon--whatsapp">
+                        <i class="sicon-whatsapp"></i>
+                    </div>
+                    <h4>واتساب</h4>
+                    <p class="dir-ltr">+{{ wa_num }}</p>
+                </a>
+            {% endif %}
+            {% if email %}
+                <a href="mailto:{{ email }}" class="najd-support__card">
+                    <div class="najd-support__card-icon najd-support__card-icon--email">
+                        <i class="sicon-envelope"></i>
+                    </div>
+                    <h4>البريد الإلكتروني</h4>
+                    <p>{{ email }}</p>
+                </a>
+            {% endif %}
+            {% if component.custom_text %}
+                <div class="najd-support__card najd-support__card--text">
+                    <div class="najd-support__card-icon">
+                        <i class="sicon-info-circle"></i>
+                    </div>
+                    <p class="text-sm opacity-80">{{ component.custom_text }}</p>
+                </div>
+            {% endif %}
+        </div>
+
+    {% elseif layout == 'minimal' %}
+        {# === Minimal Layout: simple inline links === #}
+        <div class="najd-support__minimal">
+            {% if component.custom_text %}
+                <p class="text-center opacity-70 mb-4">{{ component.custom_text }}</p>
+            {% endif %}
+            <div class="najd-support__minimal-links">
+                {% if wa_num %}
+                    <a href="https://wa.me/{{ wa_num }}" class="najd-support__minimal-link" target="_blank" rel="noopener noreferrer">
+                        <i class="sicon-whatsapp"></i>
+                        <span class="dir-ltr">+{{ wa_num }}</span>
+                    </a>
+                {% endif %}
+                {% if email %}
+                    <a href="mailto:{{ email }}" class="najd-support__minimal-link">
+                        <i class="sicon-envelope"></i>
+                        <span>{{ email }}</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+    {% else %}
+        {# === Modern Layout (default): gradient card === #}
+        <div class="najd-support__modern">
+            {% if component.custom_text %}
+                <p class="najd-support__modern-text">{{ component.custom_text }}</p>
+            {% endif %}
+            <div class="najd-support__modern-actions">
+                {% if wa_num %}
+                    <a href="https://wa.me/{{ wa_num }}"
+                       class="najd-btn najd-btn--whatsapp najd-btn--lg"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="sicon-whatsapp"></i>
+                        <span>تواصل عبر واتساب</span>
+                    </a>
+                {% endif %}
+                {% if email %}
+                    <a href="mailto:{{ email }}" class="najd-btn najd-btn--outline najd-btn--lg">
+                        <i class="sicon-envelope"></i>
+                        <span>{{ email }}</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
+</section>

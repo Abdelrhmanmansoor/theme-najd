@@ -1,0 +1,235 @@
+{# ============================================================
+   Size Chart — Dynamic sizing table with unit toggle & calculator
+   Layouts: classic | cards | tabs
+   Fields: title, subtitle, layout, unit_toggle, highlight_text,
+           guide_title, guide_text, finder_enabled, columns, rows
+   ============================================================ #}
+
+{% set chart_layout = component.layout|default('classic') %}
+{% set unit_toggle = component.unit_toggle is defined and component.unit_toggle %}
+{% set finder_enabled = component.finder_enabled is defined and component.finder_enabled %}
+{% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
+{% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
+{% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
+
+<section class="najd-block najd-block--sizechart najd-sizechart--{{ chart_layout }} {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
+
+    {# Header #}
+    {% if component.title %}
+        <div class="najd-block__header text-center mb-8">
+            {% if component.highlight_text %}
+                <div class="najd-sizechart__highlight">
+                    <i class="sicon-ruler"></i>
+                    <span>{{ component.highlight_text }}</span>
+                </div>
+            {% endif %}
+            <h2 class="najd-block__title">{{ component.title }}</h2>
+            {% if component.subtitle %}
+                <p class="najd-block__subtitle">{{ component.subtitle }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {# Unit Toggle #}
+    {% if unit_toggle %}
+        <div class="najd-sizechart__unit-toggle" data-unit-toggle>
+            <button class="najd-sizechart__unit-btn is-active" data-unit="cm">سم</button>
+            <button class="najd-sizechart__unit-btn" data-unit="inch">بوصة</button>
+            <span class="najd-sizechart__unit-slider"></span>
+        </div>
+    {% endif %}
+
+    {# === Classic Layout: Full HTML Table === #}
+    {% if chart_layout == 'classic' %}
+        <div class="najd-sizechart__wrapper">
+            <table class="najd-sizechart__table" data-chart-table>
+                {% if component.columns %}
+                    <thead>
+                        <tr>
+                            {% for col in component.columns %}
+                                <th>
+                                    <span class="unit-cm">{{ col.header }}</span>
+                                    {% if unit_toggle and col.header_inch %}
+                                        <span class="unit-inch">{{ col.header_inch }}</span>
+                                    {% endif %}
+                                </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                {% endif %}
+                {% if component.rows %}
+                    <tbody>
+                        {% for row in component.rows %}
+                            <tr class="najd-sizechart__row {{ row.popular is defined and row.popular ? 'is-popular' : '' }}"
+                                data-values-cm="{{ row.values_cm }}"
+                                data-values-inch="{{ row.values_inch }}"
+                                data-size="{{ row.size_label }}">
+                                <td>
+                                    <strong class="najd-sizechart__size-label">{{ row.size_label }}</strong>
+                                    {% if row.popular is defined and row.popular %}
+                                        <span class="najd-sizechart__popular-badge">الأكثر طلباً</span>
+                                    {% endif %}
+                                </td>
+                                {% set cm_vals = row.values_cm ? row.values_cm|split('|') : [] %}
+                                {% set inch_vals = row.values_inch ? row.values_inch|split('|') : [] %}
+                                {% for i in 1..(component.columns|length - 1) %}
+                                    <td>
+                                        <span class="unit-cm">{{ cm_vals[i-1]|default('—') }}</span>
+                                        {% if unit_toggle %}
+                                            <span class="unit-inch">{{ inch_vals[i-1]|default('—') }}</span>
+                                        {% endif %}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                {% endif %}
+            </table>
+        </div>
+
+    {# === Cards Layout: One Card per Size === #}
+    {% elseif chart_layout == 'cards' %}
+        <div class="najd-sizechart__cards">
+            {% for row in component.rows %}
+                <div class="najd-sizechart__card {{ row.popular is defined and row.popular ? 'is-popular' : '' }}">
+                    {% if row.popular is defined and row.popular %}
+                        <span class="najd-sizechart__popular-badge">الأكثر طلباً</span>
+                    {% endif %}
+                    <div class="najd-sizechart__card-size">{{ row.size_label }}</div>
+                    {% if component.columns %}
+                        <ul class="najd-sizechart__card-values">
+                            {% set cm_vals = row.values_cm ? row.values_cm|split('|') : [] %}
+                            {% set inch_vals = row.values_inch ? row.values_inch|split('|') : [] %}
+                            {% for i in 1..(component.columns|length - 1) %}
+                                <li>
+                                    <span class="najd-sizechart__card-label">
+                                        <span class="unit-cm">{{ component.columns[i].header|default('') }}</span>
+                                        {% if unit_toggle and component.columns[i].header_inch is defined %}
+                                            <span class="unit-inch">{{ component.columns[i].header_inch }}</span>
+                                        {% endif %}
+                                    </span>
+                                    <span class="najd-sizechart__card-val">
+                                        <span class="unit-cm">{{ cm_vals[i-1]|default('—') }}</span>
+                                        {% if unit_toggle %}
+                                            <span class="unit-inch">{{ inch_vals[i-1]|default('—') }}</span>
+                                        {% endif %}
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+    {# === Tabs Layout: Grouped by category in tabs === #}
+    {% else %}
+        <div class="najd-sizechart__tabs-wrap" data-chart-tabs>
+            <div class="najd-sizechart__tab-nav">
+                {% for row in component.rows %}
+                    <button class="najd-sizechart__tab-btn {{ loop.first ? 'is-active' : '' }}"
+                            data-tab="{{ loop.index0 }}">
+                        {{ row.size_label }}
+                    </button>
+                {% endfor %}
+            </div>
+            <div class="najd-sizechart__tab-panels">
+                {% for row in component.rows %}
+                    <div class="najd-sizechart__tab-panel {{ loop.first ? 'is-active' : '' }}"
+                         data-panel="{{ loop.index0 }}">
+                        <div class="najd-sizechart__tab-inner">
+                            {% if row.popular is defined and row.popular %}
+                                <span class="najd-sizechart__popular-badge mb-4 inline-flex">الأكثر طلباً ⭐</span>
+                            {% endif %}
+                            {% if component.columns %}
+                                {% set cm_vals = row.values_cm ? row.values_cm|split('|') : [] %}
+                                {% set inch_vals = row.values_inch ? row.values_inch|split('|') : [] %}
+                                <dl class="najd-sizechart__tab-dl">
+                                    {% for i in 1..(component.columns|length - 1) %}
+                                        <div class="najd-sizechart__tab-dl-item">
+                                            <dt>
+                                                <span class="unit-cm">{{ component.columns[i].header|default('') }}</span>
+                                                {% if unit_toggle and component.columns[i].header_inch is defined %}
+                                                    <span class="unit-inch">{{ component.columns[i].header_inch }}</span>
+                                                {% endif %}
+                                            </dt>
+                                            <dd>
+                                                <span class="unit-cm">{{ cm_vals[i-1]|default('—') }}</span>
+                                                {% if unit_toggle %}
+                                                    <span class="unit-inch">{{ inch_vals[i-1]|default('—') }}</span>
+                                                {% endif %}
+                                            </dd>
+                                        </div>
+                                    {% endfor %}
+                                </dl>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {# Measurement Guide #}
+    {% if component.guide_title or component.guide_text %}
+        <details class="najd-sizechart__guide">
+            <summary class="najd-sizechart__guide-toggle">
+                <i class="sicon-help-circle"></i>
+                {{ component.guide_title ? component.guide_title : trans('common.elements.help') }}
+                <i class="sicon-chevron-down najd-sizechart__guide-arrow"></i>
+            </summary>
+            <div class="najd-sizechart__guide-body">
+                {% if component.guide_text %}
+                    <p>{{ component.guide_text|nl2br }}</p>
+                {% endif %}
+            </div>
+        </details>
+    {% endif %}
+
+    {# ⭐ Size Calculator (Finder) #}
+    {% if finder_enabled %}
+        <div class="najd-sizechart__finder" data-size-finder>
+            <h4 class="najd-sizechart__finder-title">
+                <i class="sicon-magic-wand"></i>
+                {{ component.finder_title ? component.finder_title : 'احسب مقاسك المثالي' }}
+            </h4>
+            <div class="najd-sizechart__finder-inputs">
+                {% if component.columns %}
+                    {% for i in 1..(component.columns|length - 1) %}
+                        <div class="najd-sizechart__finder-field">
+                            <label>
+                                <span class="unit-cm">{{ component.columns[i].header|default('القياس ' ~ i) }}</span>
+                                {% if unit_toggle and component.columns[i].header_inch is defined %}
+                                    <span class="unit-inch">{{ component.columns[i].header_inch }}</span>
+                                {% endif %}
+                            </label>
+                            <input type="number"
+                                   class="najd-sizechart__finder-input"
+                                   data-col="{{ i - 1 }}"
+                                   placeholder="أدخل القياس"
+                                   min="0" step="0.5">
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <button class="najd-btn najd-btn--primary najd-sizechart__finder-btn" data-find-size>
+                <i class="sicon-search"></i>
+                <span>احسب مقاسي</span>
+            </button>
+            <div class="najd-sizechart__finder-result" data-finder-result hidden>
+                <div class="najd-sizechart__finder-result-inner">
+                    <span class="najd-sizechart__finder-result-label">مقاسك المثالي</span>
+                    <span class="najd-sizechart__finder-result-size" data-result-size></span>
+                </div>
+            </div>
+            {# Pass rows data as JSON for JS #}
+            <script type="application/json" class="najd-sizechart__data">
+                {
+                    "rows": [{% for row in component.rows %}{"size":"{{ row.size_label }}","cm":{{ row.values_cm ? '"' ~ row.values_cm ~ '"' : '""' }},"inch":{{ row.values_inch ? '"' ~ row.values_inch ~ '"' : '""' }}}{% if not loop.last %},{% endif %}{% endfor %}],
+                    "colCount": {{ component.columns ? component.columns|length - 1 : 0 }}
+                }
+            </script>
+        </div>
+    {% endif %}
+
+</section>

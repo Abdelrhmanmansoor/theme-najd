@@ -6,8 +6,11 @@
    ============================================================ #}
 
 {% set review_layout = component.layout|default('carousel') %}
+{% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
+{% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
+{% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
 
-<section class="najd-block najd-block--reviews {{ component.full_width is defined and component.full_width ? '' : 'container' }}">
+<section class="najd-block najd-block--reviews {{ component.full_width is defined and component.full_width ? '' : 'container' }}" {{ _spacing_style }}>
     {% if component.title %}
         <div class="najd-block__header text-center mb-8">
             <h2 class="text-2xl font-bold">{{ component.title }}</h2>
@@ -90,6 +93,130 @@
                                 <span class="najd-review-card__date block">{{ item.date }}</span>
                             {% endif %}
                         </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% elseif review_layout == 'bubble' %}
+        {# === Bubble: WhatsApp-style chat bubbles === #}
+        <div class="najd-reviews-bubble">
+            {% for item in component.items %}
+                <div class="najd-review-bubble {{ loop.index is even ? 'najd-review-bubble--end' : 'najd-review-bubble--start' }} {{ item.highlight is defined and item.highlight ? 'is-highlighted' : '' }}">
+                    <div class="najd-review-bubble__avatar">
+                        {% if item.avatar %}
+                            <img src="{{ item.avatar }}" alt="{{ item.name }}" loading="lazy">
+                        {% else %}
+                            <span>{{ item.name|first }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="najd-review-bubble__content">
+                        <div class="najd-review-bubble__header">
+                            <strong>{{ item.name }}</strong>
+                            {% if item.verified %}
+                                <i class="sicon-check-circle najd-review-bubble__verified-icon"></i>
+                            {% endif %}
+                            {% if item.source %}
+                                <span class="najd-review-bubble__source">{{ item.source }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="najd-review-bubble__bubble">
+                            <salla-rating-stars class="flex mb-2" size="small" value="{{ item.stars }}"></salla-rating-stars>
+                            <p>{{ item.text }}</p>
+                            {% if item.product_name %}
+                                <span class="najd-review-bubble__product">📦 {{ item.product_name }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="najd-review-bubble__meta">
+                            {% if item.location %}<span>📍 {{ item.location }}</span>{% endif %}
+                            {% if item.date %}<span>{{ item.date }}</span>{% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% elseif review_layout == 'masonry' %}
+        {# === Masonry: Pinterest-style variable height grid === #}
+        <div class="najd-reviews-masonry">
+            {% for item in component.items %}
+                <div class="najd-review-masonry-card {{ item.highlight is defined and item.highlight ? 'is-highlighted' : '' }}">
+                    {% if item.highlight is defined and item.highlight %}
+                        <div class="najd-review-masonry-card__badge">⭐ مميز</div>
+                    {% endif %}
+                    <salla-rating-stars class="flex mb-3" size="small" value="{{ item.stars }}"></salla-rating-stars>
+                    <p class="najd-review-masonry-card__text">"{{ item.text }}"</p>
+                    {% if item.product_name %}
+                        <div class="najd-review-masonry-card__product">
+                            <i class="sicon-shopping-bag"></i>
+                            {{ item.product_name }}
+                        </div>
+                    {% endif %}
+                    <div class="najd-review-masonry-card__footer">
+                        <div class="najd-review-masonry-card__avatar">
+                            {% if item.avatar %}
+                                <img src="{{ item.avatar }}" alt="{{ item.name }}" loading="lazy">
+                            {% else %}
+                                <span>{{ item.name|first }}</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <strong class="text-sm">{{ item.name }}</strong>
+                            {% if item.location %}
+                                <span class="text-xs opacity-60 block">📍 {{ item.location }}</span>
+                            {% endif %}
+                            {% if item.verified %}
+                                <span class="najd-review-card__verified text-xs">
+                                    <i class="sicon-check-circle"></i> {{ trans('common.elements.verified_buyer') }}
+                                </span>
+                            {% endif %}
+                        </div>
+                        {% if item.source %}
+                            <span class="najd-review-masonry-card__source ms-auto">{{ item.source }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% elseif review_layout == 'cinema' %}
+        {# === Cinema: Large cinematic cards with full visual impact === #}
+        <div class="najd-reviews-cinema">
+            {% for item in component.items %}
+                <div class="najd-review-cinema {{ item.highlight is defined and item.highlight ? 'is-highlighted' : '' }}">
+                    <div class="najd-review-cinema__quote-mark">"</div>
+                    <div class="najd-review-cinema__body">
+                        <salla-rating-stars class="flex mb-4" size="medium" value="{{ item.stars }}"></salla-rating-stars>
+                        <blockquote class="najd-review-cinema__text">{{ item.text }}</blockquote>
+                        {% if item.product_name %}
+                            <div class="najd-review-cinema__product">
+                                <i class="sicon-shopping-bag"></i>
+                                {{ item.product_name }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="najd-review-cinema__footer">
+                        <div class="najd-review-cinema__avatar">
+                            {% if item.avatar %}
+                                <img src="{{ item.avatar }}" alt="{{ item.name }}" loading="lazy">
+                            {% else %}
+                                <span>{{ item.name|first }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="najd-review-cinema__info">
+                            <strong>{{ item.name }}</strong>
+                            {% if item.location %}
+                                <span class="text-sm opacity-60">📍 {{ item.location }}</span>
+                            {% endif %}
+                            {% if item.verified %}
+                                <span class="najd-review-card__verified">
+                                    <i class="sicon-check-circle"></i> {{ trans('common.elements.verified_buyer') }}
+                                </span>
+                            {% endif %}
+                        </div>
+                        {% if item.source %}
+                            <span class="najd-review-cinema__source ms-auto">{{ item.source }}</span>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}

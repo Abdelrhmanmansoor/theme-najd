@@ -111,8 +111,44 @@
             {% if theme.settings.get('accent_color') %}
             --color-accent: {{ theme.settings.get('accent_color') }};
             {% endif %}
+
+            /* ⭐ Gradient Builder */
+            {% if theme.settings.get('gradient_primary_start') %}
+            --gradient-start: {{ theme.settings.get('gradient_primary_start') }};
+            {% endif %}
+            {% if theme.settings.get('gradient_primary_end') %}
+            --gradient-end: {{ theme.settings.get('gradient_primary_end') }};
+            {% endif %}
+            --gradient-direction: {{ theme.settings.get('gradient_direction', '135deg') }};
+
+            /* ⭐ Section Spacing */
+            --block-padding-y: {{ theme.settings.get('spacing_desktop_v', 64) }}px;
+            --block-padding-x: {{ theme.settings.get('spacing_h', 0) }}px;
+            --block-gap: {{ theme.settings.get('section_gap', 0) }}px;
+
+            /* ⭐ Announcement Bar */
+            --ann-padding: {{ theme.settings.get('ann_padding', 12) }}px;
+            --ann-margin-top: {{ theme.settings.get('ann_margin_top', 0) }}px;
+            --ann-margin-bottom: {{ theme.settings.get('ann_margin_bottom', 0) }}px;
+            {% set ann_speed_val = theme.settings.get('ann_speed', 5) %}
+            --ann-speed: {{ 70 - (ann_speed_val * 6) }}s;
+        }
+
+        /* Tablet spacing override */
+        @media (max-width: 1024px) {
+            :root { --block-padding-y: {{ theme.settings.get('spacing_tablet_v', 48) }}px; }
+        }
+        /* Mobile spacing override */
+        @media (max-width: 768px) {
+            :root { --block-padding-y: {{ theme.settings.get('spacing_mobile_v', 32) }}px; }
         }
     </style>
+
+    {# ⭐ Custom CSS injection #}
+    {% if theme.settings.get('custom_css') %}
+    <style id="najd-custom-css">/* Najd Custom CSS — Applied by store owner */
+{{ theme.settings.get('custom_css') }}</style>
+    {% endif %}
 
     {% if theme.settings.get('custom_favicon') %}
         <link rel="icon" href="{{ theme.settings.get('custom_favicon') }}" type="image/png">
@@ -143,6 +179,7 @@
     data-card-hover="{{ theme.settings.get('product_card_hover_effect', 'lift') }}"
     data-section-alt="{{ theme.settings.get('section_alt_bg') ? 'true' : 'false' }}"
     data-section-divider="{{ theme.settings.get('section_divider', 'none') }}"
+    data-color-preset="{{ theme.settings.get('color_preset', 'custom') }}"
 >
 
 {# ===== Preloader ===== #}
@@ -193,22 +230,55 @@
 <div class="app-inner flex flex-col min-h-full">
     {% hook 'body:start' %}
 
-    {# ---- Announcement Bar ---- #}
-    {% if theme.settings.get('announcement_text') %}
-        <div class="najd-announcement" id="najd-announcement">
-            <div class="container">
+    {# ---- ⭐ Advanced Announcement Bar ---- #}
+    {% set ann_text = theme.settings.get('announcement_text') %}
+    {% set ann_messages_raw = theme.settings.get('ann_messages') %}
+    {% if ann_text or ann_messages_raw %}
+        {% set ann_animation = theme.settings.get('ann_animation', 'ticker') %}
+        {% set ann_shape = theme.settings.get('ann_shape', 'flat') %}
+        {% set ann_preset = theme.settings.get('ann_color_preset', 'custom') %}
+        {% set ann_emoji = theme.settings.get('ann_emoji', '') %}
+        {% set ann_pause = theme.settings.get('ann_pause_hover', true) %}
+        {% set ann_full_width = theme.settings.get('ann_full_width', false) %}
+
+        <div class="najd-announcement najd-announcement--{{ ann_shape }}"
+             id="najd-announcement"
+             data-ann-animation="{{ ann_animation }}"
+             data-ann-preset="{{ ann_preset }}"
+             data-ann-pause="{{ ann_pause ? 'true' : 'false' }}">
+            <div class="{{ ann_full_width ? '' : 'container' }}">
                 <div class="najd-announcement__inner">
-                    <div class="najd-announcement__marquee">
-                        {% if theme.settings.get('announcement_url') %}
-                            <a href="{{ theme.settings.get('announcement_url') }}" class="najd-announcement__link">
-                                {{ theme.settings.get('announcement_text') }}
-                            </a>
-                        {% else %}
-                            <span>{{ theme.settings.get('announcement_text') }}</span>
-                        {% endif %}
-                    </div>
+
+                    {% if ann_messages_raw %}
+                        {# ⭐ Multi-message rotation mode — JS handles fade cycling #}
+                        <div class="najd-announcement__msg-wrap"
+                             data-messages="{{ ann_messages_raw|e('html_attr') }}"
+                             data-emoji="{{ ann_emoji }}">
+                            <span class="najd-announcement__msg-text">
+                                {% if ann_emoji %}{{ ann_emoji }} {% endif %}{{ ann_messages_raw|split('\n')|first|trim }}
+                            </span>
+                        </div>
+                    {% else %}
+                        {# Single message — ticker or chosen animation #}
+                        <div class="najd-announcement__ticker-wrap" aria-live="polite">
+                            <div class="najd-announcement__track">
+                                {% for i in 1..4 %}
+                                    <span class="najd-announcement__item">
+                                        {% if ann_emoji %}{{ ann_emoji }}&nbsp;{% endif %}
+                                        {% if theme.settings.get('announcement_url') %}
+                                            <a href="{{ theme.settings.get('announcement_url') }}">{{ ann_text }}</a>
+                                        {% else %}
+                                            {{ ann_text }}
+                                        {% endif %}
+                                        &nbsp;&nbsp;✦&nbsp;&nbsp;
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
                     {% if theme.settings.get('announcement_closable', true) %}
-                        <button class="najd-announcement__close" onclick="this.closest('.najd-announcement').remove(); localStorage.setItem('najd-ann-closed','1')" aria-label="Close">
+                        <button class="najd-announcement__close" id="najd-ann-close" aria-label="إغلاق الإعلان">
                             <i class="sicon-cancel"></i>
                         </button>
                     {% endif %}
@@ -369,5 +439,26 @@
 {% endif %}
 
 {% block scripts %}{% endblock %}
+
+{# ⭐ Custom JS injection — runs after full page load #}
+{% if theme.settings.get('custom_js') %}
+<script id="najd-custom-js">
+window.addEventListener('load', function() {
+  try {
+    {{ theme.settings.get('custom_js') }}
+  } catch(e) {
+    console.warn('[Najd] Custom JS error:', e.message);
+  }
+});
+</script>
+{% endif %}
+
+{# 🛠️ Developer Mode indicator #}
+{% if theme.settings.get('developer_mode') %}
+<script>
+console.info('%c[Najd Theme v3] Developer Mode Active', 'color:#6366f1;font-weight:bold;font-size:14px');
+console.table({ settings: {{ theme.settings|json_encode }}, mode: "{{ theme.settings.get('default_theme_mode') }}", colorPreset: "{{ theme.settings.get('color_preset', 'custom') }}" });
+</script>
+{% endif %}
 </body>
 </html>

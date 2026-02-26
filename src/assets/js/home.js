@@ -16,6 +16,10 @@ class NajdHome extends AppHelpers {
     this.initProductTabs();
     this.initShopTheLook();
     this.initParallaxBanners();
+    this.initCouponSections();
+    this.initSizeChart();
+    this.initProductFinder();
+    this.initFaqFilter();
   }
 
   /** Countdown timers for special offers */
@@ -231,6 +235,269 @@ class NajdHome extends AppHelpers {
     }, { threshold: 0.3 });
 
     counters.forEach(el => observer.observe(el));
+  }
+
+  /** ⭐ Coupon sections — copy to clipboard + reveal toggle */
+  initCouponSections() {
+    document.querySelectorAll('.najd-coupon').forEach(coupon => {
+      const code = coupon.dataset.coupon;
+      if (!code) return;
+
+      const copyBtn = coupon.querySelector('.najd-coupon__copy');
+      const codeEl = coupon.querySelector('.najd-coupon__code');
+
+      // Copy button
+      if (copyBtn) {
+        copyBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          navigator.clipboard.writeText(code).then(() => {
+            coupon.classList.add('is-copied');
+            setTimeout(() => coupon.classList.remove('is-copied'), 2500);
+          }).catch(() => {
+            const ta = document.createElement('textarea');
+            ta.value = code;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            coupon.classList.add('is-copied');
+            setTimeout(() => coupon.classList.remove('is-copied'), 2500);
+          });
+        });
+      }
+
+      // Reveal on click (blur → clear)
+      if (coupon.classList.contains('najd-coupon--reveal') && codeEl) {
+        codeEl.addEventListener('click', () => {
+          coupon.classList.add('is-revealed');
+        });
+      }
+    });
+  }
+
+  /** ⭐ Size Chart: unit toggle + row highlight + size calculator */
+  initSizeChart() {
+    document.querySelectorAll('.najd-block--sizechart').forEach(section => {
+      const unitToggle = section.querySelector('[data-unit-toggle]');
+
+      // Unit toggle
+      if (unitToggle) {
+        const btns = unitToggle.querySelectorAll('.najd-sizechart__unit-btn');
+        btns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const unit = btn.dataset.unit;
+            btns.forEach(b => b.classList.toggle('is-active', b.dataset.unit === unit));
+            unitToggle.classList.toggle('is-inch', unit === 'inch');
+            section.classList.toggle('is-inch', unit === 'inch');
+          });
+        });
+      }
+
+      // Row click highlight (classic table)
+      section.querySelectorAll('.najd-sizechart__row').forEach(row => {
+        row.addEventListener('click', () => {
+          section.querySelectorAll('.najd-sizechart__row').forEach(r => r.classList.remove('is-selected'));
+          row.classList.add('is-selected');
+        });
+      });
+
+      // Card click highlight (cards layout)
+      section.querySelectorAll('.najd-sizechart__card').forEach(card => {
+        card.addEventListener('click', () => {
+          section.querySelectorAll('.najd-sizechart__card').forEach(c => c.classList.remove('is-selected'));
+          card.classList.add('is-selected');
+        });
+      });
+
+      // Tabs layout
+      const tabWrap = section.querySelector('[data-chart-tabs]');
+      if (tabWrap) {
+        tabWrap.querySelectorAll('.najd-sizechart__tab-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = btn.dataset.tab;
+            tabWrap.querySelectorAll('.najd-sizechart__tab-btn').forEach(b => b.classList.toggle('is-active', b.dataset.tab === idx));
+            tabWrap.querySelectorAll('.najd-sizechart__tab-panel').forEach(p => p.classList.toggle('is-active', p.dataset.panel === idx));
+          });
+        });
+      }
+
+      // Size finder / calculator
+      const finder = section.querySelector('[data-size-finder]');
+      if (!finder) return;
+
+      const dataEl = finder.querySelector('.najd-sizechart__data');
+      if (!dataEl) return;
+
+      let chartData;
+      try { chartData = JSON.parse(dataEl.textContent); } catch(e) { return; }
+
+      const findBtn = finder.querySelector('[data-find-size]');
+      const resultEl = finder.querySelector('[data-finder-result]');
+      const resultSize = finder.querySelector('[data-result-size]');
+      if (!findBtn || !resultEl || !resultSize) return;
+
+      findBtn.addEventListener('click', () => {
+        const inputs = [...finder.querySelectorAll('.najd-sizechart__finder-input')];
+        const isInch = section.classList.contains('is-inch');
+        const userVals = inputs.map(inp => parseFloat(inp.value) || 0);
+
+        let bestMatch = null;
+        let bestScore = Infinity;
+
+        chartData.rows.forEach(row => {
+          const rawVals = isInch ? row.inch : row.cm;
+          if (!rawVals) return;
+          const rowVals = rawVals.split('|').map(v => parseFloat(v.trim()) || 0);
+          let score = 0;
+          userVals.forEach((uv, i) => {
+            if (uv > 0 && rowVals[i]) {
+              score += Math.abs(uv - rowVals[i]);
+            }
+          });
+          if (score < bestScore) {
+            bestScore = score;
+            bestMatch = row.size;
+          }
+        });
+
+        if (bestMatch) {
+          resultSize.textContent = bestMatch;
+          resultEl.hidden = false;
+          resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    });
+  }
+  /** ⭐ Product Finder Quiz — step navigation + result display */
+  initProductFinder() {
+    document.querySelectorAll('.najd-finder').forEach(finder => {
+      const total = parseInt(finder.dataset.finderTotal) || 0;
+      if (!total) return;
+
+      let history = []; // navigation history for back support
+      let pendingResult = null;
+
+      const screens = {
+        intro: finder.querySelector('[data-screen="intro"]'),
+        result: finder.querySelector('[data-screen="result"]'),
+        progress: finder.querySelector('[data-progress]'),
+        progressFill: finder.querySelector('[data-progress-fill]'),
+        progressText: finder.querySelector('[data-progress-text]'),
+        currentQ: finder.querySelector('[data-current-q]'),
+      };
+
+      const showScreen = (el) => {
+        finder.querySelectorAll('.najd-finder__screen').forEach(s => s.hidden = true);
+        finder.querySelectorAll('[data-progress]').forEach(s => s.hidden = true);
+        if (el) el.hidden = false;
+      };
+
+      const showStep = (stepNum) => {
+        const stepEl = finder.querySelector(`[data-step="${stepNum}"]`);
+        if (!stepEl) return;
+        showScreen(stepEl);
+        if (screens.progress) screens.progress.hidden = false;
+        if (screens.progressFill) screens.progressFill.style.width = `${((stepNum - 1) / total) * 100}%`;
+        if (screens.currentQ) screens.currentQ.textContent = stepNum;
+      };
+
+      const showResult = (result) => {
+        showScreen(screens.result);
+        if (!result) return;
+
+        const imgWrap = screens.result.querySelector('[data-result-img-wrap]');
+        const img = screens.result.querySelector('[data-result-img]');
+        const title = screens.result.querySelector('[data-result-title]');
+        const desc = screens.result.querySelector('[data-result-desc]');
+        const price = screens.result.querySelector('[data-result-price]');
+        const url = screens.result.querySelector('[data-result-url]');
+
+        if (img && result.image) { img.src = result.image; img.alt = result.title || ''; }
+        if (imgWrap) imgWrap.hidden = !result.image;
+        if (title) title.textContent = result.title || '';
+        if (desc) desc.textContent = result.description || '';
+        if (price) price.textContent = result.price || '';
+        if (url) url.href = result.url || '#';
+        if (screens.progressFill) screens.progressFill.style.width = '100%';
+      };
+
+      // Start button
+      const startBtn = finder.querySelector('[data-start]');
+      if (startBtn) {
+        startBtn.addEventListener('click', () => {
+          history = [];
+          pendingResult = null;
+          showStep(1);
+        });
+      }
+
+      // Option buttons
+      finder.addEventListener('click', e => {
+        const optBtn = e.target.closest('.najd-finder__option');
+        if (!optBtn) return;
+
+        const qi = parseInt(optBtn.dataset.qi);
+        const next = parseInt(optBtn.dataset.next);
+        let result = null;
+
+        try { result = JSON.parse(optBtn.dataset.result); } catch(err) {}
+
+        // Visual feedback
+        optBtn.classList.add('is-selected');
+        setTimeout(() => optBtn.classList.remove('is-selected'), 300);
+
+        history.push(qi + 1);
+
+        if (result && (result.title || result.image || result.url)) {
+          pendingResult = result;
+        }
+
+        // Navigate: next=0 → show result, next>0 → go to that step
+        setTimeout(() => {
+          if (next > 0 && finder.querySelector(`[data-step="${next}"]`)) {
+            showStep(next);
+          } else if (qi + 2 <= total && !next) {
+            showStep(qi + 2);
+          } else {
+            showResult(pendingResult);
+          }
+        }, 200);
+      });
+
+      // Restart button
+      const restartBtn = finder.querySelector('[data-restart]');
+      if (restartBtn) {
+        restartBtn.addEventListener('click', () => {
+          pendingResult = null;
+          history = [];
+          showScreen(screens.intro);
+        });
+      }
+    });
+  }
+
+  /** ⭐ FAQ Category Filter Tabs */
+  initFaqFilter() {
+    document.querySelectorAll('[data-faq-filter]').forEach(tabBar => {
+      const section = tabBar.closest('.najd-block--faq');
+      if (!section) return;
+
+      tabBar.querySelectorAll('.najd-faq__filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cat = btn.dataset.cat;
+          tabBar.querySelectorAll('.najd-faq__filter-btn').forEach(b => b.classList.toggle('is-active', b === btn));
+          section.querySelectorAll('[data-item-cat]').forEach(item => {
+            if (cat === 'all' || !item.dataset.itemCat || item.dataset.itemCat === cat) {
+              item.classList.remove('is-hidden');
+            } else {
+              item.classList.add('is-hidden');
+            }
+          });
+        });
+      });
+    });
   }
 }
 

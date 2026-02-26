@@ -84,3 +84,57 @@
 .najd-reveal.is-visible {
   clip-path: inset(0 0 0 0);
 }
+
+/* ---- ⭐ Advanced Announcement Bar Keyframes ---- */
+
+/* Bounce: subtle vertical bounce for announcement text */
+@keyframes najd-ann-bounce {
+  0%, 100% { transform: translateY(0); }
+  25%       { transform: translateY(-4px); }
+  50%       { transform: translateY(0); }
+  75%       { transform: translateY(-2px); }
+}
+
+/* Wave: horizontal wave oscillation */
+@keyframes najd-ann-wave {
+  0%   { transform: translateX(0) skewX(0deg); }
+  25%  { transform: translateX(4px) skewX(1deg); }
+  50%  { transform: translateX(0) skewX(0deg); }
+  75%  { transform: translateX(-4px) skewX(-1deg); }
+  100% { transform: translateX(0) skewX(0deg); }
+}
+
+/* Fade: gentle opacity pulse for multi-message mode */
+@keyframes najd-ann-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes najd-ann-fade-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-6px); }
+}
+
+/* Slide: slide from bottom entrance */
+@keyframes najd-ann-slide-in {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+/* Glow pulse for neon coupon */
+@keyframes najd-neon-glow {
+  0%, 100% { box-shadow: 0 0 8px var(--color-primary), 0 0 24px var(--color-primary); }
+  50%       { box-shadow: 0 0 16px var(--color-primary), 0 0 48px var(--color-primary), 0 0 80px var(--color-primary); }
+}
+
+/* Shimmer sweep for coupon cards */
+@keyframes najd-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Zoom breathe for slider */
+@keyframes najd-zoom-breathe {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.04); }
+}
