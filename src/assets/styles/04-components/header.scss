@@ -31,18 +31,30 @@
 }
 
 
-/* ---- Top Bar ---- */
+/* ---- Top Bar — Wokiee: dark #222222 bg, rgba(255,255,255,0.7) text ---- */
 
 .najd-header__topbar {
-  padding: 6px 0;
-  font-size: 11px;
-  line-height: 1.4;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  line-height: 40px;
   letter-spacing: 0.01em;
-  color: var(--text-secondary);
-  background: #f7f7f8;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  transition: background var(--duration-slow) var(--ease-out),
-              border-color var(--duration-slow) var(--ease-out);
+  color: rgba(255, 255, 255, 0.7);
+  background: #222222;
+  border-bottom: none;
+
+  a {
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.2s ease;
+
+    &:hover { color: #ffffff; }
+  }
+
+  salla-contacts a {
+    color: rgba(255, 255, 255, 0.7);
+    &:hover { color: #fff; }
+  }
 }
 
 .najd-header__topbar-inner {
@@ -51,16 +63,14 @@
   justify-content: space-between;
 }
 
+/* Dark/Glass: topbar stays dark (already dark by default) */
 [data-theme="dark"] .najd-header__topbar {
-  background: var(--dark-bg-secondary, #0e0f0f);
-  color: rgba(255, 255, 255, 0.55);
-  border-bottom-color: rgba(255, 255, 255, 0.06);
+  background: #0e0e0e;
 }
 
 [data-theme="glass"] .najd-header__topbar {
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.55);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(17, 17, 17, 0.85);
+  backdrop-filter: blur(8px);
 }
 
 .najd-header__locale-btn,
@@ -196,22 +206,25 @@
   gap: 2px;
 }
 
+/* Wokiee: 13px UPPERCASE 600 0.5px letter-spacing */
 .najd-header__nav a,
 .najd-header__nav .nav-link {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-primary);
-  padding: 8px 14px;
-  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #222222;
+  padding: 8px 12px;
+  border-radius: 0;
   white-space: nowrap;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease;
 
   &:hover {
-    color: var(--color-accent, var(--color-primary));
+    color: var(--color-accent, #2879FE);
   }
 
   &.is-active {
-    color: var(--color-accent, var(--color-primary));
+    color: var(--color-accent, #2879FE);
   }
 }
 

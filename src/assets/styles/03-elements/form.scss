@@ -3,39 +3,39 @@
    Input: gray bg (#f0f0f0), 8px radius, accent on focus
    ============================================================ */
 
+/* Wokiee: #F5F5F5 bg, #E8E8E8 border, 0 radius, blue focus border */
 .najd-input {
   width: 100%;
   padding: 10px 16px;
   height: 40px;
-  background: #f0f0f0;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  color: var(--text-primary);
-  font-size: var(--text-base, 14px);
-  font-family: var(--font-main);
+  background: #F5F5F5;
+  border: 1px solid #E8E8E8;
+  border-radius: 0;
+  color: #222222;
+  font-size: 14px;
+  font-family: 'Poppins', var(--font-main), system-ui, sans-serif;
   outline: none;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease;
 
   &::placeholder {
-    color: var(--text-tertiary);
+    color: #999999;
   }
 
   &:focus {
-    border-color: var(--color-accent, #304ffe);
+    border-color: var(--color-accent, #2879FE);
     background: #fff;
-    box-shadow: 0 0 0 3px rgba(48, 79, 254, 0.1);
+    box-shadow: none;
   }
 }
 
 [data-theme="dark"] .najd-input {
   background: rgba(255, 255, 255, 0.06);
-  border-color: transparent;
+  border-color: rgba(255, 255, 255, 0.1);
   color: var(--text-primary);
 
   &:focus {
-    border-color: var(--color-accent, #304ffe);
+    border-color: var(--color-accent, #2879FE);
     background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 0 3px rgba(48, 79, 254, 0.15);
   }
 }
 
@@ -44,39 +44,40 @@
   border-color: rgba(255, 255, 255, 0.1);
 
   &:focus {
-    border-color: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.3);
     background: rgba(255, 255, 255, 0.08);
   }
 }
 
-/* Salla add to cart button — Wokiee: black → accent on hover */
+/* Salla add to cart button — Wokiee: #222222 → #2879FE on hover, 0 radius */
 salla-add-product-button {
   .s-add-product-btn,
   .s-button-element {
-    background: var(--color-primary) !important;
-    color: var(--color-primary-reverse, #fff) !important;
-    border-radius: 8px !important;
-    font-weight: 700 !important;
-    font-size: var(--text-base, 14px) !important;
+    background: #222222 !important;
+    color: #ffffff !important;
+    border-radius: 0 !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
     padding: 0 32px !important;
-    height: 44px !important;
+    height: 48px !important;
     border: none !important;
-    transition: background 0.2s ease !important;
+    transition: background 0.3s ease !important;
 
     &:hover {
-      background: var(--color-accent, #304ffe) !important;
+      background: var(--color-accent, #2879FE) !important;
     }
   }
 }
 
-/* Quantity input — Wokiee: gray bg, 8px radius */
+/* Quantity input — Wokiee: gray bg, 0 radius, #E8E8E8 border */
 salla-quantity-input {
   .s-quantity-input {
-    border-radius: 8px !important;
-    border: 1px solid var(--border-color) !important;
+    border-radius: 0 !important;
+    border: 1px solid #E8E8E8 !important;
     overflow: hidden !important;
-    background: #f0f0f0 !important;
+    background: #F5F5F5 !important;
     height: 40px !important;
   }
 

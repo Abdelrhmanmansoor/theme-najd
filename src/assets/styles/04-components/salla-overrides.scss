@@ -8,34 +8,36 @@
 
 salla-product-card,
 custom-salla-product-card {
-  /* ---- Card container — Wokiee: 8px radius, lift shadow ---- */
+  /* ---- Card container — Wokiee: 0 radius, #E8E8E8 border ---- */
   .s-product-card-entry {
-    border-radius: var(--card-radius, 8px) !important;
+    border-radius: 0 !important;
     overflow: hidden !important;
-    border: none !important;
+    border: 1px solid #E8E8E8 !important;
     background: #fff !important;
-    box-shadow: 4px 8px 20px 0 rgba(0, 0, 0, 0.06) !important;
-    transition: transform var(--duration-base) var(--ease-out),
-                box-shadow var(--duration-base) var(--ease-out) !important;
+    box-shadow: none !important;
+    transition: box-shadow var(--duration-base) var(--ease-out) !important;
 
     &:hover {
-      transform: translateY(-3px) !important;
-      box-shadow: 4px 8px 20px 0 rgba(0, 0, 0, 0.15) !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
     }
   }
 
-  /* ---- Image — subtle scale on hover ---- */
+  /* ---- Image — 4/5 ratio, scale on hover ---- */
   .s-product-card-image {
     overflow: hidden !important;
-    border-radius: 8px 8px 0 0 !important;
+    border-radius: 0 !important;
+    aspect-ratio: 4 / 5 !important;
 
     img {
       transition: transform 0.5s ease !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
     }
   }
 
   &:hover .s-product-card-image img {
-    transform: scale(1.03) !important;
+    transform: scale(1.04) !important;
   }
 
   /* ---- Content area ---- */
@@ -53,30 +55,32 @@ custom-salla-product-card {
   }
 
   &:hover .s-product-card-title {
-    color: var(--color-accent, #304ffe) !important;
+    color: var(--color-accent, #2879FE) !important;
   }
 
-  /* ---- Price — Wokiee: accent color, 20px, 700 ---- */
+  /* ---- Price — Wokiee: #222222 black, 16px, 700 ---- */
   .s-product-card-price {
     font-weight: 700 !important;
-    font-size: 20px !important;
-    color: var(--color-accent, #304ffe) !important;
+    font-size: 16px !important;
+    color: #222222 !important;
   }
 
-  /* ---- Add to cart — Wokiee: green #388e3c ---- */
+  /* ---- Add to cart — Wokiee: #222222 → #2879FE hover, 0 radius ---- */
   .s-product-card-fitment-btn,
   .s-product-card-add-to-cart-btn {
-    background: #388e3c !important;
+    background: #222222 !important;
     color: #fff !important;
-    border-radius: 8px !important;
+    border-radius: 0 !important;
     border: none !important;
     font-weight: 600 !important;
-    font-size: 14px !important;
+    font-size: 12px !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
     height: 40px !important;
-    transition: opacity 0.2s ease !important;
+    transition: background 0.3s ease !important;
 
     &:hover {
-      opacity: 0.9 !important;
+      background: var(--color-accent, #2879FE) !important;
     }
   }
 
@@ -85,34 +89,44 @@ custom-salla-product-card {
     transition: color 0.2s ease !important;
 
     &:hover {
-      color: #f44336 !important;
+      color: #F22C2C !important;
     }
   }
 
-  /* ---- Sale badge — Wokiee: red #F44336, 8px radius ---- */
+  /* ---- Sale badge — Wokiee: #F22C2C, 0 radius ---- */
   .s-product-card-sale-badge {
-    background: #f44336 !important;
+    background: #F22C2C !important;
     color: #fff !important;
-    border-radius: 8px !important;
+    border-radius: 0 !important;
     font-weight: 700 !important;
     font-size: 11px !important;
     padding: 4px 10px !important;
   }
 
-  /* ---- Featured badge — Wokiee orange ---- */
+  /* ---- New badge — Wokiee: #43B649 green, 0 radius ---- */
+  .s-product-card-new-badge {
+    background: #43B649 !important;
+    color: #fff !important;
+    border-radius: 0 !important;
+    font-weight: 700 !important;
+    font-size: 11px !important;
+    padding: 4px 10px !important;
+  }
+
+  /* ---- Featured badge — 0 radius ---- */
   .s-product-card-featured-badge {
     background: #ff8a00 !important;
     color: #fff !important;
-    border-radius: 8px !important;
+    border-radius: 0 !important;
     font-weight: 700 !important;
     font-size: 11px !important;
     padding: 4px 10px !important;
   }
 
-  /* ---- Rating stars — Wokiee: #FFAB00 ---- */
+  /* ---- Rating stars — Wokiee: #FFC107 ---- */
   .s-product-card-rating .s-rating-star,
   .s-product-card-rating i {
-    color: #ffab00 !important;
+    color: #FFC107 !important;
   }
 }
 

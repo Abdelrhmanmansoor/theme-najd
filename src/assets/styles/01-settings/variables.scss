@@ -14,14 +14,14 @@
   --space-3xl: 64px;
   --space-4xl: 96px;
 
-  /* ---- Radius Scale — Wokiee: 8px universal ---- */
-  --radius-sm:   4px;
-  --radius-md:   8px;
-  --radius-lg:   8px;
-  --radius-xl:   10px;
-  --radius-2xl:  12px;
-  --radius-3xl:  16px;
-  --radius-full: 9999px;
+  /* ---- Radius Scale — Wokiee: 0px (sharp edges) ---- */
+  --radius-sm:   0px;
+  --radius-md:   0px;
+  --radius-lg:   0px;
+  --radius-xl:   0px;
+  --radius-2xl:  0px;
+  --radius-3xl:  0px;
+  --radius-full: 9999px; /* pills remain rounded */
 
   /* ---- Transitions — Wokiee: 0.2s/0.3s ease ---- */
   --ease-out:    ease;
@@ -52,27 +52,28 @@
   --text-4xl:  32px;
   --text-5xl:  44px;
 
-  /* ---- Section spacing — Wokiee: 100px desktop ---- */
-  --section-gap: 100px;
+  /* ---- Section spacing — Wokiee: 70px desktop ---- */
+  --section-gap: 70px;
 
-  /* ---- Border radius style — Wokiee: 8px global ---- */
-  --radius-global: 8px;
+  /* ---- Border radius style — Wokiee: 0 (sharp) ---- */
+  --radius-global: 0px;
+  --card-radius:   0px;
 
-  /* ---- Card style — Wokiee shadow ---- */
-  --card-shadow: 4px 8px 20px 0 rgba(0, 0, 0, 0.15);
-  --card-border: none;
+  /* ---- Card style — Wokiee: subtle shadow ---- */
+  --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  --card-border: 1px solid #E8E8E8;
 
   /* ---- Accent color — Wokiee blue ---- */
-  --color-accent: #304ffe;
+  --color-accent: #2879FE;
 }
 
 /* ---- Section spacing variants — Wokiee scale ---- */
-[data-spacing="compact"]  { --section-gap: 50px; }
-[data-spacing="normal"]   { --section-gap: 100px; }
-[data-spacing="spacious"] { --section-gap: 140px; }
+[data-spacing="compact"]  { --section-gap: 40px; }
+[data-spacing="normal"]   { --section-gap: 70px; }
+[data-spacing="spacious"] { --section-gap: 100px; }
 
 /* ---- Border radius variants ---- */
-[data-radius="rounded"] { --radius-global: 8px;  --card-radius: 8px; }
+[data-radius="rounded"] { --radius-global: 8px;  --card-radius: 8px; --radius-sm:4px; --radius-md:8px; --radius-lg:8px; --radius-xl:10px; --radius-2xl:12px; }
 [data-radius="sharp"]   { --radius-global: 0px;  --card-radius: 0px; }
 [data-radius="pill"]    { --radius-global: 50px; --card-radius: 16px; }
 
@@ -157,27 +158,27 @@ body[style*="--gradient-start"] .najd-btn--primary {
   --header-bg:          var(--light-header-bg, #ffffff);
   --header-text:        var(--light-header-text, #111111);
 
-  --border-color:       #e5e5e5;
+  --border-color:       #E8E8E8;
   --border-hover:       #cccccc;
   --border-active:      var(--color-primary);
 
-  /* Wokiee-style shadows */
-  --shadow-xs:          0 1px 3px rgba(0, 0, 0, 0.06);
-  --shadow-sm:          2px 4px 10px 0 rgba(0, 0, 0, 0.08);
-  --shadow-md:          4px 8px 20px 0 rgba(0, 0, 0, 0.15);
-  --shadow-lg:          4px 8px 20px 0 rgba(0, 0, 0, 0.22);
-  --shadow-xl:          6px 12px 32px 0 rgba(0, 0, 0, 0.25);
+  /* Wokiee-style shadows — clean and light */
+  --shadow-xs:          0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-sm:          0 2px 5px rgba(0, 0, 0, 0.1);
+  --shadow-md:          0 2px 5px rgba(0, 0, 0, 0.1);
+  --shadow-lg:          0 5px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl:          0 8px 20px rgba(0, 0, 0, 0.12);
 
   /* No glass in light mode */
   --glass-bg:           #ffffff;
-  --glass-border:       #e5e5e5;
+  --glass-border:       #E8E8E8;
   --glass-blur:         0px;
 
   --scene-opacity: 0;
 
-  /* Card — Wokiee style */
-  --card-hover-lift:    -3px;
-  --card-radius:        8px;
+  /* Card — Wokiee: sharp */
+  --card-hover-lift:    0px;
+  --card-radius:        0px;
 
   /* Flat primary color — no gradient */
   --gradient-primary:   var(--color-primary);
@@ -216,8 +217,8 @@ body[style*="--gradient-start"] .najd-btn--primary {
   --glass-blur:         0px;
 
   --scene-opacity: 0;
-  --card-hover-lift:    -3px;
-  --card-radius:        8px;
+  --card-hover-lift:    0px;
+  --card-radius:        0px;
   --gradient-primary:   var(--color-primary);
 }
 

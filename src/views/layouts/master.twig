@@ -58,6 +58,10 @@
     <link rel="stylesheet" href="{{ 'app.css' | asset }}">
     <link rel="stylesheet" href="{{ theme.font.path|cdn }}"/>
     <link rel="stylesheet" href="{{ 'fonts/sallaicons.css'|cdn }}"/>
+    {# ⭐ Wokiee Font — Poppins #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     {# ---- CSS Custom Properties from theme settings ---- #}
     <style>
@@ -71,11 +75,11 @@
             --color-primary-light:   {{ theme.color.lighter(0.15) }};
             --color-primary-reverse: {{ theme.color.reverse_text }};
 
-            /* Light mode colors */
+            /* Light mode colors — Wokiee exact values */
             --light-bg-primary:    {{ theme.settings.get('light_bg_primary',   '#ffffff') }};
-            --light-bg-secondary:  {{ theme.settings.get('light_bg_secondary', '#f8f9fc') }};
-            --light-text-primary:  {{ theme.settings.get('light_text_primary', '#111827') }};
-            --light-text-secondary:{{ theme.settings.get('light_text_secondary','#4b5563') }};
+            --light-bg-secondary:  {{ theme.settings.get('light_bg_secondary', '#F5F5F5') }};
+            --light-text-primary:  {{ theme.settings.get('light_text_primary', '#222222') }};
+            --light-text-secondary:{{ theme.settings.get('light_text_secondary','#656565') }};
             --light-header-bg:     {{ theme.settings.get('light_header_bg',    '#ffffff') }};
             --light-header-text:   {{ theme.settings.get('light_header_text',  '#111827') }};
             --light-card-bg:       {{ theme.settings.get('light_card_bg',      '#ffffff') }};
@@ -95,9 +99,9 @@
             --glass-orb-2:    {{ theme.settings.get('glass_orb_color_2',   '#5AC8FA') }};
             --glass-orb-3:    {{ theme.settings.get('glass_orb_color_3',   '#F5B9EA') }};
 
-            /* Footer */
-            --footer-bg:   {{ theme.settings.get('footer_bg_color',   '#f3f4f6') }};
-            --footer-text: {{ theme.settings.get('footer_text_color', '#374151') }};
+            /* Footer — Wokiee: dark #222222 */
+            --footer-bg:   {{ theme.settings.get('footer_bg_color',   '#222222') }};
+            --footer-text: {{ theme.settings.get('footer_text_color', 'rgba(255,255,255,0.7)') }};
 
             /* Announcement */
             {% if theme.settings.get('announcement_bg_color') %}
@@ -121,8 +125,8 @@
             {% endif %}
             --gradient-direction: {{ theme.settings.get('gradient_direction', '135deg') }};
 
-            /* ⭐ Section Spacing — Wokiee: 100px desktop */
-            --block-padding-y: {{ theme.settings.get('spacing_desktop_v', 100) }}px;
+            /* ⭐ Section Spacing — Wokiee: 70px desktop */
+            --block-padding-y: {{ theme.settings.get('spacing_desktop_v', 70) }}px;
             --block-padding-x: {{ theme.settings.get('spacing_h', 0) }}px;
             --block-gap: {{ theme.settings.get('section_gap', 0) }}px;
 
@@ -137,10 +141,10 @@
             --grid-cols-desktop: {{ theme.settings.get('grid_cols_desktop', '4') }};
             --grid-cols-tablet:  {{ theme.settings.get('grid_cols_tablet', '3') }};
             --grid-cols-mobile:  {{ theme.settings.get('grid_cols_mobile', '2') }};
-            --card-gap:          {{ theme.settings.get('card_gap', 20) }}px;
+            --card-gap:          {{ theme.settings.get('card_gap', 30) }}px;
 
-            /* ⭐ Slider Advanced */
-            --slider-height-desktop: {{ theme.settings.get('slider_height_desktop', 600) }}px;
+            /* ⭐ Slider Advanced — Wokiee: 550px desktop */
+            --slider-height-desktop: {{ theme.settings.get('slider_height_desktop', 550) }}px;
             --slider-height-mobile:  {{ theme.settings.get('slider_height_mobile', 380) }}px;
         }
 

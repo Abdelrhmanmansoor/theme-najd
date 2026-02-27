@@ -1,8 +1,9 @@
 /* ============================================================
-   Buttons — Wokiee-inspired Button System
-   Primary: black bg → blue hover
-   Secondary: outline accent
-   Radius: 8px (matches Wokiee)
+   Buttons — Wokiee Exact Style
+   Primary: #222222 → #2879FE hover
+   Outline: #222222 border → fill on hover
+   Radius: 0 (sharp edges — Wokiee signature)
+   Text: 12px UPPERCASE 600 weight 0.5px spacing
    ============================================================ */
 
 .najd-btn {
@@ -10,82 +11,130 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  padding: 11px 28px;
-  border-radius: 8px;
-  font-family: var(--font-main);
-  font-size: var(--text-base);
+  padding: 0 30px;
+  border-radius: 0;
+  font-family: 'Poppins', var(--font-main), system-ui, sans-serif;
+  font-size: 12px;
   font-weight: 600;
-  line-height: 1.4;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1;
   cursor: pointer;
-  transition: background var(--duration-base) var(--ease-out),
-              color var(--duration-base) var(--ease-out),
-              border-color var(--duration-base) var(--ease-out),
-              box-shadow var(--duration-base) var(--ease-out);
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   border: 1px solid transparent;
   text-decoration: none;
   white-space: nowrap;
   position: relative;
   overflow: hidden;
-  height: 44px;
+  height: 40px;
 }
 
-/* Primary — Wokiee: black → blue on hover */
+/* Primary — Wokiee: #222222 bg → #2879FE on hover */
 .najd-btn--primary {
-  background: var(--color-primary);
-  color: var(--color-primary-reverse, #fff);
-  border-color: transparent;
+  background: #222222;
+  color: #ffffff;
+  border-color: #222222;
 
   &:hover {
-    background: var(--color-accent, #304ffe);
+    background: var(--color-accent, #2879FE);
     color: #fff;
-    border-color: transparent;
+    border-color: var(--color-accent, #2879FE);
   }
 
   &:active {
-    background: var(--color-accent, #304ffe);
-    filter: brightness(0.95);
+    filter: brightness(0.92);
   }
 }
 
-/* Secondary — Wokiee: transparent + accent border → fill on hover */
+/* Outline — transparent + #222222 border → fill on hover */
 .najd-btn--outline {
   background: transparent;
-  color: var(--color-accent, #304ffe);
-  border-color: var(--color-accent, #304ffe);
+  color: #222222;
+  border-color: #222222;
 
   &:hover {
-    background: var(--color-accent, #304ffe);
+    background: #222222;
     color: #fff;
-    border-color: var(--color-accent, #304ffe);
+    border-color: #222222;
   }
 }
 
-/* Ghost — subtle background */
-.najd-btn--ghost {
-  background: var(--surface-secondary, #f0f0f0);
-  color: var(--text-primary);
-  border-color: transparent;
+/* Outline accent variant */
+.najd-btn--outline-accent {
+  background: transparent;
+  color: var(--color-accent, #2879FE);
+  border-color: var(--color-accent, #2879FE);
 
   &:hover {
-    background: var(--border-color, #e0e0e0);
+    background: var(--color-accent, #2879FE);
+    color: #fff;
+  }
+}
+
+/* Ghost — subtle secondary background */
+.najd-btn--ghost {
+  background: var(--surface-secondary, #F5F5F5);
+  color: var(--text-primary, #222222);
+  border-color: #E8E8E8;
+
+  &:hover {
+    background: #E8E8E8;
+    color: #222222;
   }
 }
 
 /* Small variant */
 .najd-btn--sm {
-  padding: 7px 18px;
-  font-size: var(--text-sm);
+  padding: 0 16px;
+  font-size: 11px;
   height: 34px;
 }
 
 /* Large variant */
 .najd-btn--lg {
-  padding: 13px 36px;
-  font-size: var(--text-lg);
-  height: 52px;
+  padding: 0 40px;
+  font-size: 13px;
+  height: 48px;
 }
 
 /* Full-width */
 .najd-btn--full {
   width: 100%;
+}
+
+/* Dark mode */
+[data-theme="dark"] .najd-btn--primary {
+  background: #fff;
+  color: #222222;
+  border-color: #fff;
+
+  &:hover {
+    background: var(--color-accent, #2879FE);
+    color: #fff;
+    border-color: var(--color-accent, #2879FE);
+  }
+}
+
+[data-theme="dark"] .najd-btn--outline {
+  color: #fff;
+  border-color: rgba(255,255,255,0.4);
+
+  &:hover {
+    background: #fff;
+    color: #222222;
+    border-color: #fff;
+  }
+}
+
+/* Glass mode */
+[data-theme="glass"] .najd-btn--primary {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border-color: rgba(255,255,255,0.25);
+  backdrop-filter: blur(8px);
+
+  &:hover {
+    background: var(--color-accent, #2879FE);
+    border-color: var(--color-accent, #2879FE);
+  }
 }

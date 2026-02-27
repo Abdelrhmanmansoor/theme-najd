@@ -247,7 +247,7 @@ salla-slider:not(.najd-block--hero salla-slider) {
   font-weight: 700 !important;
   height: 48px !important;
   padding: 0 36px !important;
-  border-radius: 8px !important;
+  border-radius: 0 !important;
   text-shadow: none !important;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2) !important;
   transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease !important;
@@ -275,7 +275,7 @@ salla-slider:not(.najd-block--hero salla-slider) {
   }
 }
 
-/* ---- Section Block — Wokiee: 100px desktop / 50px mobile ---- */
+/* ---- Section Block — Wokiee: 70px desktop / 50px mobile ---- */
 .najd-block {
   position: relative;
   z-index: var(--z-above);
@@ -286,18 +286,18 @@ salla-slider:not(.najd-block--hero salla-slider) {
   }
 
   @media (min-width: 1024px) {
-    padding: var(--section-gap, 100px) 0;
+    padding: var(--section-gap, 70px) 0;
   }
 }
 
-/* Alternating background for sections — Wokiee: #f0f0f0 secondary */
+/* Alternating background for sections — Wokiee: #F5F5F5 secondary */
 .najd-block:nth-child(even) {
   background: var(--surface-secondary);
 }
 
 [data-theme="light"] .najd-block:nth-child(even),
 :root .najd-block:nth-child(even) {
-  background: #f0f0f0;
+  background: #F5F5F5;
 }
 
 [data-theme="dark"] .najd-block:nth-child(even) {
@@ -312,84 +312,80 @@ salla-slider:not(.najd-block--hero salla-slider) {
    Premium Block Header System
    ============================================================ */
 
-/* Block headers — Wokiee: title left + link right, clean bottom border */
+/* ============================================================
+   Wokiee Block Header: centered, eyebrow text, title + blue underline
+   ============================================================ */
+
 .najd-block__header {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
-  margin-bottom: 30px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border-color, #e5e5e5);
+  justify-content: center;
+  text-align: center;
+  gap: 0;
+  margin-bottom: 36px;
+  padding-bottom: 0;
+  border-bottom: none;
 
   @media (min-width: 768px) {
-    margin-bottom: 36px;
-  }
-
-  /* Centered header mode */
-  &.text-center {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    border-bottom: none;
-    padding-bottom: 0;
-    margin-bottom: 32px;
+    margin-bottom: 40px;
   }
 }
 
-[data-theme="dark"] .najd-block__header {
-  border-bottom-color: rgba(255, 255, 255, 0.08);
-}
-
-[data-theme="glass"] .najd-block__header {
-  border-bottom-color: rgba(255, 255, 255, 0.06);
-}
-
-/* ⭐ Eyebrow — Wokiee: simple colored tag, no side decorations */
+/* Eyebrow — Wokiee: 14px secondary text, UPPERCASE, thin weight */
 .najd-block__eyebrow {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--color-accent, var(--color-primary));
+  color: #656565;
   margin-bottom: 8px;
+  line-height: 1.4;
 }
 
-/* Block Title — Wokiee: clean 700, no underline decoration */
+/* Block Title — Wokiee: 24px 700, with 40px blue underline */
 .najd-block__title {
-  font-size: var(--text-2xl, 20px);
+  font-size: 24px;
   font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
+  color: var(--text-primary, #222222);
+  letter-spacing: 0;
   line-height: 1.2;
   margin: 0;
+  position: relative;
+
+  /* Wokiee blue underline: 40px centered */
+  &::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: var(--color-accent, #2879FE);
+    margin: 12px auto 0;
+  }
 
   @media (min-width: 768px) {
-    font-size: var(--text-3xl, 24px);
+    font-size: 24px;
   }
 }
 
 .najd-block__subtitle {
-  font-size: var(--text-base, 14px);
-  color: var(--text-secondary);
-  margin-top: var(--space-md);
+  font-size: 14px;
+  color: #656565;
+  margin-top: 12px;
   font-weight: 400;
   line-height: 1.6;
   max-width: 560px;
-
-  .text-center & {
-    margin-left: auto;
-    margin-right: auto;
-  }
+  margin-inline: auto;
 }
 
-/* View all link — Wokiee: blue #304ffe, underline on hover */
+/* View all link — Wokiee: blue, underline on hover */
 .najd-block__link {
   font-size: 13px;
-  font-weight: 500;
-  color: var(--color-accent, #304ffe);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-accent, #2879FE);
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -399,6 +395,7 @@ salla-slider:not(.najd-block--hero salla-slider) {
   transition: opacity 0.2s ease;
   white-space: nowrap;
   text-decoration: none;
+  margin-top: 8px;
 
   &:hover {
     opacity: 0.75;
@@ -425,12 +422,12 @@ salla-slider:not(.najd-block--hero salla-slider) {
   align-items: center;
   text-align: center;
   padding: 24px 20px;
-  border-radius: 8px;
+  border-radius: 0;
   background: var(--surface-card, #fff);
-  border: none;
+  border: 1px solid #E8E8E8;
   position: relative;
   overflow: hidden;
-  box-shadow: 4px 8px 20px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: none;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 
   /* Top accent line on hover — Wokiee signature */
@@ -489,7 +486,7 @@ salla-slider:not(.najd-block--hero salla-slider) {
   font-size: 26px;
   color: var(--color-accent, var(--color-primary));
   background: color-mix(in srgb, var(--color-accent, var(--color-primary)) 10%, transparent);
-  border-radius: 8px;
+  border-radius: 0;
   margin-bottom: 16px;
   transition: all 0.3s ease;
 }
@@ -3161,11 +3158,11 @@ salla-slider:not(.najd-block--hero salla-slider) {
 /* ================================================================
    INLINE NEWSLETTER
    ================================================================ */
-/* ---- Newsletter inline — Wokiee: black bg, white text, green button ---- */
+/* ---- Newsletter inline — Wokiee: #F5F5F5 bg, dark text, black button ---- */
 .najd-newsletter-inline {
-  padding: 80px 0;
-  background: #000;
-  color: #fff;
+  padding: 50px 0;
+  background: #F5F5F5;
+  color: #222222;
 }
 
 .najd-newsletter-inline__inner {
@@ -3187,16 +3184,16 @@ salla-slider:not(.najd-block--hero salla-slider) {
 }
 
 .najd-newsletter-inline__title {
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 700;
-  color: #fff;
+  color: #222222;
   margin-bottom: 6px;
   line-height: 1.2;
 }
 
 .najd-newsletter-inline__subtitle {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.65);
+  color: #656565;
   line-height: 1.6;
 }
 
@@ -3206,17 +3203,53 @@ salla-slider:not(.najd-block--hero salla-slider) {
   width: 100%;
 
   salla-newsletter .s-newsletter-input {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
-    color: #fff !important;
+    background: #fff !important;
+    border: 1px solid #E8E8E8 !important;
+    border-radius: 0 !important;
+    color: #222222 !important;
 
-    &::placeholder { color: rgba(255, 255, 255, 0.5) !important; }
+    &::placeholder { color: #999999 !important; }
 
     &:focus {
-      background: rgba(255, 255, 255, 0.15) !important;
-      border-color: #fff !important;
+      border-color: var(--color-accent, #2879FE) !important;
     }
   }
+
+  salla-newsletter .s-newsletter-btn,
+  salla-newsletter [type="submit"],
+  salla-newsletter button[part="button"] {
+    background: #222222 !important;
+    color: #fff !important;
+    border-radius: 0 !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+    border: none !important;
+    height: 40px !important;
+
+    &:hover {
+      background: var(--color-accent, #2879FE) !important;
+    }
+  }
+}
+
+/* Dark mode newsletter */
+[data-theme="dark"] .najd-newsletter-inline {
+  background: #141416;
+  color: var(--text-primary);
+
+  .najd-newsletter-inline__title { color: var(--text-primary); }
+  .najd-newsletter-inline__subtitle { color: var(--text-secondary); }
+}
+
+/* Glass mode newsletter */
+[data-theme="glass"] .najd-newsletter-inline {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+
+  .najd-newsletter-inline__title { color: var(--text-primary); }
+  .najd-newsletter-inline__subtitle { color: var(--text-secondary); }
 }
 
 /* ================================================================
