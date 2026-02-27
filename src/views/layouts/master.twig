@@ -121,8 +121,8 @@
             {% endif %}
             --gradient-direction: {{ theme.settings.get('gradient_direction', '135deg') }};
 
-            /* ⭐ Section Spacing */
-            --block-padding-y: {{ theme.settings.get('spacing_desktop_v', 64) }}px;
+            /* ⭐ Section Spacing — Wokiee: 100px desktop */
+            --block-padding-y: {{ theme.settings.get('spacing_desktop_v', 100) }}px;
             --block-padding-x: {{ theme.settings.get('spacing_h', 0) }}px;
             --block-gap: {{ theme.settings.get('section_gap', 0) }}px;
 
@@ -144,13 +144,13 @@
             --slider-height-mobile:  {{ theme.settings.get('slider_height_mobile', 380) }}px;
         }
 
-        /* Tablet spacing override */
+        /* Tablet spacing override — Wokiee: 60px tablet */
         @media (max-width: 1024px) {
-            :root { --block-padding-y: {{ theme.settings.get('spacing_tablet_v', 48) }}px; }
+            :root { --block-padding-y: {{ theme.settings.get('spacing_tablet_v', 60) }}px; }
         }
-        /* Mobile spacing override */
+        /* Mobile spacing override — Wokiee: 50px mobile */
         @media (max-width: 768px) {
-            :root { --block-padding-y: {{ theme.settings.get('spacing_mobile_v', 32) }}px; }
+            :root { --block-padding-y: {{ theme.settings.get('spacing_mobile_v', 50) }}px; }
         }
     </style>
 

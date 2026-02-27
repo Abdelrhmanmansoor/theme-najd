@@ -43,65 +43,225 @@
   background-position: center;
 }
 
+/* Wokiee: strong directional overlay — dark on reading-start side */
 .najd-hero-slide__bg--overlay::after {
   content: '';
   position: absolute;
   inset: 0;
+  /* RTL (Arabic): dark on right side (reading start) */
   background: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0.5) 0%,
-    rgba(0, 0, 0, 0.2) 60%,
+    to left,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0.4) 40%,
+    rgba(0, 0, 0, 0.1) 70%,
     transparent 100%
   );
 }
 
+/* LTR stores: flip to dark on left */
+[dir="ltr"] .najd-hero-slide__bg--overlay::after {
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0.4) 40%,
+    rgba(0, 0, 0, 0.1) 70%,
+    transparent 100%
+  );
+}
+
+/* Wokiee: text anchored to bottom-left of slide */
 .najd-hero-slide__content {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 2;
   display: flex;
+  align-items: flex-end;
   width: 100%;
-  padding: var(--space-3xl) 0;
+  padding: 0;
 }
 
 .najd-hero-slide__inner {
-  max-width: 680px;
-  padding: var(--space-2xl) var(--space-xl);
+  max-width: 660px;
+  padding: 40px 20px;
   color: #fff;
 
   @media (min-width: 768px) {
-    padding: var(--space-3xl);
+    padding: 50px 40px;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 80px 60px;
   }
 }
 
-[data-theme="light"] .najd-hero-slide__inner {
-  background: rgba(0, 0, 0, 0.45);
-  border-radius: 12px;
-}
-
+/* Wokiee: no background box on text, overlay gradient does the job */
+[data-theme="light"] .najd-hero-slide__inner,
 [data-theme="glass"] .najd-hero-slide__inner {
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 12px;
+  background: transparent;
+  border-radius: 0;
 }
 
+/* Wokiee: large bold hero heading */
 .najd-hero-slide__title {
-  font-size: var(--text-3xl);
+  font-size: 28px;
   font-weight: 800;
-  line-height: 1.15;
+  line-height: 1.1;
   margin-bottom: var(--space-md);
   letter-spacing: -0.02em;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 
-  @media (min-width: 768px) { font-size: var(--text-4xl); }
-  @media (min-width: 1024px) { font-size: var(--text-5xl); }
+  @media (min-width: 768px) { font-size: 42px; }
+  @media (min-width: 1024px) { font-size: 58px; }
+  @media (min-width: 1280px) { font-size: 68px; }
 }
 
 .najd-hero-slide__subtitle {
-  font-size: var(--text-base);
-  opacity: 0.85;
+  font-size: 14px;
+  opacity: 0.9;
   margin-bottom: var(--space-xl);
   line-height: 1.6;
-  max-width: 480px;
+  max-width: 440px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 
-  @media (min-width: 768px) { font-size: var(--text-lg); }
+  @media (min-width: 768px) { font-size: 16px; }
+  @media (min-width: 1024px) { font-size: 18px; }
+}
+
+/* ---- Wokiee Slider: Arrow + Pagination overrides ---- */
+
+/* Hero slider arrows — white circles with black arrow */
+.najd-block--hero {
+  salla-slider,
+  .swiper-container {
+    .swiper-button-prev,
+    .swiper-button-next {
+      width: 46px !important;
+      height: 46px !important;
+      background: #fff !important;
+      border-radius: 50% !important;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18) !important;
+      margin-top: -23px !important;
+      transition: background 0.2s ease, color 0.2s ease !important;
+
+      &::after {
+        font-size: 14px !important;
+        font-weight: 900 !important;
+        color: #000 !important;
+      }
+
+      &:hover {
+        background: var(--color-primary, #000) !important;
+
+        &::after {
+          color: #fff !important;
+        }
+      }
+    }
+
+    /* Hero pagination bullets — black elongated active */
+    .swiper-pagination-bullet {
+      width: 8px !important;
+      height: 8px !important;
+      background: rgba(255, 255, 255, 0.5) !important;
+      opacity: 1 !important;
+      border-radius: 4px !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .swiper-pagination-bullet-active {
+      background: #fff !important;
+      width: 28px !important;
+      border-radius: 4px !important;
+    }
+  }
+}
+
+/* Product/all other slider arrows — subtle, outside */
+salla-products-slider,
+salla-slider:not(.najd-block--hero salla-slider) {
+  .swiper-button-prev,
+  .swiper-button-next {
+    width: 40px !important;
+    height: 40px !important;
+    background: #fff !important;
+    border: 1px solid #e5e5e5 !important;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10) !important;
+    margin-top: -20px !important;
+    transition: background 0.2s ease, border-color 0.2s ease !important;
+
+    &::after {
+      font-size: 13px !important;
+      font-weight: 900 !important;
+      color: #000 !important;
+    }
+
+    &:hover {
+      background: var(--color-primary, #000) !important;
+      border-color: var(--color-primary, #000) !important;
+
+      &::after {
+        color: #fff !important;
+      }
+    }
+  }
+
+  .swiper-pagination-bullet {
+    width: 8px !important;
+    height: 8px !important;
+    background: #bdbdbd !important;
+    opacity: 1 !important;
+    border-radius: 50% !important;
+    transition: all 0.25s ease !important;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: var(--color-primary, #000) !important;
+    width: 24px !important;
+    border-radius: 4px !important;
+  }
+}
+
+[data-theme="dark"] salla-products-slider,
+[data-theme="dark"] salla-slider {
+  .swiper-button-prev,
+  .swiper-button-next {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+
+    &::after { color: #fff !important; }
+
+    &:hover {
+      background: var(--color-primary) !important;
+      border-color: var(--color-primary) !important;
+    }
+  }
+}
+
+/* Hero CTA button — visible on any slide background */
+.najd-hero-slide .najd-btn--primary {
+  background: #fff !important;
+  color: #000 !important;
+  border-color: #fff !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  height: 48px !important;
+  padding: 0 36px !important;
+  border-radius: 8px !important;
+  text-shadow: none !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2) !important;
+  transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease !important;
+
+  i { color: #000 !important; }
+
+  &:hover {
+    background: var(--color-primary, #000) !important;
+    color: #fff !important;
+    border-color: var(--color-primary, #000) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
+
+    i { color: #fff !important; }
+  }
 }
 
 /* Merged header with hero */
@@ -115,25 +275,29 @@
   }
 }
 
-/* ---- Section Block ---- */
+/* ---- Section Block — Wokiee: 100px desktop / 50px mobile ---- */
 .najd-block {
   position: relative;
   z-index: var(--z-above);
-  padding: var(--space-3xl) 0;
+  padding: 50px 0;
 
   @media (min-width: 768px) {
-    padding: var(--section-gap, 80px) 0;
+    padding: 60px 0;
+  }
+
+  @media (min-width: 1024px) {
+    padding: var(--section-gap, 100px) 0;
   }
 }
 
-/* Alternating background for sections — subtle, premium */
+/* Alternating background for sections — Wokiee: #f0f0f0 secondary */
 .najd-block:nth-child(even) {
   background: var(--surface-secondary);
 }
 
 [data-theme="light"] .najd-block:nth-child(even),
 :root .najd-block:nth-child(even) {
-  background: #f8f8f8;
+  background: #f0f0f0;
 }
 
 [data-theme="dark"] .najd-block:nth-child(even) {
@@ -148,16 +312,18 @@
    Premium Block Header System
    ============================================================ */
 
-/* Block headers — default: title left + link right */
+/* Block headers — Wokiee: title left + link right, clean bottom border */
 .najd-block__header {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
-  margin-bottom: var(--space-xl);
+  margin-bottom: 30px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color, #e5e5e5);
 
   @media (min-width: 768px) {
-    margin-bottom: var(--space-2xl);
+    margin-bottom: 36px;
   }
 
   /* Centered header mode */
@@ -166,78 +332,47 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 32px;
   }
 }
 
-/* ⭐ Eyebrow — small uppercase label above title */
+[data-theme="dark"] .najd-block__header {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="glass"] .najd-block__header {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ⭐ Eyebrow — Wokiee: simple colored tag, no side decorations */
 .najd-block__eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.10em;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--color-primary);
-  margin-bottom: 10px;
-
-  /* Decorative side lines */
-  &::before,
-  &::after {
-    content: '';
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: var(--color-primary);
-    border-radius: 2px;
-    opacity: 0.5;
-  }
+  color: var(--color-accent, var(--color-primary));
+  margin-bottom: 8px;
 }
 
-/* Block Title */
+/* Block Title — Wokiee: clean 700, no underline decoration */
 .najd-block__title {
-  font-size: var(--text-2xl);
-  font-weight: 800;
+  font-size: var(--text-2xl, 20px);
+  font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   line-height: 1.2;
-  position: relative;
-  display: inline-block;
+  margin: 0;
 
   @media (min-width: 768px) {
-    font-size: var(--text-3xl);
-  }
-
-  /* Gradient underline decoration */
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    inset-inline-start: 0;
-    width: 48px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--color-primary), transparent);
-    border-radius: 2px;
-    transition: width 0.4s var(--ease-out);
-  }
-
-  /* Extend underline in centered headers */
-  .text-center & {
-    &::after {
-      left: 50%;
-      transform: translateX(-50%);
-      width: 48px;
-    }
-  }
-
-  /* Hover: underline expands */
-  .najd-block__header:hover &::after {
-    width: 80px;
+    font-size: var(--text-3xl, 24px);
   }
 }
 
 .najd-block__subtitle {
-  font-size: var(--text-base);
+  font-size: var(--text-base, 14px);
   color: var(--text-secondary);
   margin-top: var(--space-md);
   font-weight: 400;
@@ -250,44 +385,28 @@
   }
 }
 
+/* View all link — Wokiee: blue #304ffe, underline on hover */
 .najd-block__link {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-primary);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-accent, #304ffe);
   display: inline-flex;
   align-items: center;
   gap: 4px;
   padding: 0;
   border: none;
   background: none;
-  transition: gap var(--duration-base, 0.3s) var(--ease-out, ease-out);
+  transition: opacity 0.2s ease;
   white-space: nowrap;
   text-decoration: none;
 
-  /* Arrow icon */
-  &::after {
-    content: '\2192';
-    font-size: 16px;
-    transition: transform var(--duration-base, 0.3s) var(--ease-out, ease-out);
-  }
-
   &:hover {
-    gap: 8px;
-
-    &::after {
-      transform: translateX(3px);
-    }
+    opacity: 0.75;
+    text-decoration: underline;
   }
 }
 
-/* RTL arrow direction */
-[dir="rtl"] .najd-block__link::after {
-  content: '\2190';
-}
-
-[dir="rtl"] .najd-block__link:hover::after {
-  transform: translateX(-3px);
-}
+/* RTL link direction — Wokiee: just underline, no arrow */
 
 /* Section full-bleed backgrounds */
 .najd-block--full-bg {
@@ -305,18 +424,16 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: var(--space-xl) var(--space-lg);
-  border-radius: var(--radius-xl);
+  padding: 24px 20px;
+  border-radius: 8px;
   background: var(--surface-card, #fff);
-  border: 1px solid var(--border-color);
+  border: none;
   position: relative;
   overflow: hidden;
-  transition:
-    box-shadow var(--duration-base, 0.3s) var(--ease-out, ease-out),
-    transform var(--duration-base, 0.3s) var(--ease-out, ease-out),
-    border-color var(--duration-base, 0.3s);
+  box-shadow: 4px 8px 20px 0 rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 
-  /* Top accent line on hover */
+  /* Top accent line on hover — Wokiee signature */
   &::before {
     content: '';
     position: absolute;
@@ -324,17 +441,15 @@
     inset-inline-start: 0;
     right: 0;
     height: 3px;
-    background: var(--color-primary);
+    background: var(--color-accent, var(--color-primary));
     transform: scaleX(0);
     transform-origin: center;
-    transition: transform 0.35s var(--ease-out);
-    border-radius: 0 0 2px 2px;
+    transition: transform 0.3s ease;
   }
 
   &:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    box-shadow: 4px 8px 20px 0 rgba(0, 0, 0, 0.15);
     transform: translateY(-4px);
-    border-color: var(--color-primary);
 
     &::before {
       transform: scaleX(1);
@@ -364,24 +479,24 @@
   }
 }
 
-/* Icon mode */
+/* Icon mode — Wokiee accent color */
 .najd-features__icon {
   width: 52px;
   height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
-  color: var(--color-primary);
-  background: color-mix(in srgb, var(--color-primary) 8%, transparent);
-  border-radius: 12px;
-  margin-bottom: var(--space-md);
-  transition: all var(--duration-base, 0.3s) var(--ease-out, ease-out);
+  font-size: 26px;
+  color: var(--color-accent, var(--color-primary));
+  background: color-mix(in srgb, var(--color-accent, var(--color-primary)) 10%, transparent);
+  border-radius: 8px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
 }
 
 .najd-features__item:hover .najd-features__icon {
-  background: var(--color-primary);
-  color: var(--color-primary-reverse, #fff);
+  background: var(--color-accent, var(--color-primary));
+  color: #fff;
 }
 
 [data-theme="glass"] .najd-features__icon {
@@ -1833,100 +1948,131 @@
 }
 
 /* ---- Features: Horizontal layout ---- */
+/* ---- Features Horizontal — Wokiee shipping bar style ---- */
 .najd-features-horizontal {
   display: flex;
   flex-wrap: wrap;
-  background: var(--surface-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
+  background: #fff;
+  box-shadow: 4px 8px 20px 0 rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
   overflow: hidden;
 }
 
 .najd-features-horizontal__item {
   flex: 1;
-  min-width: 200px;
+  min-width: 180px;
   display: flex;
   align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-lg) var(--space-xl);
-  border-inline-end: 1px solid var(--border-color);
+  gap: 16px;
+  padding: 24px 28px;
+  border-inline-end: 1px solid #f0f0f0;
+  transition: background 0.2s ease;
 
   &:last-child { border-inline-end: none; }
+
+  &:hover { background: #fafafa; }
 
   @media (max-width: 767px) {
     flex: 0 0 50%;
     border-inline-end: none;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid #f0f0f0;
+    padding: 18px 20px;
     &:nth-last-child(-n+2) { border-bottom: none; }
   }
 }
 
 .najd-features-horizontal__img {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
   flex-shrink: 0;
 }
 
 .najd-features-horizontal__icon {
-  font-size: 28px;
-  color: var(--color-primary);
+  font-size: 26px;
+  color: var(--color-accent, var(--color-primary));
   flex-shrink: 0;
+  line-height: 1;
 }
 
 .najd-features-horizontal__title {
-  font-size: var(--text-sm);
+  font-size: 14px;
   font-weight: 700;
   color: var(--text-primary);
   margin: 0;
+  line-height: 1.3;
 }
 
 .najd-features-horizontal__text {
   font-size: 12px;
-  color: var(--text-tertiary);
-  margin: 2px 0 0;
+  color: var(--text-secondary, #555);
+  margin: 3px 0 0;
+  line-height: 1.4;
 }
 
 [data-theme="dark"] .najd-features-horizontal {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.08);
+  background: var(--surface-card, #1a1a1e);
+  box-shadow: 4px 8px 20px 0 rgba(0, 0, 0, 0.3);
+
+  .najd-features-horizontal__item {
+    border-color: rgba(255, 255, 255, 0.06);
+    &:hover { background: rgba(255, 255, 255, 0.03); }
+  }
 }
 
 [data-theme="glass"] .najd-features-horizontal {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  .najd-features-horizontal__item {
+    border-color: rgba(255, 255, 255, 0.06);
+    &:hover { background: rgba(255, 255, 255, 0.03); }
+  }
 }
 
-/* ---- Features: Bar layout (compact) ---- */
+/* ---- Features: Bar layout — Wokiee compact strip ---- */
 .najd-features-bar {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-lg);
-  padding: var(--space-md) 0;
+  gap: 0;
+  background: #fff;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .najd-features-bar__item {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: 10px;
+  padding: 14px 28px;
+  border-inline-end: 1px solid #f0f0f0;
+
+  &:last-child { border-inline-end: none; }
 }
 
 .najd-features-bar__img {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   object-fit: contain;
 }
 
 .najd-features-bar__icon {
   font-size: 20px;
-  color: var(--color-primary);
+  color: var(--color-accent, var(--color-primary));
 }
 
 .najd-features-bar__title {
-  font-size: var(--text-sm);
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-primary);
+}
+
+[data-theme="dark"] .najd-features-bar {
+  background: var(--surface-card);
+  border-color: rgba(255, 255, 255, 0.06);
+  .najd-features-bar__item { border-color: rgba(255, 255, 255, 0.06); }
 }
 
 /* ---- About: Fullwidth layout ---- */
@@ -2694,47 +2840,69 @@
 /* ================================================================
    PRODUCT TABS
    ================================================================ */
+/* Wokiee product tabs: underline style, border-bottom accent on active */
 .najd-product-tabs__nav {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-xl);
-  justify-content: center;
+  gap: 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--border-color, #e5e5e5);
+  justify-content: flex-start;
 }
 
 .najd-product-tabs__btn {
-  padding: 8px 24px;
-  border: 2px solid var(--border-color);
-  border-radius: var(--radius-full);
+  padding: 12px 22px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
   background: transparent;
   color: var(--text-secondary);
-  font-size: var(--text-sm);
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all var(--duration-base) var(--ease-out);
+  transition: color 0.2s ease, border-color 0.2s ease;
+  margin-bottom: -1px; /* overlap the nav border-bottom */
 
-  &.is-active,
-  &:hover {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
-    color: var(--color-primary-reverse, #fff);
+  &.is-active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+    background: transparent;
+  }
+
+  &:hover:not(.is-active) {
+    color: var(--text-primary);
+    border-bottom-color: var(--border-color);
+    background: transparent;
   }
 }
 
 .najd-product-tabs__panel {
   display: none;
+  padding-top: var(--space-xl);
 
   &.is-active { display: block; }
 }
 
+[data-theme="dark"] .najd-product-tabs__nav {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
 [data-theme="dark"] .najd-product-tabs__btn {
-  border-color: rgba(255, 255, 255, 0.1);
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.5);
+
+  &.is-active { color: #fff; border-bottom-color: var(--color-primary); }
+  &:hover:not(.is-active) { color: rgba(255, 255, 255, 0.8); }
+}
+
+[data-theme="glass"] .najd-product-tabs__nav {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
 }
 
 [data-theme="glass"] .najd-product-tabs__btn {
-  border-color: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.5);
+
+  &.is-active { color: #fff; border-bottom-color: var(--color-primary); }
+  &:hover:not(.is-active) { color: rgba(255, 255, 255, 0.7); }
 }
 
 /* ================================================================
@@ -2993,22 +3161,24 @@
 /* ================================================================
    INLINE NEWSLETTER
    ================================================================ */
+/* ---- Newsletter inline — Wokiee: black bg, white text, green button ---- */
 .najd-newsletter-inline {
-  padding: var(--space-3xl) 0;
+  padding: 80px 0;
+  background: #000;
   color: #fff;
-  background: var(--color-primary);
 }
 
 .najd-newsletter-inline__inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-xl);
+  gap: 32px;
   text-align: center;
 
   @media (min-width: 768px) {
     flex-direction: row;
     text-align: start;
+    justify-content: space-between;
   }
 }
 
@@ -3017,22 +3187,36 @@
 }
 
 .najd-newsletter-inline__title {
-  font-size: var(--text-2xl);
-  font-weight: 800;
+  font-size: 28px;
+  font-weight: 700;
   color: #fff;
-  margin-bottom: var(--space-xs);
+  margin-bottom: 6px;
+  line-height: 1.2;
 }
 
 .najd-newsletter-inline__subtitle {
-  font-size: var(--text-sm);
-  opacity: 0.8;
-  color: #fff;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.6;
 }
 
 .najd-newsletter-inline__form {
   flex: 1;
-  max-width: 400px;
+  max-width: 440px;
   width: 100%;
+
+  salla-newsletter .s-newsletter-input {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #fff !important;
+
+    &::placeholder { color: rgba(255, 255, 255, 0.5) !important; }
+
+    &:focus {
+      background: rgba(255, 255, 255, 0.15) !important;
+      border-color: #fff !important;
+    }
+  }
 }
 
 /* ================================================================

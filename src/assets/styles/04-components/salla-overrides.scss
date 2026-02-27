@@ -8,77 +8,111 @@
 
 salla-product-card,
 custom-salla-product-card {
+  /* ---- Card container — Wokiee: 8px radius, lift shadow ---- */
   .s-product-card-entry {
-    border-radius: var(--card-radius, var(--radius-2xl)) !important;
+    border-radius: var(--card-radius, 8px) !important;
     overflow: hidden !important;
     border: none !important;
     background: #fff !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+    box-shadow: 4px 8px 20px 0 rgba(0, 0, 0, 0.06) !important;
     transition: transform var(--duration-base) var(--ease-out),
                 box-shadow var(--duration-base) var(--ease-out) !important;
 
     &:hover {
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10) !important;
+      transform: translateY(-3px) !important;
+      box-shadow: 4px 8px 20px 0 rgba(0, 0, 0, 0.15) !important;
     }
   }
 
+  /* ---- Image — subtle scale on hover ---- */
   .s-product-card-image {
     overflow: hidden !important;
+    border-radius: 8px 8px 0 0 !important;
 
     img {
-      transition: transform var(--duration-slower) var(--ease-out) !important;
+      transition: transform 0.5s ease !important;
     }
   }
 
   &:hover .s-product-card-image img {
-    transform: scale(1.04) !important;
+    transform: scale(1.03) !important;
   }
 
+  /* ---- Content area ---- */
   .s-product-card-content {
-    padding: var(--space-md) !important;
+    padding: 12px 16px 16px !important;
   }
 
+  /* ---- Title — Wokiee: 14px, 500 weight, hover → accent ---- */
   .s-product-card-title {
-    font-weight: 600 !important;
-    font-size: var(--text-sm) !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
     color: var(--text-primary) !important;
     line-height: 1.5 !important;
+    transition: color 0.2s ease !important;
   }
 
+  &:hover .s-product-card-title {
+    color: var(--color-accent, #304ffe) !important;
+  }
+
+  /* ---- Price — Wokiee: accent color, 20px, 700 ---- */
   .s-product-card-price {
     font-weight: 700 !important;
-    color: var(--text-primary) !important;
+    font-size: 20px !important;
+    color: var(--color-accent, #304ffe) !important;
   }
 
+  /* ---- Add to cart — Wokiee: green #388e3c ---- */
   .s-product-card-fitment-btn,
   .s-product-card-add-to-cart-btn {
-    background: var(--color-primary) !important;
-    color: var(--color-primary-reverse, #fff) !important;
-    border-radius: var(--radius-lg) !important;
+    background: #388e3c !important;
+    color: #fff !important;
+    border-radius: 8px !important;
     border: none !important;
     font-weight: 600 !important;
-    transition: opacity var(--duration-fast) var(--ease-out) !important;
+    font-size: 14px !important;
+    height: 40px !important;
+    transition: opacity 0.2s ease !important;
 
     &:hover {
       opacity: 0.9 !important;
     }
   }
 
+  /* ---- Wishlist ---- */
   .s-product-card-wishlist-btn {
-    transition: color var(--duration-fast) var(--ease-out) !important;
+    transition: color 0.2s ease !important;
 
     &:hover {
-      color: #ef4444 !important;
+      color: #f44336 !important;
     }
   }
 
+  /* ---- Sale badge — Wokiee: red #F44336, 8px radius ---- */
   .s-product-card-sale-badge {
-    background: #ef4444 !important;
+    background: #f44336 !important;
     color: #fff !important;
-    border-radius: var(--radius-full) !important;
+    border-radius: 8px !important;
     font-weight: 700 !important;
     font-size: 11px !important;
     padding: 4px 10px !important;
+  }
+
+  /* ---- Featured badge — Wokiee orange ---- */
+  .s-product-card-featured-badge {
+    background: #ff8a00 !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    font-size: 11px !important;
+    padding: 4px 10px !important;
+  }
+
+  /* ---- Rating stars — Wokiee: #FFAB00 ---- */
+  .s-product-card-rating .s-rating-star,
+  .s-product-card-rating i {
+    color: #ffab00 !important;
   }
 }
 
@@ -87,10 +121,11 @@ custom-salla-product-card {
   salla-product-card .s-product-card-entry,
   custom-salla-product-card .s-product-card-entry {
     background: var(--surface-card) !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.22) !important;
 
     &:hover {
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+      transform: translateY(-3px) !important;
+      box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.32) !important;
     }
   }
 }
@@ -233,16 +268,18 @@ salla-cart-summary-enhanced {
 /* ---- Search ---- */
 
 salla-search {
+  /* Wokiee: gray bg #f0f0f0, 8px radius, accent border on focus */
   .s-search-input {
-    border-radius: var(--radius-full) !important;
-    border: 1px solid rgba(0, 0, 0, 0.08) !important;
-    background: #f5f5f5 !important;
-    transition: all var(--duration-fast) !important;
+    border-radius: 100px !important;
+    border: 1px solid transparent !important;
+    background: #f0f0f0 !important;
+    height: 40px !important;
+    transition: all 0.2s ease !important;
 
     &:focus-within {
       background: #fff !important;
-      border-color: var(--color-primary) !important;
-      box-shadow: none !important;
+      border-color: var(--color-accent, #304ffe) !important;
+      box-shadow: 0 0 0 3px rgba(48, 79, 254, 0.1) !important;
     }
   }
 }
@@ -380,38 +417,132 @@ salla-contacts {
 }
 
 
-/* ---- Product Price ---- */
+/* ---- Product Price — Wokiee: accent color, 20px ---- */
 
 salla-product-price {
   .s-product-price-current {
     font-weight: 700 !important;
-    color: var(--text-primary) !important;
-    font-size: var(--text-2xl) !important;
+    color: var(--color-accent, #304ffe) !important;
+    font-size: 20px !important;
   }
 
   .s-product-price-old {
-    color: #bbb !important;
+    color: #aaa !important;
     text-decoration: line-through !important;
     font-weight: 400 !important;
+    font-size: 14px !important;
   }
 
   .s-product-price-discount {
-    background: #ef4444 !important;
+    background: #f44336 !important;
     color: #fff !important;
-    border-radius: var(--radius-full) !important;
-    font-weight: 600 !important;
-    padding: 2px 8px !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    padding: 3px 8px !important;
     font-size: 11px !important;
   }
 }
 
 
-/* ---- Rating Stars ---- */
+/* ---- Rating Stars — Wokiee: #FFAB00 ---- */
 
 salla-rating-stars {
   .s-rating-stars-star {
-    color: #f59e0b !important;
+    color: #ffab00 !important;
   }
+}
+
+
+/* ---- Newsletter — Wokiee: green submit button, gray input ---- */
+
+salla-newsletter {
+  .s-newsletter-form {
+    display: flex !important;
+    gap: 8px !important;
+    align-items: stretch !important;
+  }
+
+  .s-newsletter-input {
+    flex: 1 !important;
+    height: 48px !important;
+    background: #f0f0f0 !important;
+    border: 1px solid transparent !important;
+    border-radius: 8px !important;
+    padding: 0 16px !important;
+    font-size: 14px !important;
+    color: #111 !important;
+    transition: all 0.2s ease !important;
+
+    &:focus {
+      background: #fff !important;
+      border-color: var(--color-accent, #304ffe) !important;
+      outline: none !important;
+    }
+  }
+
+  .s-newsletter-btn {
+    height: 48px !important;
+    background: #388e3c !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 0 28px !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    cursor: pointer !important;
+    transition: opacity 0.2s ease !important;
+    white-space: nowrap !important;
+
+    &:hover {
+      opacity: 0.9 !important;
+    }
+  }
+}
+
+[data-theme="dark"] salla-newsletter .s-newsletter-input {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+
+  &:focus {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: var(--color-accent, #304ffe) !important;
+  }
+}
+
+
+/* ---- Salla Filters — Wokiee: 8px radius, gray bg ---- */
+
+salla-filter {
+  .s-filter-btn {
+    border-radius: 8px !important;
+    border: 1px solid var(--border-color) !important;
+    background: #f0f0f0 !important;
+    height: 40px !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease !important;
+
+    &.is-active,
+    &:hover {
+      background: var(--color-accent, #304ffe) !important;
+      color: #fff !important;
+      border-color: var(--color-accent, #304ffe) !important;
+    }
+  }
+}
+
+
+/* ---- Free Shipping Progress Bar ---- */
+
+.s-free-shipping-progress {
+  background: #388e3c !important;
+  border-radius: 4px !important;
+}
+
+.s-free-shipping-bar {
+  border-radius: 4px !important;
+  background: #f0f0f0 !important;
+  overflow: hidden !important;
 }
 
 

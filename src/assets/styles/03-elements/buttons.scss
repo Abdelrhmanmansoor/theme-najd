@@ -1,5 +1,8 @@
 /* ============================================================
-   Buttons — NAJD PREMIUM Button System
+   Buttons — Wokiee-inspired Button System
+   Primary: black bg → blue hover
+   Secondary: outline accent
+   Radius: 8px (matches Wokiee)
    ============================================================ */
 
 .najd-btn {
@@ -7,71 +10,82 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  padding: 12px 28px;
-  border-radius: var(--radius-full);
+  padding: 11px 28px;
+  border-radius: 8px;
   font-family: var(--font-main);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   font-weight: 600;
   line-height: 1.4;
   cursor: pointer;
-  transition: all var(--duration-base) var(--ease-out);
+  transition: background var(--duration-base) var(--ease-out),
+              color var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out);
   border: 1px solid transparent;
   text-decoration: none;
   white-space: nowrap;
   position: relative;
   overflow: hidden;
+  height: 44px;
 }
 
-/* Primary — solid with subtle shadow */
+/* Primary — Wokiee: black → blue on hover */
 .najd-btn--primary {
   background: var(--color-primary);
   color: var(--color-primary-reverse, #fff);
   border-color: transparent;
-  box-shadow: var(--shadow-sm);
 
   &:hover {
-    filter: brightness(1.05);
-    box-shadow: var(--shadow-md);
+    background: var(--color-accent, #304ffe);
+    color: #fff;
+    border-color: transparent;
   }
 
   &:active {
-    filter: brightness(0.98);
+    background: var(--color-accent, #304ffe);
+    filter: brightness(0.95);
   }
 }
 
-/* Outline — clean border */
+/* Secondary — Wokiee: transparent + accent border → fill on hover */
 .najd-btn--outline {
   background: transparent;
-  color: var(--text-primary);
-  border-color: var(--border-color);
+  color: var(--color-accent, #304ffe);
+  border-color: var(--color-accent, #304ffe);
 
   &:hover {
-    background: var(--surface-secondary);
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+    background: var(--color-accent, #304ffe);
+    color: #fff;
+    border-color: var(--color-accent, #304ffe);
   }
 }
 
-/* Ghost */
+/* Ghost — subtle background */
 .najd-btn--ghost {
-  background: var(--surface-secondary);
+  background: var(--surface-secondary, #f0f0f0);
   color: var(--text-primary);
-  border-color: var(--border-color);
+  border-color: transparent;
 
   &:hover {
-    background: var(--surface-card);
-    border-color: var(--border-hover);
+    background: var(--border-color, #e0e0e0);
   }
 }
 
 /* Small variant */
 .najd-btn--sm {
-  padding: 8px 18px;
-  font-size: var(--text-xs);
+  padding: 7px 18px;
+  font-size: var(--text-sm);
+  height: 34px;
 }
 
 /* Large variant */
 .najd-btn--lg {
-  padding: 14px 36px;
-  font-size: var(--text-base);
+  padding: 13px 36px;
+  font-size: var(--text-lg);
+  height: 52px;
+}
+
+/* Full-width */
+.najd-btn--full {
+  width: 100%;
 }
