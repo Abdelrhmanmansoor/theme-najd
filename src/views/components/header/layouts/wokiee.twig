@@ -1,0 +1,101 @@
+{# ===== Header Layout: Wokiee ===== #}
+{# Exact replica of Wokiee Shopify theme header #}
+{# Top bar with links + currency/lang + contact | Main header with logo + nav + actions #}
+
+{# Top Bar - Wokiee Style #}
+<div class="najd-header__topbar wokiee-topbar">
+    <div class="container">
+        <div class="wokiee-topbar__inner">
+            {# Left: Important Links #}
+            <div class="wokiee-topbar__links">
+                <a href="#" class="wokiee-topbar__link">About</a>
+                <a href="#" class="wokiee-topbar__link">Shipping & Returns</a>
+                <a href="#" class="wokiee-topbar__link">Payment</a>
+                <a href="#" class="wokiee-topbar__link">Warranty</a>
+                <a href="#" class="wokiee-topbar__link">Location</a>
+                <a href="#" class="wokiee-topbar__link">Contacts</a>
+            </div>
+            
+            {# Right: Currency + Language + Contact #}
+            <div class="wokiee-topbar__right">
+                {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+                    <button type="button"
+                            onclick="salla.event.dispatch('localization::open')"
+                            class="wokiee-topbar__locale">
+                        <span>{{ user.language.name }}</span>
+                        <span class="mx-1">|</span>
+                        <span>{{ currency.code }} {{ currency.symbol }}</span>
+                    </button>
+                    <salla-localization-modal></salla-localization-modal>
+                {% endif %}
+                
+                <div class="wokiee-topbar__contact">
+                    <i class="sicon-phone"></i>
+                    <span>{{ store.settings.mobile ?: '(555) 555-1000' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Main Header - Wokiee Style #}
+<div class="najd-header__main wokiee-header" id="najd-header-main">
+    <div class="container">
+        <div class="wokiee-header__inner">
+            {# Mobile menu toggle #}
+            <a class="lg:hidden wokiee-header__mobile-toggle" href="#mobile-menu" aria-label="Open menu">
+                <i class="sicon-menu"></i>
+            </a>
+
+            {# Logo #}
+            <a href="{{ link('home') }}" class="wokiee-header__logo">
+                {% if store.logo %}
+                    <img src="{{ store.logo }}" alt="{{ store.name }}" class="wokiee-header__logo-img">
+                {% else %}
+                    <span class="wokiee-header__logo-text">{{ store.name }}</span>
+                {% endif %}
+            </a>
+
+            {# Main Navigation #}
+            <nav class="wokiee-header__nav">
+                <a href="{{ link('home') }}" class="wokiee-header__nav-link active">Home</a>
+                <a href="{{ link('products') }}" class="wokiee-header__nav-link">Shop</a>
+                <a href="#" class="wokiee-header__nav-link">Features</a>
+                <a href="#" class="wokiee-header__nav-link">Pages</a>
+                <a href="{{ link('blog') }}" class="wokiee-header__nav-link">Blog</a>
+                <a href="#" class="wokiee-header__nav-link">Portfolio</a>
+            </nav>
+
+            {# Header Actions #}
+            <div class="wokiee-header__actions">
+                {# Search #}
+                <button class="wokiee-header__action-btn"
+                        onclick="salla.event.dispatch('search::open')"
+                        aria-label="Search">
+                    <i class="sicon-search"></i>
+                </button>
+
+                {# User #}
+                {% if user.type == 'user' %}
+                    <salla-user-menu avatar-only show-header></salla-user-menu>
+                {% else %}
+                    <button class="wokiee-header__action-btn"
+                            onclick="salla.event.dispatch('login::open')"
+                            aria-label="Login">
+                        <i class="sicon-user-circle"></i>
+                    </button>
+                {% endif %}
+
+                {# Wishlist #}
+                <a href="{{ link('wishlist') }}" class="wokiee-header__action-btn" aria-label="Wishlist">
+                    <i class="sicon-heart"></i>
+                </a>
+
+                {# Cart #}
+                <salla-cart-summary class="wokiee-header__cart">
+                    <i slot="icon" class="sicon-shopping-bag wokiee-header__cart-icon"></i>
+                </salla-cart-summary>
+            </div>
+        </div>
+    </div>
+</div>

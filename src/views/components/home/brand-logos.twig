@@ -1,33 +1,44 @@
 {# ============================================================
-   Brand/Partner Logos Section — NAJD PREMIUM
-   Clean grid with subtle card backgrounds (Wokiee style)
+   Brand Logos — Wokiee Style
+   Showcase brand/vendor logos in a grid or carousel
    ============================================================ #}
-{% set _pt = component.section_padding_top is defined and component.section_padding_top != '' ? component.section_padding_top : null %}
-{% set _pb = component.section_padding_bottom is defined and component.section_padding_bottom != '' ? component.section_padding_bottom : null %}
-{% set _spacing_style = (_pt is not null or _pb is not null) ? 'style="' ~ (_pt is not null ? 'padding-top:' ~ _pt ~ 'px;' : '') ~ (_pb is not null ? 'padding-bottom:' ~ _pb ~ 'px;' : '') ~ '"' : '' %}
-{% if component.items|length %}
-<section class="najd-block najd-block--brands py-12 lg:py-16" {{ _spacing_style }}>
-    <div class="{{ component.full_width is defined and component.full_width ? '' : 'container' }}">
-        {% if component.title %}
-            <div class="najd-block__header text-center mb-10">
-                <div class="najd-block__eyebrow">{{ component.eyebrow is defined and component.eyebrow ? component.eyebrow : 'شركاؤنا' }}</div>
-                <h2 class="najd-block__title">{{ component.title }}</h2>
+
+{% set title = component.title|default('Our Brands') %}
+{% set subtitle = component.subtitle|default('') %}
+{% set layout = component.layout|default('grid') %}
+{% set brands = component.brands|default([]) %}
+
+<section class="najd-block najd-block--brand-logos wokiee-brands">
+    <div class="container">
+        {% if title %}
+            <div class="wokiee-brands__header">
+                <h2 class="wokiee-brands__title">{{ title }}</h2>
+                {% if subtitle %}
+                    <p class="wokiee-brands__subtitle">{{ subtitle }}</p>
+                {% endif %}
             </div>
         {% endif %}
-
-        <div class="najd-brands-grid">
-            {% for item in component.items %}
-                {% if item.url %}
-                    <a href="{{ item.url }}" class="najd-brands-grid__item glass-surface" target="_blank" rel="noopener noreferrer" title="{{ item.name }}">
-                        <img src="{{ item.image }}" alt="{{ item.name }}" loading="lazy" class="najd-brands-grid__logo">
+        
+        {% if layout == 'carousel' %}
+            <salla-slider type="carousel" auto-play show-controls="false">
+                <div slot="items">
+                    {% for brand in brands %}
+                        <div class="swiper-slide wokiee-brands__slide">
+                            <a href="{{ brand.url|default('#') }}" class="wokiee-brands__link">
+                                <img src="{{ brand.image }}" alt="{{ brand.name }}" class="wokiee-brands__logo">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </salla-slider>
+        {% else %}
+            <div class="wokiee-brands__grid">
+                {% for brand in brands %}
+                    <a href="{{ brand.url|default('#') }}" class="wokiee-brands__item">
+                        <img src="{{ brand.image }}" alt="{{ brand.name }}" class="wokiee-brands__logo">
                     </a>
-                {% else %}
-                    <div class="najd-brands-grid__item glass-surface" title="{{ item.name }}">
-                        <img src="{{ item.image }}" alt="{{ item.name }}" loading="lazy" class="najd-brands-grid__logo">
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 </section>
-{% endif %}

@@ -1,0 +1,45 @@
+{# ============================================================
+   Features Bar — Wokiee Style
+   Icons with benefits: Free Shipping, Returns, Security, Support
+   ============================================================ #}
+
+{% set features = component.features|default([
+    {
+        icon: 'sicon-shipping-fast',
+        title: 'Free Shipping',
+        subtitle: 'On orders over $50'
+    },
+    {
+        icon: 'sicon-refresh',
+        title: 'Easy Returns',
+        subtitle: '30-day return policy'
+    },
+    {
+        icon: 'sicon-shield-check',
+        title: 'Secure Payment',
+        subtitle: '100% secure checkout'
+    },
+    {
+        icon: 'sicon-headphones',
+        title: '24/7 Support',
+        subtitle: 'Dedicated support'
+    }
+]) %}
+
+<section class="najd-block najd-block--features-bar wokiee-features-bar">
+    <div class="container">
+        <div class="wokiee-features-bar__grid">
+            {% for feature in features %}
+                <div class="wokiee-features-bar__item">
+                    <div class="wokiee-features-bar__icon">
+                        <i class="{{ feature.icon }}"></i>
+                    </div>
+                    <div class="wokiee-features-bar__content">
+                        <h4 class="wokiee-features-bar__title">{{ feature.title }}</h4>
+                        <p class="wokiee-features-bar__subtitle">{{ feature.subtitle }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

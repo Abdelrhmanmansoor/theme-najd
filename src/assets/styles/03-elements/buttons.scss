@@ -1,9 +1,9 @@
 /* ============================================================
    Buttons — Wokiee Exact Style
-   Primary: #222222 → #2879FE hover
-   Outline: #222222 border → fill on hover
-   Radius: 0 (sharp edges — Wokiee signature)
-   Text: 12px UPPERCASE 600 weight 0.5px spacing
+   Primary: #304ffe → darken hover
+   Outline: #304ffe border → fill on hover
+   Radius: 8px (Wokiee uses 8px)
+   Text: 14px 700 weight
    ============================================================ */
 
 .najd-btn {
@@ -11,16 +11,16 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  padding: 0 30px;
-  border-radius: 0;
-  font-family: 'Poppins', var(--font-main), system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  padding: 0 25px;
+  border-radius: 8px;
+  font-family: var(--font-main), system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
   line-height: 1;
   cursor: pointer;
-  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: color 0.3s, box-shadow 0.3s, background 0.3s, border-color 0.3s;
   border: 1px solid transparent;
   text-decoration: none;
   white-space: nowrap;
@@ -29,16 +29,17 @@
   height: 40px;
 }
 
-/* Primary — Wokiee: #222222 bg → #2879FE on hover */
+/* Primary — Wokiee: #304ffe bg */
 .najd-btn--primary {
-  background: #222222;
+  background: var(--color-primary, #304ffe);
   color: #ffffff;
-  border-color: #222222;
+  border-color: var(--color-primary, #304ffe);
 
   &:hover {
-    background: var(--color-accent, #2879FE);
+    background: var(--color-primary-dark, #1a3cfc);
     color: #fff;
-    border-color: var(--color-accent, #2879FE);
+    border-color: var(--color-primary-dark, #1a3cfc);
+    box-shadow: 0 4px 12px rgba(48, 79, 254, 0.3);
   }
 
   &:active {
@@ -46,27 +47,27 @@
   }
 }
 
-/* Outline — transparent + #222222 border → fill on hover */
+/* Outline — transparent + #304ffe border → fill on hover */
 .najd-btn--outline {
   background: transparent;
-  color: #222222;
-  border-color: #222222;
+  color: var(--color-primary, #304ffe);
+  border-color: var(--color-primary, #304ffe);
 
   &:hover {
-    background: #222222;
+    background: var(--color-primary, #304ffe);
     color: #fff;
-    border-color: #222222;
+    border-color: var(--color-primary, #304ffe);
   }
 }
 
 /* Outline accent variant */
 .najd-btn--outline-accent {
   background: transparent;
-  color: var(--color-accent, #2879FE);
-  border-color: var(--color-accent, #2879FE);
+  color: var(--color-primary, #304ffe);
+  border-color: var(--color-primary, #304ffe);
 
   &:hover {
-    background: var(--color-accent, #2879FE);
+    background: var(--color-primary, #304ffe);
     color: #fff;
   }
 }
@@ -104,14 +105,14 @@
 
 /* Dark mode */
 [data-theme="dark"] .najd-btn--primary {
-  background: #fff;
-  color: #222222;
-  border-color: #fff;
+  background: var(--color-primary, #304ffe);
+  color: #ffffff;
+  border-color: var(--color-primary, #304ffe);
 
   &:hover {
-    background: var(--color-accent, #2879FE);
+    background: var(--color-primary-dark, #1a3cfc);
     color: #fff;
-    border-color: var(--color-accent, #2879FE);
+    border-color: var(--color-primary-dark, #1a3cfc);
   }
 }
 
@@ -128,13 +129,12 @@
 
 /* Glass mode */
 [data-theme="glass"] .najd-btn--primary {
-  background: rgba(255,255,255,0.15);
+  background: var(--color-primary, #304ffe);
   color: #fff;
-  border-color: rgba(255,255,255,0.25);
-  backdrop-filter: blur(8px);
+  border-color: var(--color-primary, #304ffe);
 
   &:hover {
-    background: var(--color-accent, #2879FE);
-    border-color: var(--color-accent, #2879FE);
+    background: var(--color-primary-dark, #1a3cfc);
+    border-color: var(--color-primary-dark, #1a3cfc);
   }
 }

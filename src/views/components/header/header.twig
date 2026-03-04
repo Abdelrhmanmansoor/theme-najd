@@ -1,15 +1,16 @@
 {# ============================================================
    NAJD THEME — Header Component (Layout Router)
    Routes to the selected header style layout
-   Supports: classic / centered / minimal / mega / transparent / hamburger
-   Glass-aware: adapts to all 3 modes
+   Supports: wokiee / classic / centered / minimal / mega / transparent / hamburger
    ============================================================ #}
 
-{% set header_style = theme.settings.get('header_style', 'classic') %}
+{% set header_style = theme.settings.get('header_style', 'wokiee') %}
 
 <header class="najd-header najd-header--{{ header_style }}" id="najd-header">
 
-    {% if header_style == 'centered' %}
+    {% if header_style == 'wokiee' %}
+        {% include 'components.header.layouts.wokiee' %}
+    {% elseif header_style == 'centered' %}
         {% include 'components.header.layouts.centered' %}
     {% elseif header_style == 'minimal' %}
         {% include 'components.header.layouts.minimal' %}

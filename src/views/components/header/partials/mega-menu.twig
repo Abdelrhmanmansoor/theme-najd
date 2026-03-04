@@ -1,0 +1,95 @@
+{# ============================================================
+   Mega Menu — Wokiee Style
+   Multi-column dropdown with content blocks
+   ============================================================ #}
+
+{% set menu_items = component.items|default([]) %}
+
+<div class="wokiee-mega-menu">
+    <div class="wokiee-mega-menu__container">
+        {% for item in menu_items %}
+            <div class="wokiee-mega-menu__item" data-mega-item="{{ loop.index }}">
+                <a href="{{ item.url|default('#') }}" class="wokiee-mega-menu__trigger">
+                    {{ item.title }}
+                    {% if item.children|length > 0 or item.content_blocks|length > 0 %}
+                        <i class="sicon-keyboard-arrow-down"></i>
+                    {% endif %}
+                </a>
+                
+                {% if item.children|length > 0 or item.content_blocks|length > 0 %}
+                    <div class="wokiee-mega-menu__dropdown">
+                        <div class="container">
+                            <div class="wokiee-mega-menu__content">
+                                {# Column 1: Navigation Links #}
+                                {% if item.children|length > 0 %}
+                                    <div class="wokiee-mega-menu__columns">
+                                        {% for column in item.children|batch(5) %}
+                                            <div class="wokiee-mega-menu__column">
+                                                {% for child in column %}
+                                                    <div class="wokiee-mega-menu__link-group">
+                                                        <a href="{{ child.url|default('#') }}" class="wokiee-mega-menu__column-title">
+                                                            {{ child.title }}
+                                                        </a>
+                                                        {% if child.children|length > 0 %}
+                                                            <ul class="wokiee-mega-menu__submenu">
+                                                                {% for grandchild in child.children %}
+                                                                    <li>
+                                                                        <a href="{{ grandchild.url|default('#') }}">
+                                                                            {{ grandchild.title }}
+                                                                        </a>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        {% endif %}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                
+                                {# Content Blocks #}
+                                {% if item.content_blocks|length > 0 %}
+                                    <div class="wokiee-mega-menu__blocks">
+                                        {% for block in item.content_blocks %}
+                                            {% if block.type == 'banner' %}
+                                                <div class="wokiee-mega-menu__banner">
+                                                    <a href="{{ block.url|default('#') }}">
+                                                        <img src="{{ block.image }}" alt="{{ block.title|default('') }}">
+                                                        {% if block.title %}
+                                                            <span class="wokiee-mega-menu__banner-title">{{ block.title }}</span>
+                                                        {% endif %}
+                                                    </a>
+                                                </div>
+                                            {% elseif block.type == 'products' %}
+                                                <div class="wokiee-mega-menu__products">
+                                                    <h4 class="wokiee-mega-menu__block-title">{{ block.title|default('Featured Products') }}</h4>
+                                                    <div class="wokiee-mega-menu__product-list">
+                                                        {% for product in block.products|default([]) %}
+                                                            <a href="{{ product.url }}" class="wokiee-mega-menu__product">
+                                                                <img src="{{ product.image }}" alt="{{ product.name }}">
+                                                                <span class="wokiee-mega-menu__product-name">{{ product.name }}</span>
+                                                                <span class="wokiee-mega-menu__product-price">{{ product.price }}</span>
+                                                            </a>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            {% elseif block.type == 'collection' %}
+                                                <div class="wokiee-mega-menu__collection">
+                                                    <a href="{{ block.url|default('#') }}">
+                                                        <img src="{{ block.image }}" alt="{{ block.title|default('') }}">
+                                                        <span class="wokiee-mega-menu__collection-title">{{ block.title }}</span>
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,49 @@
+{# ============================================================
+   Testimonials Carousel — Wokiee Style
+   Customer reviews with star ratings
+   ============================================================ #}
+
+{% set title = component.title|default('What Our Customers Say') %}
+{% set subtitle = component.subtitle|default('') %}
+{% set testimonials = component.testimonials|default([]) %}
+
+<section class="najd-block najd-block--testimonials wokiee-testimonials">
+    <div class="container">
+        {% if title %}
+            <div class="wokiee-testimonials__header">
+                <h2 class="wokiee-testimonials__title">{{ title }}</h2>
+                {% if subtitle %}
+                    <p class="wokiee-testimonials__subtitle">{{ subtitle }}</p>
+                {% endif %}
+            </div>
+        {% endif %}
+        
+        <salla-slider type="carousel" auto-play show-controls="true" id="testimonials-slider">
+            <div slot="items">
+                {% for testimonial in testimonials %}
+                    <div class="swiper-slide wokiee-testimonials__slide">
+                        <div class="wokiee-testimonials__card">
+                            <div class="wokiee-testimonials__stars">
+                                {% for i in 1..5 %}
+                                    <i class="sicon-star {% if i <= testimonial.rating|default(5) %}filled{% endif %}"></i>
+                                {% endfor %}
+                            </div>
+                            <p class="wokiee-testimonials__text">{{ testimonial.text }}</p>
+                            <div class="wokiee-testimonials__author">
+                                {% if testimonial.image %}
+                                    <img src="{{ testimonial.image }}" alt="{{ testimonial.name }}" class="wokiee-testimonials__avatar">
+                                {% endif %}
+                                <div class="wokiee-testimonials__info">
+                                    <h4 class="wokiee-testimonials__name">{{ testimonial.name }}</h4>
+                                    {% if testimonial.title %}
+                                        <span class="wokiee-testimonials__role">{{ testimonial.title }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </salla-slider>
+    </div>
+</section>

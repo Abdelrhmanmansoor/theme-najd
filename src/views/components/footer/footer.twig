@@ -1,15 +1,16 @@
 {# ============================================================
    NAJD THEME — Footer Component (Layout Router)
    Routes to the selected footer style layout
-   Supports: classic / centered / minimal / columns / magazine
-   Glass-aware: adapts to all 3 modes
+   Supports: wokiee / classic / centered / minimal / columns / magazine
    ============================================================ #}
 
-{% set footer_style = theme.settings.get('footer_style', 'classic') %}
+{% set footer_style = theme.settings.get('footer_style', 'wokiee') %}
 
 <footer class="najd-footer najd-footer--{{ footer_style }}">
 
-    {% if footer_style == 'centered' %}
+    {% if footer_style == 'wokiee' %}
+        {% include 'components.footer.layouts.wokiee' %}
+    {% elseif footer_style == 'centered' %}
         {% include 'components.footer.layouts.centered' %}
     {% elseif footer_style == 'minimal' %}
         {% include 'components.footer.layouts.minimal' %}

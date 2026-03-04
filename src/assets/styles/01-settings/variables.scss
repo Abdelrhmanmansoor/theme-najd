@@ -14,13 +14,13 @@
   --space-3xl: 64px;
   --space-4xl: 96px;
 
-  /* ---- Radius Scale — Wokiee: 0px (sharp edges) ---- */
-  --radius-sm:   0px;
-  --radius-md:   0px;
-  --radius-lg:   0px;
-  --radius-xl:   0px;
-  --radius-2xl:  0px;
-  --radius-3xl:  0px;
+  /* ---- Radius Scale — Wokiee: 8px default ---- */
+  --radius-sm:   8px;
+  --radius-md:   8px;
+  --radius-lg:   8px;
+  --radius-xl:   8px;
+  --radius-2xl:  8px;
+  --radius-3xl:  20px;
   --radius-full: 9999px; /* pills remain rounded */
 
   /* ---- Transitions — Wokiee: 0.2s/0.3s ease ---- */
@@ -41,40 +41,43 @@
   --z-modal:  100;
   --z-toast:  110;
 
-  /* ---- Typography Scale — Wokiee: 12/14/16px ---- */
-  --text-xs:   11px;
-  --text-sm:   12px;
-  --text-base: 14px;
-  --text-lg:   16px;
-  --text-xl:   18px;
-  --text-2xl:  20px;
-  --text-3xl:  24px;
-  --text-4xl:  32px;
-  --text-5xl:  44px;
+  /* ---- Typography Scale — Wokiee: Inter font scale ---- */
+  --text-xs:   12px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-lg:   19px;
+  --text-xl:   20px;
+  --text-2xl:  24px;
+  --text-3xl:  34px;
+  --text-4xl:  40px;
+  --text-5xl:  48px;
 
-  /* ---- Section spacing — Wokiee: 70px desktop ---- */
-  --section-gap: 70px;
+  /* ---- Section spacing — Wokiee: 100px desktop ---- */
+  --section-gap: 100px;
 
-  /* ---- Border radius style — Wokiee: 0 (sharp) ---- */
-  --radius-global: 0px;
-  --card-radius:   0px;
+  /* ---- Border radius style — Wokiee: 8px ---- */
+  --radius-global: 8px;
+  --card-radius:   8px;
 
-  /* ---- Card style — Wokiee: subtle shadow ---- */
-  --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  --card-border: 1px solid #E8E8E8;
+  /* ---- Card style — Wokiee: flat design ---- */
+  --card-shadow: none;
+  --card-border: none;
 
   /* ---- Accent color — Wokiee blue ---- */
-  --color-accent: #2879FE;
+  --color-accent: #304ffe;
+  --color-success: #388e3c;
+  --color-error: #f44336;
+  --color-warning: #ff8a00;
 }
 
 /* ---- Section spacing variants — Wokiee scale ---- */
-[data-spacing="compact"]  { --section-gap: 40px; }
-[data-spacing="normal"]   { --section-gap: 70px; }
-[data-spacing="spacious"] { --section-gap: 100px; }
+[data-spacing="compact"]  { --section-gap: 50px; }
+[data-spacing="normal"]   { --section-gap: 100px; }
+[data-spacing="spacious"] { --section-gap: 120px; }
 
 /* ---- Border radius variants ---- */
-[data-radius="rounded"] { --radius-global: 8px;  --card-radius: 8px; --radius-sm:4px; --radius-md:8px; --radius-lg:8px; --radius-xl:10px; --radius-2xl:12px; }
-[data-radius="sharp"]   { --radius-global: 0px;  --card-radius: 0px; }
+[data-radius="rounded"] { --radius-global: 8px;  --card-radius: 8px; --radius-sm:8px; --radius-md:8px; --radius-lg:8px; --radius-xl:8px; --radius-2xl:20px; }
+[data-radius="sharp"]   { --radius-global: 0px;  --card-radius: 0px; --radius-sm:0px; --radius-md:0px; --radius-lg:0px; --radius-xl:0px; --radius-2xl:0px; }
 [data-radius="pill"]    { --radius-global: 50px; --card-radius: 16px; }
 
 /* ---- Card style variants ---- */
@@ -83,10 +86,24 @@
 [data-card-style="flat"]     { --card-shadow: none; --card-border: none; }
 
 /* ====================================================
-   ⭐ Color Presets — 7 Professional Palettes
+   ⭐ Color Presets — 8 Professional Palettes
    Applied via data-color-preset on body element
    Each overrides --color-primary and --color-accent
 ==================================================== */
+
+/* WOKIEE — Exact Match to Shopify Wokiee Theme */
+[data-color-preset="wokiee"] {
+  --color-primary:       #304ffe;
+  --color-primary-dark:  #1a3cfc;
+  --color-primary-light: #5c7cff;
+  --color-accent:        #304ffe;
+  --color-success:       #388e3c;
+  --color-error:         #f44336;
+  --color-warning:       #ff8a00;
+  --color-star:          #ffab00;
+  --color-star-bg:       #ffe6b3;
+}
+
 [data-color-preset="royal"] {
   --color-primary:       #7c3aed;
   --color-primary-dark:  #6d28d9;
@@ -162,12 +179,12 @@ body[style*="--gradient-start"] .najd-btn--primary {
   --border-hover:       #cccccc;
   --border-active:      var(--color-primary);
 
-  /* Wokiee-style shadows — clean and light */
+  /* Wokiee-style shadows */
   --shadow-xs:          0 1px 3px rgba(0, 0, 0, 0.05);
   --shadow-sm:          0 2px 5px rgba(0, 0, 0, 0.1);
-  --shadow-md:          0 2px 5px rgba(0, 0, 0, 0.1);
-  --shadow-lg:          0 5px 15px rgba(0, 0, 0, 0.1);
-  --shadow-xl:          0 8px 20px rgba(0, 0, 0, 0.12);
+  --shadow-md:          0 4px 16px rgba(0, 0, 0, 0.15);
+  --shadow-lg:          0 8px 32px rgba(0, 0, 0, 0.15);
+  --shadow-xl:          0 8px 20px rgba(0, 0, 0, 0.15);
 
   /* No glass in light mode */
   --glass-bg:           #ffffff;
@@ -176,9 +193,9 @@ body[style*="--gradient-start"] .najd-btn--primary {
 
   --scene-opacity: 0;
 
-  /* Card — Wokiee: sharp */
+  /* Card — Wokiee: 8px radius */
   --card-hover-lift:    0px;
-  --card-radius:        0px;
+  --card-radius:        8px;
 
   /* Flat primary color — no gradient */
   --gradient-primary:   var(--color-primary);
@@ -218,7 +235,7 @@ body[style*="--gradient-start"] .najd-btn--primary {
 
   --scene-opacity: 0;
   --card-hover-lift:    0px;
-  --card-radius:        0px;
+  --card-radius:        8px;
   --gradient-primary:   var(--color-primary);
 }
 

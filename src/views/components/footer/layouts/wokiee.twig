@@ -1,0 +1,104 @@
+{# ===== Footer Layout: Wokiee ===== #}
+{# Black background, white text, newsletter section, 4-column grid #}
+
+{% set show_newsletter = theme.settings.get('show_newsletter', true) %}
+{% set newsletter_title = theme.settings.get('newsletter_title', 'Subscribe to our newsletter') %}
+
+{# Newsletter Section - Black Background #}
+{% if show_newsletter %}
+<div class="wokiee-footer__newsletter">
+    <div class="container">
+        <div class="wokiee-footer__newsletter-inner">
+            <div class="wokiee-footer__newsletter-content">
+                <h3 class="wokiee-footer__newsletter-title">{{ newsletter_title }}</h3>
+                <p class="wokiee-footer__newsletter-desc">Get the latest updates and exclusive offers</p>
+            </div>
+            <salla-newsletter class="wokiee-footer__newsletter-form"></salla-newsletter>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{# Main Footer - Black Background #}
+<div class="wokiee-footer__main">
+    <div class="container">
+        <div class="wokiee-footer__grid">
+            {# Column 1: Store Info #}
+            <div class="wokiee-footer__col wokiee-footer__col--wide">
+                <a href="{{ link('/') }}" class="wokiee-footer__logo">
+                    {% if store.logo %}
+                        <img src="{{ store.logo }}" alt="{{ store.name }}" class="wokiee-footer__logo-img">
+                    {% else %}
+                        <span class="wokiee-footer__logo-text">{{ store.name }}</span>
+                    {% endif %}
+                </a>
+
+                {% if store.description %}
+                    <p class="wokiee-footer__desc">{{ store.description|raw }}</p>
+                {% endif %}
+
+                <div class="wokiee-footer__contact">
+                    {% if store.settings.mobile %}
+                        <div class="wokiee-footer__contact-item">
+                            <i class="sicon-phone"></i>
+                            <span>{{ store.settings.mobile }}</span>
+                        </div>
+                    {% endif %}
+                    {% if store.settings.email %}
+                        <div class="wokiee-footer__contact-item">
+                            <i class="sicon-mail"></i>
+                            <span>{{ store.settings.email }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <salla-social class="wokiee-footer__social"></salla-social>
+            </div>
+
+            {# Column 2: Quick Links #}
+            <div class="wokiee-footer__col">
+                <h4 class="wokiee-footer__heading">Quick Links</h4>
+                <ul class="wokiee-footer__links">
+                    <li><a href="{{ link('home') }}">Home</a></li>
+                    <li><a href="{{ link('products') }}">Shop</a></li>
+                    <li><a href="{{ link('blog') }}">Blog</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            {# Column 3: Customer Service #}
+            <div class="wokiee-footer__col">
+                <h4 class="wokiee-footer__heading">Customer Service</h4>
+                <ul class="wokiee-footer__links">
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="#">Payment Methods</a></li>
+                    <li><a href="#">Warranty</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            {# Column 4: My Account #}
+            <div class="wokiee-footer__col">
+                <h4 class="wokiee-footer__heading">My Account</h4>
+                <ul class="wokiee-footer__links">
+                    <li><a href="{{ link('customer.orders') }}">My Orders</a></li>
+                    <li><a href="{{ link('wishlist') }}">Wishlist</a></li>
+                    <li><a href="{{ link('customer.profile') }}">Account Settings</a></li>
+                    <li><a href="#">Track Order</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Bottom Bar #}
+<div class="wokiee-footer__bottom">
+    <div class="container">
+        <div class="wokiee-footer__bottom-inner">
+            <span class="wokiee-footer__copyright">© {{ "now"|date("Y") }} {{ store.name }}. All rights reserved.</span>
+            <salla-payments class="wokiee-footer__payments"></salla-payments>
+        </div>
+    </div>
+</div>

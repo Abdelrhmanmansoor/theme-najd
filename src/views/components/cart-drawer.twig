@@ -1,0 +1,161 @@
+{# ============================================================
+   Cart Drawer — Wokiee Style
+   Slide-out cart with free shipping progress bar
+   ============================================================ #}
+
+{% set free_shipping_threshold = theme.settings.get('free_shipping_threshold', 50) %}
+
+<div class="wokiee-cart-drawer" id="cart-drawer" aria-hidden="true">
+    <div class="wokiee-cart-drawer__overlay" onclick="closeCartDrawer()"></div>
+    
+    <div class="wokiee-cart-drawer__panel">
+        <div class="wokiee-cart-drawer__header">
+            <h3 class="wokiee-cart-drawer__title">
+                <i class="sicon-shopping-bag"></i>
+                {{ trans('blocks.cart.title') }}
+                <span class="wokiee-cart-drawer__count" id="cart-count">0</span>
+            </h3>
+            <button class="wokiee-cart-drawer__close" onclick="closeCartDrawer()" aria-label="Close cart">
+                <i class="sicon-close"></i>
+            </button>
+        </div>
+        
+        {# Free Shipping Progress #}
+        <div class="wokiee-cart-drawer__shipping" id="free-shipping-bar">
+            <div class="wokiee-cart-drawer__shipping-text">
+                <span id="shipping-message">Add ${{ free_shipping_threshold }} more for free shipping!</span>
+            </div>
+            <div class="wokiee-cart-drawer__progress">
+                <div class="wokiee-cart-drawer__progress-bar" id="shipping-progress" style="width: 0%"></div>
+            </div>
+        </div>
+        
+        {# Cart Items #}
+        <div class="wokiee-cart-drawer__items" id="cart-items">
+            {# Items will be populated by JavaScript #}
+            <div class="wokiee-cart-drawer__empty">
+                <i class="sicon-shopping-bag"></i>
+                <p>{{ trans('blocks.cart.empty') }}</p>
+                <a href="{{ link('products') }}" class="najd-btn najd-btn--primary">
+                    {{ trans('blocks.cart.continue_shopping') }}
+                </a>
+            </div>
+        </div>
+        
+        {# Cart Footer #}
+        <div class="wokiee-cart-drawer__footer" id="cart-footer" style="display: none;">
+            <div class="wokiee-cart-drawer__subtotal">
+                <span>{{ trans('blocks.cart.subtotal') }}</span>
+                <span class="wokiee-cart-drawer__subtotal-amount" id="cart-subtotal">$0.00</span>
+            </div>
+            
+            <p class="wokiee-cart-drawer__note">{{ trans('blocks.cart.shipping_note') }}</p>
+            
+            <a href="{{ link('cart') }}" class="najd-btn najd-btn--primary wokiee-cart-drawer__checkout">
+                {{ trans('blocks.cart.checkout') }}
+            </a>
+            
+            <button class="najd-btn najd-btn--outline wokiee-cart-drawer__continue" onclick="closeCartDrawer()">
+                {{ trans('blocks.cart.continue_shopping') }}
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Cart Drawer Functions
+function openCartDrawer() {
+    const drawer = document.getElementById('cart-drawer');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    updateCartDrawer();
+}
+
+function closeCartDrawer() {
+    const drawer = document.getElementById('cart-drawer');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+function updateCartDrawer() {
+    // This will be populated by Salla's cart API
+    salla.cart.get().then(cart => {
+        updateCartUI(cart);
+    });
+}
+
+function updateCartUI(cart) {
+    const itemsContainer = document.getElementById('cart-items');
+    const footer = document.getElementById('cart-footer');
+    const count = document.getElementById('cart-count');
+    const subtotal = document.getElementById('cart-subtotal');
+    
+    count.textContent = cart.items_count || 0;
+    
+    if (cart.items && cart.items.length > 0) {
+        itemsContainer.innerHTML = cart.items.map(item => `
+            <div class="wokiee-cart-drawer__item" data-item-id="${item.id}">
+                <img src="${item.image}" alt="${item.name}" class="wokiee-cart-drawer__item-image">
+                <div class="wokiee-cart-drawer__item-details">
+                    <h4 class="wokiee-cart-drawer__item-name">${item.name}</h4>
+                    <p class="wokiee-cart-drawer__item-variant">${item.variant || ''}</p>
+                    <div class="wokiee-cart-drawer__item-bottom">
+                        <div class="wokiee-cart-drawer__qty">
+                            <button onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                        </div>
+                        <span class="wokiee-cart-drawer__item-price">${item.price}</span>
+                    </div>
+                </div>
+                <button class="wokiee-cart-drawer__item-remove" onclick="removeItem(${item.id})">
+                    <i class="sicon-trash"></i>
+                </button>
+            </div>
+        `).join('');
+        
+        footer.style.display = 'block';
+        subtotal.textContent = cart.total;
+        
+        // Update free shipping progress
+        updateFreeShippingProgress(cart.total_raw || 0);
+    } else {
+        itemsContainer.innerHTML = `
+            <div class="wokiee-cart-drawer__empty">
+                <i class="sicon-shopping-bag"></i>
+                <p>Your cart is empty</p>
+                <a href="${salla.link('products')}" class="najd-btn najd-btn--primary">Continue Shopping</a>
+            </div>
+        `;
+        footer.style.display = 'none';
+    }
+}
+
+function updateFreeShippingProgress(total) {
+    const threshold = {{ free_shipping_threshold }};
+    const progress = Math.min((total / threshold) * 100, 100);
+    const remaining = Math.max(threshold - total, 0);
+    
+    document.getElementById('shipping-progress').style.width = progress + '%';
+    
+    if (remaining > 0) {
+        document.getElementById('shipping-message').textContent = 
+            `Add $${remaining.toFixed(2)} more for free shipping!`;
+    } else {
+        document.getElementById('shipping-message').textContent = 
+            'Congratulations! You qualify for free shipping!';
+    }
+}
+
+function updateQuantity(itemId, quantity) {
+    if (quantity < 1) return;
+    salla.cart.updateItem(itemId, { quantity }).then(() => updateCartDrawer());
+}
+
+function removeItem(itemId) {
+    salla.cart.removeItem(itemId).then(() => updateCartDrawer());
+}
+
+// Listen for cart updates
+salla.event.on('cart::updated', updateCartDrawer);
+</script>

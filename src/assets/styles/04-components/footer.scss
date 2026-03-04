@@ -578,3 +578,211 @@
     justify-content: center;
   }
 }
+
+
+/* ============================================================
+   7. WOKIEE FOOTER STYLE
+   Black background, white text, clean layout
+   ============================================================ */
+
+.najd-footer--wokiee {
+  margin-top: 0;
+  
+  /* Newsletter Section */
+  .wokiee-footer__newsletter {
+    background: #000000;
+    padding: 60px 0;
+  }
+  
+  .wokiee-footer__newsletter-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    
+    @media (max-width: 767px) {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+  
+  .wokiee-footer__newsletter-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 8px;
+  }
+  
+  .wokiee-footer__newsletter-desc {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .wokiee-footer__newsletter-form {
+    min-width: 400px;
+    
+    @media (max-width: 767px) {
+      min-width: 100%;
+    }
+    
+    /* Style the newsletter input */
+    salla-newsletter {
+      --newsletter-bg: #f0f0f0;
+      --newsletter-border: transparent;
+      --newsletter-radius: 8px;
+      --newsletter-btn-bg: var(--color-primary, #304ffe);
+      --newsletter-btn-color: #ffffff;
+    }
+  }
+  
+  /* Main Footer */
+  .wokiee-footer__main {
+    background: #000000;
+    padding: 60px 0 40px;
+  }
+  
+  .wokiee-footer__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    
+    @media (max-width: 1023px) {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    @media (max-width: 767px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .wokiee-footer__col--wide {
+    @media (max-width: 1023px) {
+      grid-column: 1 / -1;
+    }
+  }
+  
+  /* Logo */
+  .wokiee-footer__logo {
+    display: inline-block;
+    margin-bottom: 20px;
+    
+    &-img {
+      height: 40px;
+      width: auto;
+    }
+    
+    &-text {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+  }
+  
+  /* Description */
+  .wokiee-footer__desc {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    max-width: 300px;
+  }
+  
+  /* Contact Info */
+  .wokiee-footer__contact {
+    margin-bottom: 24px;
+  }
+  
+  .wokiee-footer__contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 12px;
+    
+    i {
+      font-size: 16px;
+      color: var(--color-primary, #304ffe);
+    }
+  }
+  
+  /* Social Icons */
+  .wokiee-footer__social {
+    display: flex;
+    gap: 12px;
+    
+    ::part(social-link) {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background: var(--color-primary, #304ffe);
+        color: #ffffff;
+      }
+    }
+  }
+  
+  /* Headings */
+  .wokiee-footer__heading {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+  
+  /* Links */
+  .wokiee-footer__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    li {
+      margin-bottom: 12px;
+    }
+    
+    a {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      transition: color 0.3s ease;
+      
+      &:hover {
+        color: var(--color-primary, #304ffe);
+      }
+    }
+  }
+  
+  /* Bottom Bar */
+  .wokiee-footer__bottom {
+    background: #000000;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 0;
+  }
+  
+  .wokiee-footer__bottom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    
+    @media (max-width: 767px) {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+  
+  .wokiee-footer__copyright {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .wokiee-footer__payments {
+    ::part(payment-icon) {
+      filter: grayscale(100%) brightness(2);
+      opacity: 0.7;
+    }
+  }
+}

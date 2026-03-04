@@ -1,0 +1,178 @@
+{# ============================================================
+   Quick View Modal — Wokiee Style
+   Product preview without page reload
+   ============================================================ #}
+
+<div class="wokiee-quick-view" id="quick-view-modal" aria-hidden="true">
+    <div class="wokiee-quick-view__overlay" onclick="closeQuickView()"></div>
+    
+    <div class="wokiee-quick-view__panel">
+        <button class="wokiee-quick-view__close" onclick="closeQuickView()" aria-label="Close quick view">
+            <i class="sicon-close"></i>
+        </button>
+        
+        <div class="wokiee-quick-view__content" id="quick-view-content">
+            {# Content will be loaded dynamically #}
+            <div class="wokiee-quick-view__loading">
+                <div class="wokiee-spinner"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Quick View Functions
+function openQuickView(productId) {
+    const modal = document.getElementById('quick-view-modal');
+    const content = document.getElementById('quick-view-content');
+    
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    
+    // Show loading
+    content.innerHTML = '<div class="wokiee-quick-view__loading"><div class="wokiee-spinner"></div></div>';
+    
+    // Fetch product data
+    salla.product.get(productId).then(product => {
+        renderQuickView(product);
+    }).catch(error => {
+        content.innerHTML = '<p class="wokiee-quick-view__error">Failed to load product</p>';
+    });
+}
+
+function closeQuickView() {
+    const modal = document.getElementById('quick-view-modal');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+function renderQuickView(product) {
+    const content = document.getElementById('quick-view-content');
+    
+    content.innerHTML = `
+        <div class="wokiee-quick-view__grid">
+            <div class="wokiee-quick-view__gallery">
+                <div class="wokiee-quick-view__main-image">
+                    <img src="${product.image}" alt="${product.name}" id="qv-main-image">
+                </div>
+                ${product.images && product.images.length > 1 ? `
+                    <div class="wokiee-quick-view__thumbnails">
+                        ${product.images.map(img => `
+                            <button onclick="changeQVImage('${img.url}')" class="wokiee-quick-view__thumb">
+                                <img src="${img.url}" alt="">
+                            </button>
+                        `).join('')}
+                    </div>
+                ` : ''}
+            </div>
+            
+            <div class="wokiee-quick-view__details">
+                <h2 class="wokiee-quick-view__title">${product.name}</h2>
+                
+                <div class="wokiee-quick-view__price">
+                    ${product.sale_price ? `
+                        <span class="wokiee-quick-view__sale-price">${product.sale_price}</span>
+                        <span class="wokiee-quick-view__old-price">${product.price}</span>
+                    ` : `<span class="wokiee-quick-view__regular-price">${product.price}</span>`}
+                </div>
+                
+                ${product.rating ? `
+                    <div class="wokiee-quick-view__rating">
+                        ${renderStars(product.rating)}
+                        <span>(${product.reviews_count || 0} reviews)</span>
+                    </div>
+                ` : ''}
+                
+                <p class="wokiee-quick-view__description">${product.description || ''}</p>
+                
+                ${product.variants && product.variants.length > 0 ? `
+                    <div class="wokiee-quick-view__variants">
+                        ${renderVariants(product.variants)}
+                    </div>
+                ` : ''}
+                
+                <div class="wokiee-quick-view__actions">
+                    <div class="wokiee-quick-view__qty">
+                        <button onclick="updateQVQty(-1)">-</button>
+                        <input type="number" value="1" min="1" id="qv-quantity">
+                        <button onclick="updateQVQty(1)">+</button>
+                    </div>
+                    
+                    <button class="najd-btn najd-btn--primary wokiee-quick-view__add" onclick="addToCartFromQV(${product.id})">
+                        <i class="sicon-shopping-bag"></i>
+                        Add to Cart
+                    </button>
+                    
+                    <a href="${product.url}" class="najd-btn najd-btn--outline wokiee-quick-view__full">
+                        View Full Details
+                    </a>
+                </div>
+                
+                <div class="wokiee-quick-view__meta">
+                    ${product.sku ? `<p><strong>SKU:</strong> ${product.sku}</p>` : ''}
+                    ${product.category ? `<p><strong>Category:</strong> ${product.category}</p>` : ''}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderStars(rating) {
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+        stars += `<i class="sicon-star ${i <= rating ? 'filled' : ''}"></i>`;
+    }
+    return stars;
+}
+
+function renderVariants(variants) {
+    // Group variants by type
+    const groups = {};
+    variants.forEach(v => {
+        if (!groups[v.type]) groups[v.type] = [];
+        groups[v.type].push(v);
+    });
+    
+    return Object.keys(groups).map(type => `
+        <div class="wokiee-quick-view__variant-group">
+            <label>${type}</label>
+            <div class="wokiee-quick-view__variant-options">
+                ${groups[type].map(v => `
+                    <button class="wokiee-quick-view__variant-btn" data-variant="${v.id}">
+                        ${v.value}
+                    </button>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+function changeQVImage(url) {
+    document.getElementById('qv-main-image').src = url;
+}
+
+function updateQVQty(change) {
+    const input = document.getElementById('qv-quantity');
+    let val = parseInt(input.value) + change;
+    if (val < 1) val = 1;
+    input.value = val;
+}
+
+function addToCartFromQV(productId) {
+    const qty = document.getElementById('qv-quantity').value;
+    const selectedVariant = document.querySelector('.wokiee-quick-view__variant-btn.active');
+    
+    salla.cart.addItem(productId, {
+        quantity: qty,
+        variant_id: selectedVariant ? selectedVariant.dataset.variant : null
+    }).then(() => {
+        closeQuickView();
+        openCartDrawer();
+    });
+}
+
+// Close on escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeQuickView();
+});
+</script>

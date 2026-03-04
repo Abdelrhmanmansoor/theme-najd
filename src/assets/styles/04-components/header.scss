@@ -946,3 +946,247 @@
     padding: 4px 0;
   }
 }
+
+
+/* ============================================================
+   VI. WOKIEE HEADER STYLE (.najd-header--wokiee)
+   Exact replica of Wokiee Shopify theme header
+   ============================================================ */
+
+.najd-header--wokiee {
+  /* Top Bar - Light gray background */
+  .wokiee-topbar {
+    background: #f0f0f0;
+    border-bottom: none;
+    height: 40px;
+    
+    .container {
+      height: 100%;
+    }
+  }
+  
+  .wokiee-topbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    font-size: 14px;
+  }
+  
+  .wokiee-topbar__links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .wokiee-topbar__link {
+    color: #000000;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: var(--color-primary, #304ffe);
+    }
+  }
+  
+  .wokiee-topbar__right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .wokiee-topbar__locale {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #000000;
+    font-size: 14px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: var(--color-primary, #304ffe);
+    }
+  }
+  
+  .wokiee-topbar__contact {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #000000;
+    font-size: 14px;
+    
+    i {
+      font-size: 14px;
+    }
+  }
+  
+  /* Main Header */
+  .wokiee-header {
+    background: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  
+  .wokiee-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 80px;
+    gap: 40px;
+  }
+  
+  /* Logo */
+  .wokiee-header__logo {
+    flex-shrink: 0;
+    
+    &-img {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+    }
+    
+    &-text {
+      font-size: 24px;
+      font-weight: 700;
+      color: #000000;
+    }
+  }
+  
+  /* Navigation */
+  .wokiee-header__nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .wokiee-header__nav-link {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+    padding: 10px 16px;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+    
+    &:hover,
+    &.active {
+      color: var(--color-primary, #304ffe);
+    }
+  }
+  
+  /* Actions */
+  .wokiee-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .wokiee-header__action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    font-size: 20px;
+    color: #000000;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+    
+    &:hover {
+      color: var(--color-primary, #304ffe);
+      background: rgba(0, 0, 0, 0.04);
+    }
+    
+    i {
+      font-size: 20px;
+    }
+  }
+  
+  .wokiee-header__cart {
+    .wokiee-header__cart-icon {
+      font-size: 20px;
+    }
+    
+    .s-cart-summary-count {
+      background: var(--color-primary, #304ffe) !important;
+      color: #ffffff !important;
+      font-size: 10px !important;
+      min-width: 18px !important;
+      height: 18px !important;
+      border-radius: 50% !important;
+      font-weight: 700 !important;
+    }
+  }
+  
+  /* Mobile Toggle */
+  .wokiee-header__mobile-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    font-size: 24px;
+    color: #000000;
+    
+    &:hover {
+      color: var(--color-primary, #304ffe);
+    }
+  }
+  
+  /* Scrolled State */
+  &.is-scrolled {
+    .wokiee-header {
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+/* Wokiee Header Responsive */
+@media (max-width: 1023px) {
+  .najd-header--wokiee {
+    .wokiee-header__nav {
+      display: none;
+    }
+    
+    .wokiee-header__mobile-toggle {
+      display: flex;
+    }
+    
+    .wokiee-header__inner {
+      min-height: 60px;
+      gap: 16px;
+    }
+    
+    .wokiee-topbar__links {
+      display: none;
+    }
+    
+    .wokiee-topbar__contact {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .najd-header--wokiee {
+    .wokiee-header__inner {
+      min-height: 56px;
+    }
+    
+    .wokiee-header__logo-img {
+      height: 32px;
+    }
+    
+    .wokiee-header__action-btn {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+    }
+  }
+}
